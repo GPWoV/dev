@@ -155,6 +155,9 @@
     <ClInclude Include="Stage.h" />
     <ClInclude Include="Tylenol.h" />
     <ClInclude Include="TylenolPreview.h" />
+    <ClInclude Include="Vaccine.h" />
+    <ClInclude Include="VaccineMissile.h" />
+    <ClInclude Include="VaccinePreview.h" />
     <ClInclude Include="virus.h" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +173,9 @@
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Tylenol.cpp" />
     <ClCompile Include="TylenolPreview.cpp" />
+    <ClCompile Include="Vaccine.cpp" />
+    <ClCompile Include="VaccineMissile.cpp" />
+    <ClCompile Include="VaccinePreview.cpp" />
     <ClCompile Include="virus.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
