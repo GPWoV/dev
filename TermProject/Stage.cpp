@@ -165,6 +165,14 @@ void Stage::Update()
 	for (auto iter = tylenol_turret.begin(); iter != tylenol_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
 		(*iter)->missileMove();
 		(*iter)->missileCheck();
+		
+		for (auto iter_missile = (*iter)->missile.begin(); iter_missile != (*iter)->missile.end(); iter_missile++) {
+			for (auto iter_flu = flu_list.begin(); iter_flu != flu_list.end(); iter_flu++) {
+				if ((*iter_missile).crash((*iter_flu)->getX(), (*iter_flu)->getY(), (*iter_flu)->getW(), (*iter_flu)->getH())) {
+					(*iter_flu)->takeDamage((*iter_missile).damage);
+				}
+			}
+		}
 	}
 
 	for (auto iter = hand_sanit_turret.begin(); iter != hand_sanit_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
@@ -187,8 +195,6 @@ void Stage::Update()
 	spray_preview->setXY(move_x, move_y);
 	vaccine_preview->setXY(move_x, move_y);
 	support_preview->setXY(move_x, move_y);
-
-	
 }
 
 
