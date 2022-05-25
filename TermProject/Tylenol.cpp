@@ -1,14 +1,14 @@
 #include "Tylenol.h"
 
 Tylenol::Tylenol(int x, int y) : gold(300), w(100), h(100), delay(33) {
-	SDL_Surface* tylenol_surface = IMG_Load("../../Resources/tylenolTurret.png");
+	SDL_Surface* tylenol_surface = IMG_Load("../../Resources/turret_01_ tylenol.png");
 	//SDL_SetColorKey(tylenol_surface, SDL_TRUE, SDL_MapRGB(tylenol_surface->format, 255, 255, 255));
 	tylenol_texture = SDL_CreateTextureFromSurface(g_renderer, tylenol_surface);
 	SDL_FreeSurface(tylenol_surface);
 	tylenol_source = { 0,0,100,100 };
 	tylenol_destination = { x-50, y-50, tylenol_source.w, tylenol_source.h };
 
-	SDL_Surface* missile_surface = IMG_Load("../../Resources/tylenolMissile.png");
+	SDL_Surface* missile_surface = IMG_Load("../../Resources/turret_01_skill.png");
 	missile_texture = SDL_CreateTextureFromSurface(g_renderer, missile_surface);
 	SDL_FreeSurface(missile_surface);
 	missile_source = { 0,0,25,25 };
