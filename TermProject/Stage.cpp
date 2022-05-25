@@ -25,6 +25,12 @@ Stage::Stage()
 	destination_rectangle_.w = source_rectangle_.w = 1280;
 	destination_rectangle_.h = source_rectangle_.h = 720;
 
+
+	//level에 따라 (감기)list 출현하게끔 구현 해볼생각
+	//x,y,speed,gold,hp,level,attack
+	flu_list.push_back(new Virus({ 1200,300,10,100,100,3,10 }));
+	flu_list.push_back(new Virus({ 1200,200,20,100,100,2,10 }));
+	
 	// 시작 버튼
 	/*
 		SDL_Surface* start_surface = IMG_Load("../../Resources/start.png");
@@ -52,7 +58,9 @@ Stage::~Stage()
 
 void Stage::Update()
 {
-
+	for (auto iter = flu_list.begin(); iter != flu_list.end(); iter++) {
+		(*iter)->move();
+	}
 }
 
 
@@ -60,17 +68,22 @@ void Stage::Render()
 {
 	SDL_SetRenderDrawColor(g_renderer, 255, 255, 255, 255);
 	SDL_RenderClear(g_renderer);
-
+	
 	SDL_RenderCopy(g_renderer, texture_, &source_rectangle_, &destination_rectangle_);
 	//SDL_RenderCopy(g_renderer, start_texture_, &start_source_rectangle_, &start_destination_rectangle_);
-
+	for (auto iter = flu_list.begin(); iter != flu_list.end(); iter++) {
+		(*iter)-> show();
+	}
+	
 	SDL_RenderPresent(g_renderer);
+	
 }
 
 
 
 void Stage::HandleEvents()
 {
+	
 	SDL_Event event;
 	if (SDL_PollEvent(&event))
 	{
