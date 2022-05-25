@@ -37,6 +37,9 @@
     <Filter Include="소스 파일\turret\Spray">
       <UniqueIdentifier>{fac1038e-ca15-4d60-9107-181e4ddd8846}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\turret\GovernmentSupport">
+      <UniqueIdentifier>{240820ed-30a7-42b1-94a8-3aef3c85e534}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -99,6 +102,12 @@
     <ClInclude Include="SprayPreview.h">
       <Filter>소스 파일\turret\Spray</Filter>
     </ClInclude>
+    <ClInclude Include="Support.h">
+      <Filter>소스 파일\turret\GovernmentSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportPreview.h">
+      <Filter>소스 파일\turret\GovernmentSupport</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -157,6 +166,12 @@
     </ClCompile>
     <ClCompile Include="SprayPreview.cpp">
       <Filter>소스 파일\turret\Spray</Filter>
+    </ClCompile>
+    <ClCompile Include="Support.cpp">
+      <Filter>소스 파일\turret\GovernmentSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="SupportPreview.cpp">
+      <Filter>소스 파일\turret\GovernmentSupport</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
