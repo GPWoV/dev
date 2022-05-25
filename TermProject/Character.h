@@ -25,8 +25,6 @@ private:
 
 
 	TTF_Font* font;
-	SDL_Texture* gold_texture;
-	SDL_Rect gold_destination;
 
 	SDL_Texture* gold_num_texture;
 	SDL_Rect gold_num_destination;
@@ -36,7 +34,7 @@ public:
 	const int w;
 	const int h;
 
-	int gold_int;
+	int gold_int = 5000;
 	const char* gold_char;
 	char buf[10];
 	int goverment_gold = 100;
