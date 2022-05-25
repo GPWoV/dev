@@ -31,6 +31,12 @@
     <Filter Include="소스 파일\turret\HandSanitizers">
       <UniqueIdentifier>{77ad2b41-2924-467c-b4d2-eda8a6dd7703}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\turret\Vaccine">
+      <UniqueIdentifier>{a1cf35e9-73f2-4100-8000-3bc83e48b0d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\turret\Spray">
+      <UniqueIdentifier>{fac1038e-ca15-4d60-9107-181e4ddd8846}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -75,6 +81,15 @@
     <ClInclude Include="HandSanitPreivew.h">
       <Filter>소스 파일\turret\HandSanitizers</Filter>
     </ClInclude>
+    <ClInclude Include="Vaccine.h">
+      <Filter>소스 파일\turret\Vaccine</Filter>
+    </ClInclude>
+    <ClInclude Include="VaccineMissile.h">
+      <Filter>소스 파일\turret\Vaccine</Filter>
+    </ClInclude>
+    <ClInclude Include="VaccinePreview.h">
+      <Filter>소스 파일\turret\Vaccine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -115,6 +130,15 @@
     </ClCompile>
     <ClCompile Include="HandSanitPreview.cpp">
       <Filter>소스 파일\turret\HandSanitizers</Filter>
+    </ClCompile>
+    <ClCompile Include="Vaccine.cpp">
+      <Filter>소스 파일\turret\Vaccine</Filter>
+    </ClCompile>
+    <ClCompile Include="VaccineMissile.cpp">
+      <Filter>소스 파일\turret\Vaccine</Filter>
+    </ClCompile>
+    <ClCompile Include="VaccinePreview.cpp">
+      <Filter>소스 파일\turret\Vaccine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
