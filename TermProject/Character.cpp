@@ -47,17 +47,8 @@ Character::Character() : character_hp(1000), w(250), h(250) {
 
 
 	//°ñµå
-	font = TTF_OpenFont("../../Resources/game_over.ttf", 70);
+	font = TTF_OpenFont("../../Resources/game_over.ttf", 150);
 	SDL_Color black = { 0, 0, 0, 0 };
-	SDL_Surface* gold_surface = TTF_RenderText_Blended(font, CW2A(L"°ñµå : ", CP_UTF8), black);
-
-	gold_destination.x = 0;
-	gold_destination.y = 0;
-	gold_destination.w = gold_surface->w;
-	gold_destination.h = gold_surface->h;
-
-	gold_texture = SDL_CreateTextureFromSurface(g_renderer, gold_surface);
-	SDL_FreeSurface(gold_surface);
 
 	sprintf_s(buf, "%d", gold_int);
 	gold_char = buf;
@@ -76,7 +67,6 @@ Character::Character() : character_hp(1000), w(250), h(250) {
 Character::~Character() {
 	SDL_DestroyTexture(character_texture);
 	SDL_DestroyTexture(damage_texture);
-	SDL_DestroyTexture(gold_texture);
 	SDL_DestroyTexture(gold_num_texture);
 	SDL_DestroyTexture(gameover_texture);
 	SDL_DestroyTexture(hp_texture);
@@ -86,24 +76,16 @@ Character::~Character() {
 void Character::show() {
 	SDL_Rect character_r;
 	SDL_Rect damage_r;
-	SDL_Rect gold_r;
 	SDL_Rect gold_num_r;
 	SDL_Rect hp_r;
 	SDL_Rect gameover_r;
 
-	//gold ±Û¾¾
-	gold_r.x = 910;
-	gold_r.y = 600;
-	gold_r.w = gold_destination.w;
-	gold_r.h = gold_destination.h;
-	SDL_RenderCopy(g_renderer, gold_texture, &gold_destination, &gold_r);
-
 	//gold_num
-	gold_num_r.x = 1010;
+	gold_num_r.x = 940;
 	gold_num_r.y = 600;
 	gold_num_r.w = gold_num_destination.w;
 	gold_num_r.h = gold_num_destination.h;
-	SDL_RenderCopy(g_renderer, gold_num_texture, &gold_destination, &gold_num_r);
+	SDL_RenderCopy(g_renderer, gold_num_texture, &gold_num_destination, &gold_num_r);
 
 	//hp
 	SDL_RenderCopy(g_renderer, hp_texture, &hp_source, &hp_destination);
