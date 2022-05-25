@@ -19,6 +19,11 @@ private:
 	SDL_Rect gameover_source;
 	SDL_Rect gameover_destination;
 
+
+	TTF_Font* font;
+	SDL_Texture* gold_texture;
+	SDL_Rect gold_destination;
+
 public:
 	int hp;
 	const int w;

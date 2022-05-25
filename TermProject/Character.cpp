@@ -35,6 +35,20 @@ Character::Character():hp(1000), w(250), h(250) {
 	gameover_destination.w = gameover_source.w;
 	gameover_destination.h = gameover_source.h;
 
+
+	//°ñµå
+	font = TTF_OpenFont("../../Resources/°ñµå.ttf", 70);
+	SDL_Color black = { 0, 0, 0, 0 };
+	SDL_Surface* gold_surface = TTF_RenderText_Blended(font, "Gold : ", black);
+
+	gold_destination.x = 0;
+	gold_destination.y = 0;
+	gold_destination.w = gold_surface->w;
+	gold_destination.h = gold_surface->h;
+
+	gold_texture = SDL_CreateTextureFromSurface(g_renderer, gold_surface);
+	SDL_FreeSurface(gold_surface);
+
 }
 
 Character::~Character() {
