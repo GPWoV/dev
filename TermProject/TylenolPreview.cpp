@@ -1,7 +1,7 @@
 #include "TylenolPreview.h"
 
 TylenolPreview::TylenolPreview(int x, int y) {
-	SDL_Surface* tylenol_surface = IMG_Load("../../Resources/tylenolMove.png");
+	SDL_Surface* tylenol_surface = IMG_Load("../../Resources/turret_01_ tylenol_move.png");
 	tylenol_texture = SDL_CreateTextureFromSurface(g_renderer, tylenol_surface);
 	SDL_FreeSurface(tylenol_surface);
 	tylenol_source = { 0,0,100,100 };
