@@ -42,17 +42,43 @@ Stage::Stage()
 	start_destination_rectangle_.h = start_source_rectangle_.h = 57;
 	*/
 
+
+	//about turret
+	turret_kind = -1; //터렛 종류
+	btn_down = false;
+	btn_up = false;
+	tp = new TylenolPreview(0, 0); //클릭시 보여질 투명한 타이레놀
 }
 
 Stage::~Stage()
 {
 	SDL_DestroyTexture(texture_);
 	//SDL_DestroyTexture(start_texture_);
+
+	for (auto iter = tt.begin(); iter != tt.end(); iter++) { //생성한 터렛들을 지워줌
+		delete (*iter);
+	}
+	tt.clear();
 }
 
 void Stage::Update()
 {
+	for (int i = 0; i < tylenol_delay.size(); i++) { //타이레놀 딜레이 걸어서 슈팅
+		if (tylenol_delay[i] > tt[i]->delay) {
+			tt[i]->shooting();
+			tylenol_delay[i] = 0;
+		}
+		else {
+			tylenol_delay[i]++;
+		}
+	}
 
+	for (auto iter = tt.begin(); iter != tt.end(); iter++) { //타이레놀 미사일 이동 및 삭제
+		(*iter)->missileMove();
+		(*iter)->missileCheck();
+	}
+
+	tp->setXY(move_x, move_y); //투명한 타이레놀 위치 지정
 }
 
 
@@ -63,6 +89,14 @@ void Stage::Render()
 
 	SDL_RenderCopy(g_renderer, texture_, &source_rectangle_, &destination_rectangle_);
 	//SDL_RenderCopy(g_renderer, start_texture_, &start_source_rectangle_, &start_destination_rectangle_);
+
+	for (auto iter = tt.begin(); iter != tt.end(); iter++) { //터렛, 미사일 띄우기
+		(*iter)->show();
+		(*iter)->missileShow();
+	}
+
+	if (btn_down) //버튼이 눌렸을 때만 투명한 타이레놀을 보여주겠다.
+		tp->show();
 
 	SDL_RenderPresent(g_renderer);
 }
@@ -105,11 +139,47 @@ void Stage::HandleEvents()
 				}
 				*/
 
+				btn_up = false;
+				if (event.button.x > 0 &&
+					event.button.x<100 &&
+					event.button.y>destination_rectangle_.h - 100 &&
+					event.button.y < destination_rectangle_.h) {
+					turret_kind = 0;
+				}
+			}
+			break;
+
+		case SDL_MOUSEBUTTONUP:
+			if (event.button.button == SDL_BUTTON_LEFT) {
+				btn_up = true;
 			}
 			break;
 
 		default:
 			break;
+		}
+	}
+
+	SDL_PumpEvents();
+	buttons = SDL_GetMouseState(&move_x, &move_y);
+	if ((buttons & SDL_BUTTON_LMASK) != 0) {
+		if (turret_kind != -1) {
+			btn_down = true;
+		}
+	}
+	else {
+		if (btn_up && btn_down) {
+			switch (turret_kind) {
+			case 0:
+				tt.push_back(new Tylenol({ move_x, move_y }));
+				tylenol_delay.push_back(33);
+				break;
+			default:
+				break;
+			}
+			btn_up = false;
+			btn_down = false;
+			turret_kind = -1;
 		}
 	}
 }
