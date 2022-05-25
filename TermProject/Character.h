@@ -19,6 +19,10 @@ private:
 	SDL_Rect gameover_source;
 	SDL_Rect gameover_destination;
 
+	SDL_Texture* hp_texture;
+	SDL_Rect hp_source;
+	SDL_Rect hp_destination;
+
 
 	TTF_Font* font;
 	SDL_Texture* gold_texture;
