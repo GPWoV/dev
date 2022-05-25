@@ -4,12 +4,12 @@
 #include <atlstr.h>
 #include <string.h>
 
-Character::Character(): w(250), h(250) {
+Character::Character() : character_hp(1000), w(250), h(250) {
 	//main 캐릭터
-	SDL_Surface* character_surface = IMG_Load("../../Resources/캐릭터");
+	SDL_Surface* character_surface = IMG_Load("../../Resources/character_normal.png");
 	character_texture = SDL_CreateTextureFromSurface(g_renderer, character_surface);
 	SDL_FreeSurface(character_surface);
-	
+
 	SDL_QueryTexture(character_texture, NULL, NULL, &character_source.w, &character_source.h);
 	character_destination.x = character_source.x = 0;
 	character_destination.y = character_source.y = 0;
@@ -17,7 +17,7 @@ Character::Character(): w(250), h(250) {
 	character_destination.h = character_source.h;
 
 	//데미지
-	SDL_Surface* damage_surface = IMG_Load("../../Resources/데미지");
+	SDL_Surface* damage_surface = IMG_Load("../../Resources/character_attacked.png");
 	damage_texture = SDL_CreateTextureFromSurface(g_renderer, damage_surface);
 	SDL_FreeSurface(damage_surface);
 
@@ -27,9 +27,15 @@ Character::Character(): w(250), h(250) {
 	damage_destination.w = damage_source.w;
 	damage_destination.h = damage_source.h;
 
+	//체력바
+	SDL_Surface* hp_surface = IMG_Load("../../Resources/virus_spritesheet.png");
+	hp_texture = SDL_CreateTextureFromSurface(g_renderer, hp_surface);
+	SDL_FreeSurface(hp_surface);
+	hp_source = { 0 ,213,230,17 };
+	hp_destination = { character_destination.x, character_destination.y - 20, (int)(character_source.w * character_hp / 100), hp_source.h };
 
 	//게임오버
-	SDL_Surface* gameover_surface = IMG_Load("../../Resources/게임오버");
+	SDL_Surface* gameover_surface = IMG_Load("../../Resources/text_gameover.png");
 	gameover_texture = SDL_CreateTextureFromSurface(g_renderer, gameover_surface);
 	SDL_FreeSurface(gameover_surface);
 
@@ -41,7 +47,7 @@ Character::Character(): w(250), h(250) {
 
 
 	//골드
-	font = TTF_OpenFont("../../Resources/골드.ttf", 70);
+	font = TTF_OpenFont("../../Resources/game_over.ttf", 70);
 	SDL_Color black = { 0, 0, 0, 0 };
 	SDL_Surface* gold_surface = TTF_RenderText_Blended(font, CW2A(L"골드 : ", CP_UTF8), black);
 
@@ -53,7 +59,6 @@ Character::Character(): w(250), h(250) {
 	gold_texture = SDL_CreateTextureFromSurface(g_renderer, gold_surface);
 	SDL_FreeSurface(gold_surface);
 
-	gold_char = "0";
 	sprintf_s(buf, "%d", gold_int);
 	gold_char = buf;
 	SDL_Surface* gold_num_surface = TTF_RenderText_Blended(font, gold_char, black);
@@ -70,11 +75,23 @@ Character::Character(): w(250), h(250) {
 
 Character::~Character() {
 	SDL_DestroyTexture(character_texture);
+	SDL_DestroyTexture(damage_texture);
+	SDL_DestroyTexture(gold_texture);
+	SDL_DestroyTexture(gold_num_texture);
+	SDL_DestroyTexture(gameover_texture);
+	SDL_DestroyTexture(hp_texture);
+
 }
 
 void Character::show() {
-
+	SDL_Rect character_r;
+	SDL_Rect damage_r;
 	SDL_Rect gold_r;
+	SDL_Rect gold_num_r;
+	SDL_Rect hp_r;
+	SDL_Rect gameover_r;
+
+	//gold 글씨
 	gold_r.x = 100;
 	gold_r.y = 600;
 	gold_r.w = gold_destination.w;
@@ -82,23 +99,39 @@ void Character::show() {
 	SDL_RenderCopy(g_renderer, gold_texture, &gold_destination, &gold_r);
 
 	//gold_num
-	SDL_Rect gold_num_r;
 	gold_num_r.x = 200;
 	gold_num_r.y = 600;
 	gold_num_r.w = gold_num_destination.w;
 	gold_num_r.h = gold_num_destination.h;
 	SDL_RenderCopy(g_renderer, gold_num_texture, &gold_destination, &gold_num_r);
 
+	//hp
+	SDL_RenderCopy(g_renderer, hp_texture, &hp_source, &hp_destination);
+
+
+
 	if (damage_state == false) {
+		character_r.x = 0;
+		character_r.y = 0;
+		character_r.w = character_destination.w;
+		character_r.h = character_destination.h;
 		SDL_RenderCopy(g_renderer, character_texture, &character_source, &character_destination);
 	}
 	else {
+		damage_r.x = 0;
+		damage_r.y = 0;
+		damage_r.w = damage_destination.w;
+		damage_r.h = damage_destination.h;
 		SDL_RenderCopy(g_renderer, damage_texture, &damage_source, &damage_destination);
 		SDL_Delay(100);
 		damage_state = false;
 	}
 
 	if (game_state == false) {
+		gameover_r.x = 0;
+		gameover_r.y = 0;
+		gameover_r.w = gameover_destination.w;
+		gameover_r.h = gameover_destination.h;
 		SDL_RenderCopy(g_renderer, gameover_texture, &gameover_source, &gameover_destination);
 	}
 }
