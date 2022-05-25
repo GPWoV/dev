@@ -161,6 +161,7 @@ void Stage::Update()
 		}
 		else {
 			support_delay[i]++;
+			character->addGold();
 		}
 	}
 
@@ -329,7 +330,6 @@ void Stage::HandleEvents()
 					event.button.y>595 &&
 					event.button.y < 695) {
 					turret_kind = SUPPORT;
-					character->addGold();
 				}
 				else {
 					turret_kind = NONE;

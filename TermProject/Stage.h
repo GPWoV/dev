@@ -61,7 +61,6 @@ private:
 	SupportPreview* support_preview;
 
 	Character* character;
-
 	
 
 	bool btn_down;
