@@ -22,8 +22,8 @@ Character::Character() : character_hp(1000), w(250), h(250) {
 	SDL_FreeSurface(damage_surface);
 
 	SDL_QueryTexture(damage_texture, NULL, NULL, &damage_source.w, &damage_source.h);
-	damage_destination.x = damage_source.x = 0;
-	damage_destination.y = damage_source.y = 0;
+	damage_destination.x = 40;
+	damage_destination.y = 220;
 	damage_destination.w = damage_source.w;
 	damage_destination.h = damage_source.h;
 
@@ -40,10 +40,10 @@ Character::Character() : character_hp(1000), w(250), h(250) {
 	SDL_FreeSurface(gameover_surface);
 
 	SDL_QueryTexture(gameover_texture, NULL, NULL, &gameover_source.w, &gameover_source.h);
-	gameover_destination.x = gameover_source.x = 0;
-	gameover_destination.y = gameover_source.y = 0;
-	gameover_destination.w = gameover_source.w;
-	gameover_destination.h = gameover_source.h;
+	gameover_destination.x = (1280-gameover_source.w/2)/2;
+	gameover_destination.y = (720-gameover_source.h/2)/2;
+	gameover_destination.w = gameover_source.w/2;
+	gameover_destination.h = gameover_source.h/2;
 
 
 	//골드
@@ -80,18 +80,33 @@ void Character::show() {
 	SDL_Rect hp_r;
 	SDL_Rect gameover_r;
 
+
 	//gold_num
+	SDL_Color black = { 0, 0, 0, 0 };
+	sprintf_s(buf, "%d", gold_int);
+	gold_char = buf;
+	SDL_Surface* gold_num_surface = TTF_RenderText_Blended(font, gold_char, black);
+
+	gold_num_destination.x = 0;
+	gold_num_destination.y = 0;
+	gold_num_destination.w = gold_num_surface->w;
+	gold_num_destination.h = gold_num_surface->h;
+
+	gold_num_texture = SDL_CreateTextureFromSurface(g_renderer, gold_num_surface);
+	SDL_FreeSurface(gold_num_surface);
+
 	gold_num_r.x = 950;
 	gold_num_r.y = 600;
 	gold_num_r.w = gold_num_destination.w;
 	gold_num_r.h = gold_num_destination.h;
 	SDL_RenderCopy(g_renderer, gold_num_texture, &gold_num_destination, &gold_num_r);
 
+
 	//hp
 	SDL_RenderCopy(g_renderer, hp_texture, &hp_source, &hp_destination);
 
 
-
+	//캐릭터, 데미지
 	if (damage_state == false) {
 		character_r.x = 40;
 		character_r.y = 220;
@@ -105,13 +120,14 @@ void Character::show() {
 		damage_r.w = damage_destination.w;
 		damage_r.h = damage_destination.h;
 		SDL_RenderCopy(g_renderer, damage_texture, &damage_source, &damage_destination);
-		SDL_Delay(100);
+		//Sleep(ONE_SECOND);
+		//SDL_Delay(100);
 		damage_state = false;
 	}
 
 	if (game_state == false) {
-		gameover_r.x = 1280 - gameover_destination.w / 2;
-		gameover_r.y = 720 - gameover_destination.h / 2;
+		gameover_r.x = (1280 - gameover_destination.w/2) / 2;
+		gameover_r.y = (720 - gameover_destination.h/2) / 2;
 		gameover_r.w = gameover_destination.w;
 		gameover_r.h = gameover_destination.h;
 		SDL_RenderCopy(g_renderer, gameover_texture, &gameover_source, &gameover_destination);
@@ -126,10 +142,11 @@ void Character::getDamage(int missile_damage) {
 	}
 }
 
+//여기 고쳐야함 -> 꾸준히 얻을 수 있도록
 void Character::addGold() {
-	while (game_state == true) {
-		gold_int += goverment_gold; //100골드
-		Sleep(ONE_SECOND); //1초 간격으로 골드 획득
+	if (game_state == true) { 
+		gold_int +=100; //100골드
+		//SDL_Delay(100); //1초 간격으로 골드 획득
 	}
 }
 
