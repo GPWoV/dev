@@ -116,10 +116,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>../lib/SDL2_image.lib;../lib/SDL2.lib;../lib/SDL2main.lib;../Lib/SDL2_mixer.lib;../Lib/SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -155,6 +157,9 @@
     <ClInclude Include="Stage.h" />
     <ClInclude Include="Tylenol.h" />
     <ClInclude Include="TylenolPreview.h" />
+    <ClInclude Include="Vaccine.h" />
+    <ClInclude Include="VaccineMissile.h" />
+    <ClInclude Include="VaccinePreview.h" />
     <ClInclude Include="virus.h" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +175,9 @@
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Tylenol.cpp" />
     <ClCompile Include="TylenolPreview.cpp" />
+    <ClCompile Include="Vaccine.cpp" />
+    <ClCompile Include="VaccineMissile.cpp" />
+    <ClCompile Include="VaccinePreview.cpp" />
     <ClCompile Include="virus.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
