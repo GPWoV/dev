@@ -25,13 +25,16 @@
     <Filter Include="소스 파일\phase">
       <UniqueIdentifier>{be6febc5-de99-4c52-89ac-38a49263d962}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\turret\Tylenol">
+      <UniqueIdentifier>{673fd4e1-71b7-42d8-8a4c-463f6115fec7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\turret\HandSanitizers">
+      <UniqueIdentifier>{77ad2b41-2924-467c-b4d2-eda8a6dd7703}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
       <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Tylenol.h">
-      <Filter>소스 파일\turret</Filter>
     </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>소스 파일\character</Filter>
@@ -54,16 +57,22 @@
     <ClInclude Include="Stage.h">
       <Filter>소스 파일\phase</Filter>
     </ClInclude>
-    <ClInclude Include="Missile.h">
-      <Filter>소스 파일\turret</Filter>
+    <ClInclude Include="TylenolMissile.h">
+      <Filter>소스 파일\turret\Tylenol</Filter>
+    </ClInclude>
+    <ClInclude Include="Tylenol.h">
+      <Filter>소스 파일\turret\Tylenol</Filter>
+    </ClInclude>
+    <ClInclude Include="HandSanitizers.h">
+      <Filter>소스 파일\turret\HandSanitizers</Filter>
+    </ClInclude>
+    <ClInclude Include="HandSanitMissile.h">
+      <Filter>소스 파일\turret\HandSanitizers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Tylenol.cpp">
-      <Filter>소스 파일\turret</Filter>
     </ClCompile>
     <ClCompile Include="Character.cpp">
       <Filter>소스 파일\character</Filter>
@@ -83,8 +92,17 @@
     <ClCompile Include="Stage.cpp">
       <Filter>소스 파일\phase</Filter>
     </ClCompile>
-    <ClCompile Include="Missile.cpp">
-      <Filter>소스 파일\turret</Filter>
+    <ClCompile Include="TylenolMissile.cpp">
+      <Filter>소스 파일\turret\Tylenol</Filter>
+    </ClCompile>
+    <ClCompile Include="Tylenol.cpp">
+      <Filter>소스 파일\turret\Tylenol</Filter>
+    </ClCompile>
+    <ClCompile Include="HandSanitizers.cpp">
+      <Filter>소스 파일\turret\HandSanitizers</Filter>
+    </ClCompile>
+    <ClCompile Include="HandSanitMissile.cpp">
+      <Filter>소스 파일\turret\HandSanitizers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
