@@ -17,8 +17,8 @@ void TylenolPreview::show() {
 }
 
 void TylenolPreview::setXY(int x, int y) {
-	tylenol_destination.x = x;
-	tylenol_destination.y = y;
+	tylenol_destination.x = x - 50;
+	tylenol_destination.y = y - 50;
 }
 
 void TylenolPreview::reset() {

@@ -6,7 +6,7 @@ Tylenol::Tylenol(int x, int y) : gold(300), w(100), h(100), delay(33) {
 	tylenol_texture = SDL_CreateTextureFromSurface(g_renderer, tylenol_surface);
 	SDL_FreeSurface(tylenol_surface);
 	tylenol_source = { 0,0,100,100 };
-	tylenol_destination = { x, y, tylenol_source.w, tylenol_source.h };
+	tylenol_destination = { x-50, y-50, tylenol_source.w, tylenol_source.h };
 
 	SDL_Surface* missile_surface = IMG_Load("../../Resources/tylenolMissile.png");
 	missile_texture = SDL_CreateTextureFromSurface(g_renderer, missile_surface);
@@ -33,7 +33,7 @@ void Tylenol::show() {
 }
 
 void Tylenol::shooting() {
-	TylenolMissile m(this->tylenol_destination.x, this->tylenol_destination.y);
+	TylenolMissile m(this->tylenol_destination.x+75, this->tylenol_destination.y+35);
 	missile.push_back(m);
 }
 

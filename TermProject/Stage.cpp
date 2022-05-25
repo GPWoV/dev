@@ -140,10 +140,10 @@ void Stage::HandleEvents()
 				*/
 
 				btn_up = false;
-				if (event.button.x > 0 &&
-					event.button.x<100 &&
-					event.button.y>destination_rectangle_.h - 100 &&
-					event.button.y < destination_rectangle_.h) {
+				if (event.button.x > 97 &&
+					event.button.x<177 &&
+					event.button.y>595 &&
+					event.button.y < 695) {
 					turret_kind = 0;
 				}
 			}
