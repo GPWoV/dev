@@ -145,9 +145,11 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="Ending.h" />
+    <ClInclude Include="HandSanitizers.h" />
+    <ClInclude Include="HandSanitMissile.h" />
     <ClInclude Include="How.h" />
     <ClInclude Include="Intro.h" />
-    <ClInclude Include="Missile.h" />
+    <ClInclude Include="TylenolMissile.h" />
     <ClInclude Include="Phase.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="Tylenol.h" />
@@ -156,10 +158,12 @@
   <ItemGroup>
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Ending.cpp" />
+    <ClCompile Include="HandSanitizers.cpp" />
+    <ClCompile Include="HandSanitMissile.cpp" />
     <ClCompile Include="How.cpp" />
     <ClCompile Include="Intro.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Missile.cpp" />
+    <ClCompile Include="TylenolMissile.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Tylenol.cpp" />
     <ClCompile Include="virus.cpp" />

@@ -17,7 +17,7 @@ Mix_Music* Music_;
 
 bool g_flag_running;
 Uint32 g_last_time_ms;
-int g_frame_time_ms = 120;
+int g_frame_time_ms = 30;
 
 bool InitializeWindow(const char* title, int xpos, int ypos, int width, int height, int fullscreen);
 void CleanWindow();
