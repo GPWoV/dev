@@ -28,11 +28,12 @@ Stage::Stage()
 
 	character = new Character();
 	character->damage_state = false;
+	character->game_state = true;
 
 	srand((unsigned int)time(NULL));
 	round = 1;
-	for (int virus_cnt = 0; virus_cnt < 5; virus_cnt++)
-		flu_list.push_back(new Virus({ 1200+rand()%10*60,rand() % 6 * 120,10,100,200,round,10,true}));
+	for (int virus_cnt = 0; virus_cnt < 10; virus_cnt++)
+		flu_list.push_back(new Virus({ 1200+rand()%10*60,rand() % 10 * 50+20,10,100,50,round,10,true}));
 	
 	
 	// 시작 버튼
@@ -103,6 +104,7 @@ Stage::~Stage()
 
 void Stage::Update()
 {
+
 	//virus 움직임,자기소멸 구현완료.
 	for (auto iter = flu_list.begin(); iter != flu_list.end(); iter++) {
 		(*iter)->move();
@@ -159,6 +161,7 @@ void Stage::Update()
 		}
 		else {
 			support_delay[i]++;
+			character->addGold();
 		}
 	}
 
@@ -372,24 +375,44 @@ void Stage::HandleEvents()
 
 			switch (turret_kind) {
 			case TYLENOL:
-				tylenol_turret.push_back(new Tylenol({ move_x, move_y }));
-				tylenol_delay.push_back(33);
+				if (character->gold_int < 300) break;
+				else {
+					tylenol_turret.push_back(new Tylenol({ move_x, move_y }));
+					tylenol_delay.push_back(33);
+					character->useGold(300);
+				}
 				break;
 			case HANDSANIT:
-				hand_sanit_turret.push_back(new HandSanitizers({ move_x, move_y }));
-				hand_sanit_delay.push_back(99);
+				if (character->gold_int < 500) break;
+				else {
+					hand_sanit_turret.push_back(new HandSanitizers({ move_x, move_y }));
+					hand_sanit_delay.push_back(99);
+					character->useGold(500);
+				}
 				break;
 			case SPRAY:
-				spray_turret.push_back(new Spray({ move_x, move_y }));
-				spray_delay.push_back(66);
+				if (character->gold_int < 700) break;
+				else {
+					spray_turret.push_back(new Spray({ move_x, move_y }));
+					spray_delay.push_back(66);
+					character->useGold(700);
+				}
 				break;
 			case VACCINE:
-				vaccine_turret.push_back(new Vaccine({ move_x, move_y }));
-				vaccine_delay.push_back(165);
+				if (character->gold_int < 1000) break;
+				else {
+					vaccine_turret.push_back(new Vaccine({ move_x, move_y }));
+					vaccine_delay.push_back(165);
+					character->useGold(1000);
+				}
 				break;
 			case SUPPORT:
-				support_turret.push_back(new Support({ move_x, move_y }));
-				support_delay.push_back(330);
+				if (character->gold_int < 5000) break;
+				else {
+					support_turret.push_back(new Support({ move_x, move_y }));
+					support_delay.push_back(330);
+					character->useGold(5000);
+				}
 				break;
 			default:
 				break;
