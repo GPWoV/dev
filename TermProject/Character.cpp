@@ -117,7 +117,7 @@ void Character::addGold() {
 	}
 }
 
-
+//터렛 가격보다 낮으면~ 예외처리 해주기
 void Character::useGold(int turret_price) {
 	gold_int -= turret_price;
 }
