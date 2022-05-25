@@ -96,6 +96,9 @@
     <ClInclude Include="SprayMissile.h">
       <Filter>소스 파일\turret\Spray</Filter>
     </ClInclude>
+    <ClInclude Include="SprayPreview.h">
+      <Filter>소스 파일\turret\Spray</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -150,6 +153,9 @@
       <Filter>소스 파일\turret\Spray</Filter>
     </ClCompile>
     <ClCompile Include="SprayMissile.cpp">
+      <Filter>소스 파일\turret\Spray</Filter>
+    </ClCompile>
+    <ClCompile Include="SprayPreview.cpp">
       <Filter>소스 파일\turret\Spray</Filter>
     </ClCompile>
   </ItemGroup>
