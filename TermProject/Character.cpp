@@ -11,8 +11,8 @@ Character::Character() : character_hp(1000), w(250), h(250) {
 	SDL_FreeSurface(character_surface);
 
 	SDL_QueryTexture(character_texture, NULL, NULL, &character_source.w, &character_source.h);
-	character_destination.x = character_source.x = 0;
-	character_destination.y = character_source.y = 0;
+	character_destination.x = 40;
+	character_destination.y = 220;
 	character_destination.w = character_source.w;
 	character_destination.h = character_source.h;
 
@@ -32,7 +32,7 @@ Character::Character() : character_hp(1000), w(250), h(250) {
 	hp_texture = SDL_CreateTextureFromSurface(g_renderer, hp_surface);
 	SDL_FreeSurface(hp_surface);
 	hp_source = { 0 ,213,230,17 };
-	hp_destination = { character_destination.x, character_destination.y - 20, (int)(character_source.w * character_hp / 100), hp_source.h };
+	hp_destination = { character_destination.x, character_destination.y - 20, (int)(character_source.w * character_hp / 1000), hp_source.h };
 
 	//게임오버
 	SDL_Surface* gameover_surface = IMG_Load("../../Resources/text_gameover.png");

@@ -11,6 +11,7 @@
 #include "VaccinePreview.h"
 #include "Support.h"
 #include "SupportPreview.h"
+#include "Character.h"
 
 #include<cstdlib>
 #include<ctime>
@@ -58,6 +59,10 @@ private:
 	SprayPreview* spray_preview;
 	VaccinePreview* vaccine_preview;
 	SupportPreview* support_preview;
+
+	Character* character;
+
+	
 
 	bool btn_down;
 	bool btn_up;
