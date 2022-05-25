@@ -43,7 +43,7 @@ int Virus::getY() {
 //미사일을 맞았을때
 void Virus::takeDamage(int missile_damage) {
 	this->virus_hp_destination.w -= missile_damage;
-	if (this->virus_hp <= 0) {
+	if (this->virus_hp_destination.w <= 0) {
 		//게임 골드지급 구현
 		this->die();
 	}
@@ -65,6 +65,7 @@ void Virus::move(){
 	this->virus_destination.x -= this->virus_speed;
 	this->virus_hp_destination.x -= this->virus_speed;
 	this->virus_hp_destination.w -= 2;
+	
 	if (this->virus_destination.x <= 227) {
 		this->hitDamage();
 		this->die();

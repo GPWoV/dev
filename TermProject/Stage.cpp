@@ -31,8 +31,8 @@ Stage::Stage()
 
 	srand((unsigned int)time(NULL));
 	round = 1;
-	for (int virus_cnt = 0; virus_cnt < 5; virus_cnt++)
-		flu_list.push_back(new Virus({ 1200+rand()%10*60,rand() % 6 * 120,10,100,200,round,10,true}));
+	for (int virus_cnt = 0; virus_cnt < 10; virus_cnt++)
+		flu_list.push_back(new Virus({ 1200+rand()%10*60,rand() % 10 * 50+20,10,100,50,round,10,true}));
 	
 	
 	// 시작 버튼
