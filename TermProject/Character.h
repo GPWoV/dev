@@ -35,6 +35,7 @@ public:
 	int gold_int;
 	const char* gold_char;
 	char buf[10];
+	int goverment_gold = 100;
 
 	bool damage_state = false;
 	bool game_state = true;

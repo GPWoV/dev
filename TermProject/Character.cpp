@@ -1,4 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
+#define ONE_SECOND 1000 // 1√  √ ±‚»≠
 #include "Character.h"
 #include <atlstr.h>
 #include <string.h>
@@ -53,7 +54,7 @@ Character::Character(): w(250), h(250) {
 	SDL_FreeSurface(gold_surface);
 
 	gold_char = "0";
-	sprintf(buf, "%05d", gold_int);
+	sprintf_s(buf, "%d", gold_int);
 	gold_char = buf;
 	SDL_Surface* gold_num_surface = TTF_RenderText_Blended(font, gold_char, black);
 
@@ -111,10 +112,13 @@ void Character::getDamage(int missile_damage) {
 }
 
 void Character::addGold() {
-	//∫∏¡∂±› ttf
+	while (game_state == true) {
+		gold_int += goverment_gold; //100∞ÒµÂ
+		Sleep(ONE_SECOND); //1√  ∞£∞›¿∏∑Œ ∞ÒµÂ »πµÊ
+	}
 }
 
 
 void Character::useGold(int turret_price) {
-	//∫∏¡∂±› ttf
+	gold_int -= turret_price;
 }
