@@ -23,3 +23,7 @@ int Support::getY() {
 void Support::show() {
 	SDL_RenderCopy(g_renderer, support_texture, &support_source, &support_destination);
 }
+
+int Support::giveMoney() {
+	return 300;
+}
