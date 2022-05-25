@@ -113,11 +113,10 @@ void Character::getDamage(int missile_damage) {
 
 void Character::addGold() {
 	if (game_state == true) {
-		gold_int += goverment_gold; //10골드씩
+		gold_int += goverment_gold; //1골드씩
 	}
 }
 
-//터렛 가격보다 낮으면~ 예외처리 해주기
 void Character::useGold(int turret_price) {
 	gold_int -= turret_price;
 }
