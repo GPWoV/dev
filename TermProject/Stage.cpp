@@ -28,6 +28,7 @@ Stage::Stage()
 
 	character = new Character();
 	character->damage_state = false;
+	character->game_state = true;
 
 	srand((unsigned int)time(NULL));
 	round = 1;
@@ -103,6 +104,7 @@ Stage::~Stage()
 
 void Stage::Update()
 {
+
 	//virus 움직임,자기소멸 구현완료.
 	for (auto iter = flu_list.begin(); iter != flu_list.end(); iter++) {
 		(*iter)->move();
@@ -187,7 +189,6 @@ void Stage::Update()
 	spray_preview->setXY(move_x, move_y);
 	vaccine_preview->setXY(move_x, move_y);
 	support_preview->setXY(move_x, move_y);
-
 	
 }
 
@@ -328,6 +329,7 @@ void Stage::HandleEvents()
 					event.button.y>595 &&
 					event.button.y < 695) {
 					turret_kind = SUPPORT;
+					character->addGold();
 				}
 				else {
 					turret_kind = NONE;
