@@ -25,8 +25,6 @@ private:
 
 
 	TTF_Font* font;
-	SDL_Texture* gold_texture;
-	SDL_Rect gold_destination;
 
 	SDL_Texture* gold_num_texture;
 	SDL_Rect gold_num_destination;

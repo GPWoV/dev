@@ -28,7 +28,7 @@ Character::Character() : character_hp(1000), w(250), h(250) {
 	damage_destination.h = damage_source.h;
 
 	//Ã¼·Â¹Ù
-	SDL_Surface* hp_surface = IMG_Load("../../Resources/virus_spritesheet.png");
+	SDL_Surface* hp_surface = IMG_Load("../../Resources/virus_sprite.png");
 	hp_texture = SDL_CreateTextureFromSurface(g_renderer, hp_surface);
 	SDL_FreeSurface(hp_surface);
 	hp_source = { 0 ,213,230,17 };
@@ -81,7 +81,7 @@ void Character::show() {
 	SDL_Rect gameover_r;
 
 	//gold_num
-	gold_num_r.x = 940;
+	gold_num_r.x = 950;
 	gold_num_r.y = 600;
 	gold_num_r.w = gold_num_destination.w;
 	gold_num_r.h = gold_num_destination.h;
