@@ -147,6 +147,7 @@
     <ClInclude Include="Ending.h" />
     <ClInclude Include="HandSanitizers.h" />
     <ClInclude Include="HandSanitMissile.h" />
+    <ClInclude Include="HandSanitPreivew.h" />
     <ClInclude Include="How.h" />
     <ClInclude Include="Intro.h" />
     <ClInclude Include="TylenolMissile.h" />
@@ -161,6 +162,7 @@
     <ClCompile Include="Ending.cpp" />
     <ClCompile Include="HandSanitizers.cpp" />
     <ClCompile Include="HandSanitMissile.cpp" />
+    <ClCompile Include="HandSanitPreview.cpp" />
     <ClCompile Include="How.cpp" />
     <ClCompile Include="Intro.cpp" />
     <ClCompile Include="main.cpp" />

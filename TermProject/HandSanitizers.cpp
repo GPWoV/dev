@@ -5,7 +5,7 @@ HandSanitizers::HandSanitizers(int x, int y) : gold(500), w(100), h(100), delay(
 	hand_sanit_texture = SDL_CreateTextureFromSurface(g_renderer, hand_sanit_surface);
 	SDL_FreeSurface(hand_sanit_surface);
 	hand_sanit_source = { 0,0,100,100 };
-	hand_sanit_destination = { x, y, hand_sanit_source.w, hand_sanit_source.h };
+	hand_sanit_destination = { x-50, y-50, hand_sanit_source.w, hand_sanit_source.h };
 
 	SDL_Surface* missile_surface = IMG_Load("../../Resources/HandSanitMissile.png");
 	missile_texture = SDL_CreateTextureFromSurface(g_renderer, missile_surface);
@@ -32,7 +32,7 @@ void HandSanitizers::show() {
 }
 
 void HandSanitizers::shooting() {
-	HandSanitMissile m(this->hand_sanit_destination.x, this->hand_sanit_destination.y);
+	HandSanitMissile m(this->hand_sanit_destination.x+75, this->hand_sanit_destination.y+35);
 	missile.push_back(m);
 }
 
