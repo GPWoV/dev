@@ -65,8 +65,12 @@ Stage::Stage()
 	turret_kind = NONE; //터렛 종류
 	btn_down = false;
 	btn_up = false;
-	tp = new TylenolPreview(0, 0); //클릭시 보여질 투명한 타이레놀
-	hsp = new HandSanitPreview(0, 0); //클릭시 보여질 투명한 손소독제
+
+	tylenol_preview = new TylenolPreview(0, 0); //Ŭ���� ������ ����� Ÿ�̷���
+	hand_sanit_preview = new HandSanitPreview(0, 0); //Ŭ���� ������ ����� �ռҵ��
+	spray_preview = new SprayPreview(0, 0);
+	vaccine_preview = new VaccinePreview(0, 0);
+	support_preview = new SupportPreview(0, 0);
 }
 
 Stage::~Stage()
@@ -74,26 +78,42 @@ Stage::~Stage()
 	SDL_DestroyTexture(texture_);
 	//SDL_DestroyTexture(start_texture_);
 
-	for (auto iter = tt.begin(); iter != tt.end(); iter++) { //생성한 터렛들을 지워줌
+	for (auto iter = tylenol_turret.begin(); iter != tylenol_turret.end(); iter++) { //���� �ͷ���� �����
 		delete (*iter);
 	}
-	tt.clear();
+	tylenol_turret.clear();
 
-	for (auto iter = hs.begin(); iter != hs.end(); iter++) { //생성한 터렛들을 지워줌
+	for (auto iter = hand_sanit_turret.begin(); iter != hand_sanit_turret.end(); iter++) { //���� �ͷ���� �����
 		delete (*iter);
 	}
-	hs.clear();
+	hand_sanit_turret.clear();
+
+	for (auto iter = spray_turret.begin(); iter != spray_turret.end(); iter++) { //���� �ͷ���� �����
+		delete (*iter);
+	}
+	spray_turret.clear();
+
+	for (auto iter = vaccine_turret.begin(); iter != vaccine_turret.end(); iter++) { //���� �ͷ���� �����
+		delete (*iter);
+	}
+	vaccine_turret.clear();
+
+	for (auto iter = support_turret.begin(); iter != support_turret.end(); iter++) { //���� �ͷ���� �����
+		delete (*iter);
+	}
+	support_turret.clear();
 }
 
 void Stage::Update()
 {
+
 	for (auto iter = flu_list.begin(); iter != flu_list.end(); iter++) {
 		(*iter)->move();
 	}
-
-	for (int i = 0; i < tylenol_delay.size(); i++) { //타이레놀 딜레이 걸어서 슈팅
-		if (tylenol_delay[i] > tt[i]->delay) {
-			tt[i]->shooting();
+  
+    for (int i = 0; i < tylenol_delay.size(); i++) { //Ÿ�̷��� ���� �ɾ ����
+		if (tylenol_delay[i] > tylenol_turret[i]->delay) {
+			tylenol_turret[i]->shooting();
 			tylenol_delay[i] = 0;
 		}
 		else {
@@ -101,9 +121,9 @@ void Stage::Update()
 		}
 	}
 
-	for (int i = 0; i < hand_sanit_delay.size(); i++) { //손소독제 딜레이 걸어서 슈팅
-		if (hand_sanit_delay[i] > hs[i]->delay) {
-			hs[i]->shooting();
+	for (int i = 0; i < hand_sanit_delay.size(); i++) { //�ռҵ�� ���� �ɾ ����
+		if (hand_sanit_delay[i] > hand_sanit_turret[i]->delay) {
+			hand_sanit_turret[i]->shooting();
 			hand_sanit_delay[i] = 0;
 		}
 		else {
@@ -111,18 +131,61 @@ void Stage::Update()
 		}
 	}
 
-	for (auto iter = tt.begin(); iter != tt.end(); iter++) { //타이레놀 미사일 이동 및 삭제
+	for (int i = 0; i < spray_delay.size(); i++) { //�ռҵ�� ���� �ɾ ����
+		if (spray_delay[i] > spray_turret[i]->delay) {
+			spray_turret[i]->shooting();
+			spray_delay[i] = 0;
+		}
+		else {
+			spray_delay[i]++;
+		}
+	}
+
+	for (int i = 0; i < vaccine_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
+		if (vaccine_delay[i] > vaccine_turret[i]->delay) {
+			vaccine_turret[i]->shooting();
+			vaccine_delay[i] = 0;
+		}
+		else {
+			vaccine_delay[i]++;
+		}
+	}
+
+	for (int i = 0; i < support_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
+		if (support_delay[i] > support_turret[i]->delay) {
+			//support_turret[i]->giveMoney(); ĳ���Ϳ��� �� �־��ֱ�
+			support_delay[i] = 0;
+		}
+		else {
+			support_delay[i]++;
+		}
+	}
+
+	for (auto iter = tylenol_turret.begin(); iter != tylenol_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
 		(*iter)->missileMove();
 		(*iter)->missileCheck();
 	}
 
-	for (auto iter = hs.begin(); iter != hs.end(); iter++) { //타이레놀 미사일 이동 및 삭제
+	for (auto iter = hand_sanit_turret.begin(); iter != hand_sanit_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
 		(*iter)->missileMove();
 		(*iter)->missileCheck();
 	}
 
-	tp->setXY(move_x, move_y); //투명한 타이레놀 위치 지정
-	hsp->setXY(move_x, move_y);
+	for (auto iter = spray_turret.begin(); iter != spray_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
+		(*iter)->missileMove();
+		(*iter)->missileCheck();
+	}
+
+	for (auto iter = vaccine_turret.begin(); iter != vaccine_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
+		(*iter)->missileMove();
+		(*iter)->missileCheck();
+	}
+
+	tylenol_preview->setXY(move_x, move_y); //����� Ÿ�̷��� �ġ ���
+	hand_sanit_preview->setXY(move_x, move_y);
+	spray_preview->setXY(move_x, move_y);
+	vaccine_preview->setXY(move_x, move_y);
+	support_preview->setXY(move_x, move_y);
 }
 
 
@@ -138,24 +201,47 @@ void Stage::Render()
 		(*iter)-> show();
 	}
 	
-
-	for (auto iter = tt.begin(); iter != tt.end(); iter++) { //터렛, 미사일 띄우기
+  
+	for (auto iter = tylenol_turret.begin(); iter != tylenol_turret.end(); iter++) { //�ͷ�, �̻��� ����
 		(*iter)->show();
 		(*iter)->missileShow();
 	}
 
-	for (auto iter = hs.begin(); iter != hs.end(); iter++) { //터렛, 미사일 띄우기
+	for (auto iter = hand_sanit_turret.begin(); iter != hand_sanit_turret.end(); iter++) { //�ͷ�, �̻��� ����
 		(*iter)->show();
 		(*iter)->missileShow();
 	}
 
-	if (btn_down) {//버튼이 눌렸을 때만 투명한 타이레놀을 보여주겠다.
+	for (auto iter = spray_turret.begin(); iter != spray_turret.end(); iter++) { //�ͷ�, �̻��� ����
+		(*iter)->show();
+		(*iter)->missileShow();
+	}
+
+	for (auto iter = vaccine_turret.begin(); iter != vaccine_turret.end(); iter++) { //�ͷ�, �̻��� ����
+		(*iter)->show();
+		(*iter)->missileShow();
+	}
+
+	for (auto iter = support_turret.begin(); iter != support_turret.end(); iter++) { //�ͷ�, �̻��� ����
+		(*iter)->show();
+	}
+
+	if (btn_down) {//��ư�� ����� ���� ����� Ÿ�̷���� �����ְڴ�.
 		switch (turret_kind) {
 		case TYLENOL:
-			tp->show();
+			tylenol_preview->show();
 			break;
 		case HANDSANIT:
-			hsp->show();
+			hand_sanit_preview->show();
+			break;
+		case SPRAY:
+			spray_preview->show();
+			break;
+		case VACCINE:
+			vaccine_preview->show();
+			break;
+		case SUPPORT:
+			support_preview->show();
 			break;
 		default:
 			break;
@@ -220,6 +306,27 @@ void Stage::HandleEvents()
 					event.button.y < 695) {
 					turret_kind = HANDSANIT;
 				}
+				else if (event.button.x > 307 &&
+					event.button.x < 387 &&
+					event.button.y>595 &&
+					event.button.y < 695) {
+					turret_kind = SPRAY;
+				}
+				else if (event.button.x > 412 &&
+					event.button.x < 492 &&
+					event.button.y>595 &&
+					event.button.y < 695) {
+					turret_kind = VACCINE;
+				}
+				else if (event.button.x > 788 &&
+					event.button.x < 868 &&
+					event.button.y>595 &&
+					event.button.y < 695) {
+					turret_kind = SUPPORT;
+				}
+				else {
+					turret_kind = NONE;
+				}
 			}
 			break;
 
@@ -254,12 +361,24 @@ void Stage::HandleEvents()
 
 			switch (turret_kind) {
 			case TYLENOL:
-				tt.push_back(new Tylenol({ move_x, move_y }));
+				tylenol_turret.push_back(new Tylenol({ move_x, move_y }));
 				tylenol_delay.push_back(33);
 				break;
 			case HANDSANIT:
-				hs.push_back(new HandSanitizers({ move_x, move_y }));
+				hand_sanit_turret.push_back(new HandSanitizers({ move_x, move_y }));
 				hand_sanit_delay.push_back(99);
+				break;
+			case SPRAY:
+				spray_turret.push_back(new Spray({ move_x, move_y }));
+				spray_delay.push_back(66);
+				break;
+			case VACCINE:
+				vaccine_turret.push_back(new Vaccine({ move_x, move_y }));
+				vaccine_delay.push_back(165);
+				break;
+			case SUPPORT:
+				support_turret.push_back(new Support({ move_x, move_y }));
+				support_delay.push_back(330);
 				break;
 			default:
 				break;

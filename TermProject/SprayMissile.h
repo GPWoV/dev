@@ -13,7 +13,7 @@ public:
 	int getX();
 	int getY();
 	bool getState();
-	void move();
+	void move(int direction, int turret_x, int turret_y);
 	bool crash(int x, int y, int w, int h);
 	void checkOut();
 };

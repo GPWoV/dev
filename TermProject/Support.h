@@ -20,5 +20,6 @@ public:
 	int getX();
 	int getY();
 	void show();
+	int giveMoney();
 };
 
