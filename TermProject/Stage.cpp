@@ -24,10 +24,9 @@ Stage::Stage()
 	destination_rectangle_.y = source_rectangle_.y = 0;
 	destination_rectangle_.w = source_rectangle_.w = 1280;
 	destination_rectangle_.h = source_rectangle_.h = 720;
-
-
 	
-	
+	character = new Character();
+	character->damage_state = false;
 	
 	
 	// 시작 버튼
@@ -58,6 +57,7 @@ Stage::Stage()
 	spray_preview = new SprayPreview(0, 0);
 	vaccine_preview = new VaccinePreview(0, 0);
 	support_preview = new SupportPreview(0, 0);
+
 }
 
 Stage::~Stage()
@@ -173,6 +173,8 @@ void Stage::Update()
 	spray_preview->setXY(move_x, move_y);
 	vaccine_preview->setXY(move_x, move_y);
 	support_preview->setXY(move_x, move_y);
+
+	
 }
 
 
@@ -184,6 +186,7 @@ void Stage::Render()
 	SDL_RenderCopy(g_renderer, texture_, &source_rectangle_, &destination_rectangle_);
 	//SDL_RenderCopy(g_renderer, start_texture_, &start_source_rectangle_, &start_destination_rectangle_);
 	
+	character->show();
   for (auto iter = flu_list.begin(); iter != flu_list.end(); iter++) {
 		(*iter)-> show();
 	}
@@ -235,6 +238,7 @@ void Stage::Render()
 		}
 		
 	}
+
 
 	SDL_RenderPresent(g_renderer);
 	
