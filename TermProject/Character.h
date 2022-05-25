@@ -37,7 +37,7 @@ public:
 	int gold_int = 5000;
 	const char* gold_char;
 	char buf[10];
-	int goverment_gold = 100;
+	int goverment_gold = 1;
 
 	bool damage_state = false;
 	bool game_state = true;
@@ -48,4 +48,5 @@ public:
 	void getDamage(int missile_damage);
 	void addGold();
 	void useGold(int turret_price);
+	void wait(int sec);
 };

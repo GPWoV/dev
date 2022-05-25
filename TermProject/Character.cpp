@@ -3,7 +3,6 @@
 #include "Character.h"
 #include <atlstr.h>
 #include <string.h>
-#include <time.h>
 
 Character::Character() : character_hp(1000), w(250), h(250) {
 	//main 캐릭터
@@ -94,8 +93,6 @@ void Character::show() {
 	else {
 		damage_r = { character_destination.x, character_destination.y, damage_destination.w, damage_destination.h };
 		SDL_RenderCopy(g_renderer, damage_texture, &damage_source, &damage_destination);
-		//Sleep(ONE_SECOND);
-		//SDL_Delay(100);
 		damage_state = false;
 	}
 
@@ -113,14 +110,12 @@ void Character::getDamage(int missile_damage) {
 	}
 }
 
-//여기 고쳐야함 -> 꾸준히 얻을 수 있도록
+
 void Character::addGold() {
-	if (game_state == true) { 
-		gold_int +=100; //100골드
-		//SDL_Delay(100); //1초 간격으로 골드 획득
+	if (game_state == true) {
+		gold_int += goverment_gold; //1골드씩
 	}
 }
-
 
 void Character::useGold(int turret_price) {
 	gold_int -= turret_price;
