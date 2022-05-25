@@ -92,14 +92,14 @@ void Character::show() {
 	SDL_Rect gameover_r;
 
 	//gold ±Û¾¾
-	gold_r.x = 100;
+	gold_r.x = 910;
 	gold_r.y = 600;
 	gold_r.w = gold_destination.w;
 	gold_r.h = gold_destination.h;
 	SDL_RenderCopy(g_renderer, gold_texture, &gold_destination, &gold_r);
 
 	//gold_num
-	gold_num_r.x = 200;
+	gold_num_r.x = 1010;
 	gold_num_r.y = 600;
 	gold_num_r.w = gold_num_destination.w;
 	gold_num_r.h = gold_num_destination.h;
@@ -111,15 +111,15 @@ void Character::show() {
 
 
 	if (damage_state == false) {
-		character_r.x = 0;
-		character_r.y = 0;
+		character_r.x = 40;
+		character_r.y = 220;
 		character_r.w = character_destination.w;
 		character_r.h = character_destination.h;
 		SDL_RenderCopy(g_renderer, character_texture, &character_source, &character_destination);
 	}
 	else {
-		damage_r.x = 0;
-		damage_r.y = 0;
+		damage_r.x = 40;
+		damage_r.y = 220;
 		damage_r.w = damage_destination.w;
 		damage_r.h = damage_destination.h;
 		SDL_RenderCopy(g_renderer, damage_texture, &damage_source, &damage_destination);
@@ -128,8 +128,8 @@ void Character::show() {
 	}
 
 	if (game_state == false) {
-		gameover_r.x = 0;
-		gameover_r.y = 0;
+		gameover_r.x = 1280 - gameover_destination.w / 2;
+		gameover_r.y = 720 - gameover_destination.h / 2;
 		gameover_r.w = gameover_destination.w;
 		gameover_r.h = gameover_destination.h;
 		SDL_RenderCopy(g_renderer, gameover_texture, &gameover_source, &gameover_destination);
