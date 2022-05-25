@@ -3,6 +3,7 @@
 #include "Character.h"
 #include <atlstr.h>
 #include <string.h>
+#include <time.h>
 
 Character::Character() : character_hp(1000), w(250), h(250) {
 	//main 캐릭터
@@ -11,10 +12,7 @@ Character::Character() : character_hp(1000), w(250), h(250) {
 	SDL_FreeSurface(character_surface);
 
 	SDL_QueryTexture(character_texture, NULL, NULL, &character_source.w, &character_source.h);
-	character_destination.x = 40;
-	character_destination.y = 220;
-	character_destination.w = character_source.w;
-	character_destination.h = character_source.h;
+	character_destination = { 40, 220, character_source.w, character_source.h };
 
 	//데미지
 	SDL_Surface* damage_surface = IMG_Load("../../Resources/character_attacked.png");
@@ -22,10 +20,7 @@ Character::Character() : character_hp(1000), w(250), h(250) {
 	SDL_FreeSurface(damage_surface);
 
 	SDL_QueryTexture(damage_texture, NULL, NULL, &damage_source.w, &damage_source.h);
-	damage_destination.x = 40;
-	damage_destination.y = 220;
-	damage_destination.w = damage_source.w;
-	damage_destination.h = damage_source.h;
+	damage_destination = { character_destination.x, character_destination.y, damage_source.w, damage_source.h };
 
 	//체력바
 	SDL_Surface* hp_surface = IMG_Load("../../Resources/virus_sprite.png");
@@ -40,10 +35,7 @@ Character::Character() : character_hp(1000), w(250), h(250) {
 	SDL_FreeSurface(gameover_surface);
 
 	SDL_QueryTexture(gameover_texture, NULL, NULL, &gameover_source.w, &gameover_source.h);
-	gameover_destination.x = (1280-gameover_source.w/2)/2;
-	gameover_destination.y = (720-gameover_source.h/2)/2;
-	gameover_destination.w = gameover_source.w/2;
-	gameover_destination.h = gameover_source.h/2;
+	gameover_destination = { (1280 - gameover_source.w / 2) / 2, (720 - gameover_source.h / 2) / 2, gameover_source.w / 2, gameover_source.h / 2 };
 
 
 	//골드
@@ -53,12 +45,7 @@ Character::Character() : character_hp(1000), w(250), h(250) {
 	sprintf_s(buf, "%d", gold_int);
 	gold_char = buf;
 	SDL_Surface* gold_num_surface = TTF_RenderText_Blended(font, gold_char, black);
-
-	gold_num_destination.x = 0;
-	gold_num_destination.y = 0;
-	gold_num_destination.w = gold_num_surface->w;
-	gold_num_destination.h = gold_num_surface->h;
-
+	gold_num_destination = { 0, 0, gold_num_surface->w, gold_num_surface->h };
 	gold_num_texture = SDL_CreateTextureFromSurface(g_renderer, gold_num_surface);
 	SDL_FreeSurface(gold_num_surface);
 
@@ -86,19 +73,12 @@ void Character::show() {
 	sprintf_s(buf, "%d", gold_int);
 	gold_char = buf;
 	SDL_Surface* gold_num_surface = TTF_RenderText_Blended(font, gold_char, black);
-
-	gold_num_destination.x = 0;
-	gold_num_destination.y = 0;
-	gold_num_destination.w = gold_num_surface->w;
-	gold_num_destination.h = gold_num_surface->h;
-
+	gold_num_destination = { 0, 0, gold_num_surface->w, gold_num_surface->h };
 	gold_num_texture = SDL_CreateTextureFromSurface(g_renderer, gold_num_surface);
 	SDL_FreeSurface(gold_num_surface);
 
-	gold_num_r.x = 950;
-	gold_num_r.y = 600;
-	gold_num_r.w = gold_num_destination.w;
-	gold_num_r.h = gold_num_destination.h;
+
+	gold_num_r = { 950, 600, gold_num_destination.w, gold_num_destination.h };
 	SDL_RenderCopy(g_renderer, gold_num_texture, &gold_num_destination, &gold_num_r);
 
 
@@ -108,17 +88,11 @@ void Character::show() {
 
 	//캐릭터, 데미지
 	if (damage_state == false) {
-		character_r.x = 40;
-		character_r.y = 220;
-		character_r.w = character_destination.w;
-		character_r.h = character_destination.h;
+		character_r = { character_destination.x, character_destination.y, character_destination.w, character_destination.h };
 		SDL_RenderCopy(g_renderer, character_texture, &character_source, &character_destination);
 	}
 	else {
-		damage_r.x = 40;
-		damage_r.y = 220;
-		damage_r.w = damage_destination.w;
-		damage_r.h = damage_destination.h;
+		damage_r = { character_destination.x, character_destination.y, damage_destination.w, damage_destination.h };
 		SDL_RenderCopy(g_renderer, damage_texture, &damage_source, &damage_destination);
 		//Sleep(ONE_SECOND);
 		//SDL_Delay(100);
@@ -126,10 +100,7 @@ void Character::show() {
 	}
 
 	if (game_state == false) {
-		gameover_r.x = (1280 - gameover_destination.w/2) / 2;
-		gameover_r.y = (720 - gameover_destination.h/2) / 2;
-		gameover_r.w = gameover_destination.w;
-		gameover_r.h = gameover_destination.h;
+		gameover_r = { (1280 - gameover_destination.w / 2) / 2, (720 - gameover_destination.h / 2) / 2, gameover_destination.w / 2, gameover_destination.h / 2 };
 		SDL_RenderCopy(g_renderer, gameover_texture, &gameover_source, &gameover_destination);
 	}
 }
