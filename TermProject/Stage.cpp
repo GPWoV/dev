@@ -26,10 +26,9 @@ Stage::Stage()
 	destination_rectangle_.h = source_rectangle_.h = 720;
 
 
-	//level에 따라 (감기)list 출현하게끔 구현 해볼생각
-	//x,y,speed,gold,hp,level,attack
-	flu_list.push_back(new Virus({ 1200,300,10,100,100,3,10 }));
-	flu_list.push_back(new Virus({ 1200,200,20,100,100,2,10 }));
+	
+	
+	
 	
 	// 시작 버튼
 	/*

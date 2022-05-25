@@ -6,6 +6,10 @@
 #include "HandSanitizers.h"
 #include "HandSanitPreivew.h"
 
+#include<cstdlib>
+#include<ctime>
+using namespace std;
+
 class Stage
 {
 public:
@@ -26,6 +30,7 @@ private:
 	vector<Virus> sars_list;
 	vector<Virus> mers_list;
 	vector<Virus> corona_list;
+	int round;
 	
 	//about turret
 	int turret_kind;
