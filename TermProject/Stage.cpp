@@ -25,6 +25,10 @@ Stage::Stage()
 	destination_rectangle_.w = source_rectangle_.w = 1280;
 	destination_rectangle_.h = source_rectangle_.h = 720;
 
+
+	character = new Character();
+	character->damage_state = false;
+
 	srand((unsigned int)time(NULL));
 	round = 1;
 	for (int virus_cnt = 0; virus_cnt < 5; virus_cnt++)
@@ -197,6 +201,7 @@ void Stage::Render()
 	//SDL_RenderCopy(g_renderer, start_texture_, &start_source_rectangle_, &start_destination_rectangle_);
 	
 	character->show();
+
   for (auto iter = flu_list.begin(); iter != flu_list.end(); iter++) {
 		(*iter)-> show();
 	}
