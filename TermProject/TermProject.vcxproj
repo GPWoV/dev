@@ -138,7 +138,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>../lib/SDL2_image.lib;../lib/SDL2.lib;../lib/SDL2main.lib;../Lib/SDL2_mixer.lib;../Lib/SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>../lib/SDL2_image.lib;../lib/SDL2.lib;../lib/SDL2main.lib;../lib/SDL2_mixer.lib;../lib/SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

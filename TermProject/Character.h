@@ -11,12 +11,26 @@ private:
 	SDL_Rect character_source;
 	SDL_Rect character_destination;
 
+	SDL_Texture* damage_texture;
+	SDL_Rect damage_source;
+	SDL_Rect damage_destination;
+
+	SDL_Texture* gameover_texture;
+	SDL_Rect gameover_source;
+	SDL_Rect gameover_destination;
+
 public:
-	const int hp;
+	int hp;
 	const int w;
 	const int h;
+
+	bool damage_state = false;
+	bool game_state = true;
 
 	Character();
 	~Character();
 	void show();
+	void getDamage(int missile_damage);
+	void addGold();
+	void useGold();
 };
