@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\turret">
+      <UniqueIdentifier>{2ec6c135-e6ca-40f7-a2cc-b76514630197}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\character">
+      <UniqueIdentifier>{d47590f3-23c8-492c-80ea-d2b8c08ba8a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\virus">
+      <UniqueIdentifier>{6b65c301-3c7a-483b-bcbe-02f035b14166}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\phase">
+      <UniqueIdentifier>{be6febc5-de99-4c52-89ac-38a49263d962}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Tylenol.h">
+      <Filter>소스 파일\turret</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>소스 파일\character</Filter>
+    </ClInclude>
+    <ClInclude Include="virus.h">
+      <Filter>소스 파일\virus</Filter>
+    </ClInclude>
+    <ClInclude Include="Phase.h">
+      <Filter>소스 파일\phase</Filter>
+    </ClInclude>
+    <ClInclude Include="Intro.h">
+      <Filter>소스 파일\phase</Filter>
+    </ClInclude>
+    <ClInclude Include="Ending.h">
+      <Filter>소스 파일\phase</Filter>
+    </ClInclude>
+    <ClInclude Include="How.h">
+      <Filter>소스 파일\phase</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>소스 파일\phase</Filter>
+    </ClInclude>
+    <ClInclude Include="Missile.h">
+      <Filter>소스 파일\turret</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Tylenol.cpp">
+      <Filter>소스 파일\turret</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>소스 파일\character</Filter>
+    </ClCompile>
+    <ClCompile Include="virus.cpp">
+      <Filter>소스 파일\virus</Filter>
+    </ClCompile>
+    <ClCompile Include="Intro.cpp">
+      <Filter>소스 파일\phase</Filter>
+    </ClCompile>
+    <ClCompile Include="Ending.cpp">
+      <Filter>소스 파일\phase</Filter>
+    </ClCompile>
+    <ClCompile Include="How.cpp">
+      <Filter>소스 파일\phase</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>소스 파일\phase</Filter>
+    </ClCompile>
+    <ClCompile Include="Missile.cpp">
+      <Filter>소스 파일\turret</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
