@@ -1,7 +1,7 @@
 #include "Support.h"
 
 Support::Support(int x, int y) : gold(300), w(100), h(100), delay(330) {
-	SDL_Surface* support_surface = IMG_Load("../../Resources/turret_05_ support.png");
+	SDL_Surface* support_surface = IMG_Load("../../Resources/turret_05_support.png");
 	support_texture = SDL_CreateTextureFromSurface(g_renderer, support_surface);
 	SDL_FreeSurface(support_surface);
 	support_source = { 0,0,100,100 };
