@@ -1,8 +1,8 @@
 #include "Virus.h"
 
 
-Virus::Virus(int x, int y, int virus_speed, int virus_gold, int virus_hp, int level, int virus_attack) {
-	SDL_Surface* Virus_surface = IMG_Load("../../Resources/virus_spritesheet.png");
+Virus::Virus(int x, int y, int virus_speed, int virus_gold, int virus_hp, int level, int virus_attack, bool virus_state) {
+	SDL_Surface* Virus_surface = IMG_Load("../../Resources/virus_sprite.png");
 	//기타옵션
 	this->x = x;
 	this->y = y;
@@ -10,6 +10,7 @@ Virus::Virus(int x, int y, int virus_speed, int virus_gold, int virus_hp, int le
 	this->virus_gold = virus_gold;
 	this->virus_hp = virus_hp;
 	this->virus_attack = virus_attack;
+	this->virus_state= virus_state;
 
 	//바이러스
 	this->virus_texture = SDL_CreateTextureFromSurface(g_renderer, Virus_surface);
@@ -41,8 +42,8 @@ int Virus::getY() {
 
 //미사일을 맞았을때
 void Virus::takeDamage(int missile_damage) {
-	this->virus_hp -= missile_damage;
-	if (virus_hp <= 0) {
+	this->virus_hp_destination.w -= missile_damage;
+	if (this->virus_hp <= 0) {
 		//게임 골드지급 구현
 		this->die();
 	}
@@ -51,12 +52,12 @@ void Virus::takeDamage(int missile_damage) {
 //주인공이랑 부딪힐때
 int Virus::hitDamage() {
 	this->die();
-	return virus_attack;
+	return this->virus_attack;
 }
 
 //주인공이랑 부딪히거나 체력0
 void Virus::die() {
-	//벡터로 해제 해주는 작업필요
+	this->virus_state = false;
 }
 
 
@@ -66,6 +67,7 @@ void Virus::move(){
 	this->virus_hp_destination.w -= 2;
 	if (this->virus_destination.x <= 227) {
 		this->hitDamage();
+		this->die();
 	}
 }
 

@@ -28,7 +28,8 @@ public:
 	int virus_gold;
 	int virus_hp;
 	int level;
-	Virus(int x, int y, int virus_speed, int virus_gold, int virus_hp, int level, int virus_attack);
+	bool virus_state;
+	Virus(int x, int y, int virus_speed, int virus_gold, int virus_hp, int level, int virus_attack, bool virus_state);
 	~Virus();
 	int getX();
 	int getY();
