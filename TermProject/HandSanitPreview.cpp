@@ -1,7 +1,7 @@
 #include "HandSanitPreivew.h"
 
 HandSanitPreview::HandSanitPreview(int x, int y) {
-	SDL_Surface* hand_sanit_surface = IMG_Load("../../Resources/handSanitMove.png");
+	SDL_Surface* hand_sanit_surface = IMG_Load("../../Resources/turret_02_sanitizer_move.png");
 	hand_sanit_texture = SDL_CreateTextureFromSurface(g_renderer, hand_sanit_surface);
 	SDL_FreeSurface(hand_sanit_surface);
 	hand_sanit_source = { 0,0,100,100 };

@@ -1,7 +1,7 @@
 #include "Vaccine.h"
 
 Vaccine::Vaccine(int x, int y) : gold(300), w(100), h(100), delay(165) {
-	SDL_Surface* vaccine_surface = IMG_Load("../../Resources/turret_04_ vaccine.png");
+	SDL_Surface* vaccine_surface = IMG_Load("../../Resources/turret_04_vaccine.png");
 	vaccine_texture = SDL_CreateTextureFromSurface(g_renderer, vaccine_surface);
 	SDL_FreeSurface(vaccine_surface);
 	vaccine_source = { 0,0,100,100 };

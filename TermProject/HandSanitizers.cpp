@@ -1,17 +1,17 @@
 #include "HandSanitizers.h"
 
 HandSanitizers::HandSanitizers(int x, int y) : gold(500), w(100), h(100), delay(99) {
-	SDL_Surface* hand_sanit_surface = IMG_Load("../../Resources/handSanitTurret.png");
+	SDL_Surface* hand_sanit_surface = IMG_Load("../../Resources/turret_02_sanitizer.png");
 	hand_sanit_texture = SDL_CreateTextureFromSurface(g_renderer, hand_sanit_surface);
 	SDL_FreeSurface(hand_sanit_surface);
 	hand_sanit_source = { 0,0,100,100 };
 	hand_sanit_destination = { x-50, y-50, hand_sanit_source.w, hand_sanit_source.h };
 
-	SDL_Surface* missile_surface = IMG_Load("../../Resources/HandSanitMissile.png");
+	SDL_Surface* missile_surface = IMG_Load("../../Resources/turret_02_skill.png");
 	missile_texture = SDL_CreateTextureFromSurface(g_renderer, missile_surface);
 	SDL_FreeSurface(missile_surface);
-	missile_source = { 0,0,25,25 };
-	missile_destination = { 0,0,25,25 };
+	missile_source = { 0,0,110,60 };
+	missile_destination = { 0,0,110,60 };
 }
 
 HandSanitizers::~HandSanitizers() {
@@ -32,7 +32,7 @@ void HandSanitizers::show() {
 }
 
 void HandSanitizers::shooting() {
-	HandSanitMissile m(this->hand_sanit_destination.x+75, this->hand_sanit_destination.y+35);
+	HandSanitMissile m(this->hand_sanit_destination.x+50, this->hand_sanit_destination.y-30);
 	missile.push_back(m);
 }
 
@@ -48,7 +48,7 @@ void HandSanitizers::missileShow() {
 		int y = (*iter).getY();
 		bool state = (*iter).getState();
 		if (state) {
-			missile_destination = { x,y,25,25 };
+			missile_destination = { x,y,110,60 };
 			SDL_RenderCopy(g_renderer, missile_texture, &missile_source, &missile_destination);
 		}
 	}
