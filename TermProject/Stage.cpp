@@ -11,6 +11,8 @@ extern bool g_flag_running;
 extern int g_current_game_phase;
 extern int renewal;
 
+extern Mix_Music* stage_music_;
+
 Stage::Stage()
 {
 	// 인트로 이미지
@@ -48,6 +50,16 @@ Stage::Stage()
 	start_destination_rectangle_.h = start_source_rectangle_.h = 57;
 	*/
 
+	// 인트로 BGM
+	Mix_VolumeMusic(120);
+
+	stage_music_ = Mix_LoadMUS("../../Resources/stage.mp3");
+	if (!stage_music_)
+	{
+		printf("Couldn't load the Intro music  %s\n", Mix_GetError());
+	}
+
+	Mix_FadeInMusic(stage_music_, -1, 2000);
 
 	//about turret
 	turret_kind = NONE; //터렛 종류
@@ -172,6 +184,7 @@ void Stage::HandleEvents()
 		case SDL_KEYDOWN:
 
 			if (event.key.keysym.sym == SDLK_SPACE) {
+				Mix_HaltMusic();
 				g_current_game_phase = PHASE_ENDING;
 			}
 

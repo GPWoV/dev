@@ -1,6 +1,8 @@
 #pragma once
 #include "SDL.h"
 
+extern Mix_Music* ending_music_;
+
 class Ending
 {
 public:

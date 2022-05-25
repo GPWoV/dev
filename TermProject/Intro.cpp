@@ -54,6 +54,17 @@ Intro::Intro()
 	tutorial_source_rectangle_.y = 0;
 	tutorial_destination_rectangle_.w = tutorial_source_rectangle_.w = 380;
 	tutorial_destination_rectangle_.h = tutorial_source_rectangle_.h = 128;
+
+	// ¿Œ∆Æ∑Œ BGM
+	Mix_VolumeMusic(120);
+
+	intro_music_ = Mix_LoadMUS("../../Resources/Intro.mp3");
+	if (!intro_music_)
+	{
+		printf("Couldn't load the Intro music  %s\n", Mix_GetError());
+	}
+
+	Mix_FadeInMusic(intro_music_, -1, 2000);
 }
 
 Intro::~Intro()
@@ -105,7 +116,10 @@ void Intro::HandleEvents()
 					mouse_x < start_destination_rectangle_.x + start_destination_rectangle_.w &&
 					mouse_y < start_destination_rectangle_.y + start_destination_rectangle_.h
 					) {
+					Mix_HaltMusic();
+
 					g_current_game_phase = PHASE_STAGE;
+					
 				}
 
 				if (mouse_x > tutorial_destination_rectangle_.x &&
