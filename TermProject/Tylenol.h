@@ -1,6 +1,6 @@
 #pragma once
 #include "common.h"
-#include "Missile.h"
+#include "TylenolMissile.h"
 #include <list>
 
 extern SDL_Renderer* g_renderer;
@@ -12,11 +12,18 @@ private:
 	SDL_Texture* tylenol_texture;
 	SDL_Rect tylenol_source;
 	SDL_Rect tylenol_destination;
+
 	list<TylenolMissile> missile;
+
+	SDL_Texture* missile_texture;
+	SDL_Rect missile_source;
+	SDL_Rect missile_destination;
+
 public:
 	const int gold;
 	const int w;
 	const int h;
+	const int delay;
 
 	Tylenol(int x, int y);
 	~Tylenol();
@@ -26,4 +33,6 @@ public:
 	void shooting();
 	void missileMove();
 	void missileShow();
+	void missileCheck();
 };
+
