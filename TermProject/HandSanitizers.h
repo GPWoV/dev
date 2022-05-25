@@ -1,19 +1,17 @@
 #pragma once
 #include "common.h"
-#include "TylenolMissile.h"
+#include "HandSanitMissile.h"
 #include <list>
 
 extern SDL_Renderer* g_renderer;
-extern bool g_flag_running;
-extern phase game_phase;
 
-class Tylenol {
+class HandSanitizers {
 private:
-	SDL_Texture* tylenol_texture;
-	SDL_Rect tylenol_source;
-	SDL_Rect tylenol_destination;
+	SDL_Texture* hand_sanit_texture;
+	SDL_Rect hand_sanit_source;
+	SDL_Rect hand_sanit_destination;
 
-	list<TylenolMissile> missile;
+	list<HandSanitMissile> missile;
 
 	SDL_Texture* missile_texture;
 	SDL_Rect missile_source;
@@ -25,8 +23,8 @@ public:
 	const int h;
 	const int delay;
 
-	Tylenol(int x, int y);
-	~Tylenol();
+	HandSanitizers(int x, int y);
+	~HandSanitizers();
 	int getX();
 	int getY();
 	void show();
@@ -35,4 +33,3 @@ public:
 	void missileShow();
 	void missileCheck();
 };
-

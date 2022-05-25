@@ -140,30 +140,38 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>../lib/SDL2_image.lib;../lib/SDL2.lib;../lib/SDL2main.lib;../Lib/SDL2_mixer.lib;../Lib/SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>../lib/SDL2_image.lib;../lib/SDL2.lib;../lib/SDL2main.lib;../lib/SDL2_mixer.lib;../lib/SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="Ending.h" />
+    <ClInclude Include="HandSanitizers.h" />
+    <ClInclude Include="HandSanitMissile.h" />
+    <ClInclude Include="HandSanitPreivew.h" />
     <ClInclude Include="How.h" />
     <ClInclude Include="Intro.h" />
-    <ClInclude Include="Missile.h" />
+    <ClInclude Include="TylenolMissile.h" />
     <ClInclude Include="Phase.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="Tylenol.h" />
+    <ClInclude Include="TylenolPreview.h" />
     <ClInclude Include="virus.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Ending.cpp" />
+    <ClCompile Include="HandSanitizers.cpp" />
+    <ClCompile Include="HandSanitMissile.cpp" />
+    <ClCompile Include="HandSanitPreview.cpp" />
     <ClCompile Include="How.cpp" />
     <ClCompile Include="Intro.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Missile.cpp" />
+    <ClCompile Include="TylenolMissile.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Tylenol.cpp" />
+    <ClCompile Include="TylenolPreview.cpp" />
     <ClCompile Include="virus.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

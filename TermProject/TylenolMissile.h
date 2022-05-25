@@ -2,14 +2,10 @@
 #include "common.h"
 
 extern SDL_Renderer* g_renderer;
-extern bool g_flag_running;
-extern phase game_phase;
 
 class TylenolMissile {
 private:
-	SDL_Texture* missile_texture;
-	SDL_Rect missile_source;
-	SDL_Rect missile_destination;
+	int x, y;
 	bool state;
 public:
 	const int speed;
@@ -18,8 +14,8 @@ public:
 	~TylenolMissile();
 	int getX();
 	int getY();
-	void show();
+	bool getState();
 	void move();
 	bool crash(int x, int y, int w, int h);
-	bool checkOut(int x);
+	void checkOut();
 };
