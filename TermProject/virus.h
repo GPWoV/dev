@@ -1,12 +1,11 @@
 #pragma once
 #include "common.h"
+#include <list>
 
 extern SDL_Renderer* g_renderer;
 extern bool g_flag_running;
 extern phase game_phase;
 
-
-SDL_Rect virus_img_sources[5] = { {0,0,80,80},{0,0,100,80},{0,0,100,100},{0,0,150,150},{0,0,230,230}};
 
 
 //바이라스
@@ -16,14 +15,19 @@ private:
 	SDL_Rect virus_source;
 	SDL_Rect virus_destination;
 
+	SDL_Texture* virus_hp_texture;
+	SDL_Rect virus_hp_source;
+	SDL_Rect virus_hp_destination;
+
 public:
+	
+	SDL_Rect virus_img_sources[5] = { {0,0,80,80},{80,0,80,100},{160,0,100,100},{260,0,150,150},{410,0,230,230} };
+	int x,y;
 	int virus_attack;
 	int virus_speed;
 	int virus_gold;
 	int virus_hp;
 	int level;
-	const int w;
-	const int h;
 	Virus(int x, int y, int virus_speed, int virus_gold, int virus_hp, int level, int virus_attack);
 	~Virus();
 	int getX();

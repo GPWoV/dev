@@ -13,7 +13,7 @@ extern int renewal;
 
 Stage::Stage()
 {
-	// ÀÎÆ®·Î ÀÌ¹ÌÁö
+	// ì¸íŠ¸ë¡œ ì´ë¯¸ì§€
 	SDL_Surface* temp_surface = IMG_Load("../../Resources/background_stage_01.png");
 	texture_ = SDL_CreateTextureFromSurface(g_renderer, temp_surface);
 	SDL_FreeSurface(temp_surface);
@@ -25,7 +25,13 @@ Stage::Stage()
 	destination_rectangle_.w = source_rectangle_.w = 1280;
 	destination_rectangle_.h = source_rectangle_.h = 720;
 
-	// ½ÃÀÛ ¹öÆ°
+
+	//levelì— ë”°ë¼ (ê°ê¸°)list ì¶œí˜„í•˜ê²Œë” êµ¬í˜„ í•´ë³¼ìƒê°
+	//x,y,speed,gold,hp,level,attack
+	flu_list.push_back(new Virus({ 1200,300,10,100,100,3,10 }));
+	flu_list.push_back(new Virus({ 1200,200,20,100,100,2,10 }));
+	
+	// ì‹œì‘ ë²„íŠ¼
 	/*
 		SDL_Surface* start_surface = IMG_Load("../../Resources/start.png");
 	start_texture_ = SDL_CreateTextureFromSurface(g_renderer, start_surface);
@@ -44,11 +50,11 @@ Stage::Stage()
 
 
 	//about turret
-	turret_kind = NONE; //ÅÍ·¿ Á¾·ù
+	turret_kind = NONE; //í„°ë › ì¢…ë¥˜
 	btn_down = false;
 	btn_up = false;
-	tp = new TylenolPreview(0, 0); //Å¬¸¯½Ã º¸¿©Áú Åõ¸íÇÑ Å¸ÀÌ·¹³î
-	hsp = new HandSanitPreview(0, 0); //Å¬¸¯½Ã º¸¿©Áú Åõ¸íÇÑ ¼Õ¼Òµ¶Á¦
+	tp = new TylenolPreview(0, 0); //í´ë¦­ì‹œ ë³´ì—¬ì§ˆ íˆ¬ëª…í•œ íƒ€ì´ë ˆë†€
+	hsp = new HandSanitPreview(0, 0); //í´ë¦­ì‹œ ë³´ì—¬ì§ˆ íˆ¬ëª…í•œ ì†ì†Œë…ì œ
 }
 
 Stage::~Stage()
@@ -56,12 +62,12 @@ Stage::~Stage()
 	SDL_DestroyTexture(texture_);
 	//SDL_DestroyTexture(start_texture_);
 
-	for (auto iter = tt.begin(); iter != tt.end(); iter++) { //»ı¼ºÇÑ ÅÍ·¿µéÀ» Áö¿öÁÜ
+	for (auto iter = tt.begin(); iter != tt.end(); iter++) { //ìƒì„±í•œ í„°ë ›ë“¤ì„ ì§€ì›Œì¤Œ
 		delete (*iter);
 	}
 	tt.clear();
 
-	for (auto iter = hs.begin(); iter != hs.end(); iter++) { //»ı¼ºÇÑ ÅÍ·¿µéÀ» Áö¿öÁÜ
+	for (auto iter = hs.begin(); iter != hs.end(); iter++) { //ìƒì„±í•œ í„°ë ›ë“¤ì„ ì§€ì›Œì¤Œ
 		delete (*iter);
 	}
 	hs.clear();
@@ -69,7 +75,11 @@ Stage::~Stage()
 
 void Stage::Update()
 {
-	for (int i = 0; i < tylenol_delay.size(); i++) { //Å¸ÀÌ·¹³î µô·¹ÀÌ °É¾î¼­ ½´ÆÃ
+	for (auto iter = flu_list.begin(); iter != flu_list.end(); iter++) {
+		(*iter)->move();
+	}
+
+	for (int i = 0; i < tylenol_delay.size(); i++) { //íƒ€ì´ë ˆë†€ ë”œë ˆì´ ê±¸ì–´ì„œ ìŠˆíŒ…
 		if (tylenol_delay[i] > tt[i]->delay) {
 			tt[i]->shooting();
 			tylenol_delay[i] = 0;
@@ -79,7 +89,7 @@ void Stage::Update()
 		}
 	}
 
-	for (int i = 0; i < hand_sanit_delay.size(); i++) { //¼Õ¼Òµ¶Á¦ µô·¹ÀÌ °É¾î¼­ ½´ÆÃ
+	for (int i = 0; i < hand_sanit_delay.size(); i++) { //ì†ì†Œë…ì œ ë”œë ˆì´ ê±¸ì–´ì„œ ìŠˆíŒ…
 		if (hand_sanit_delay[i] > hs[i]->delay) {
 			hs[i]->shooting();
 			hand_sanit_delay[i] = 0;
@@ -89,17 +99,17 @@ void Stage::Update()
 		}
 	}
 
-	for (auto iter = tt.begin(); iter != tt.end(); iter++) { //Å¸ÀÌ·¹³î ¹Ì»çÀÏ ÀÌµ¿ ¹× »èÁ¦
+	for (auto iter = tt.begin(); iter != tt.end(); iter++) { //íƒ€ì´ë ˆë†€ ë¯¸ì‚¬ì¼ ì´ë™ ë° ì‚­ì œ
 		(*iter)->missileMove();
 		(*iter)->missileCheck();
 	}
 
-	for (auto iter = hs.begin(); iter != hs.end(); iter++) { //Å¸ÀÌ·¹³î ¹Ì»çÀÏ ÀÌµ¿ ¹× »èÁ¦
+	for (auto iter = hs.begin(); iter != hs.end(); iter++) { //íƒ€ì´ë ˆë†€ ë¯¸ì‚¬ì¼ ì´ë™ ë° ì‚­ì œ
 		(*iter)->missileMove();
 		(*iter)->missileCheck();
 	}
 
-	tp->setXY(move_x, move_y); //Åõ¸íÇÑ Å¸ÀÌ·¹³î À§Ä¡ ÁöÁ¤
+	tp->setXY(move_x, move_y); //íˆ¬ëª…í•œ íƒ€ì´ë ˆë†€ ìœ„ì¹˜ ì§€ì •
 	hsp->setXY(move_x, move_y);
 }
 
@@ -108,21 +118,26 @@ void Stage::Render()
 {
 	SDL_SetRenderDrawColor(g_renderer, 255, 255, 255, 255);
 	SDL_RenderClear(g_renderer);
-
+	
 	SDL_RenderCopy(g_renderer, texture_, &source_rectangle_, &destination_rectangle_);
 	//SDL_RenderCopy(g_renderer, start_texture_, &start_source_rectangle_, &start_destination_rectangle_);
+	
+  for (auto iter = flu_list.begin(); iter != flu_list.end(); iter++) {
+		(*iter)-> show();
+	}
+	
 
-	for (auto iter = tt.begin(); iter != tt.end(); iter++) { //ÅÍ·¿, ¹Ì»çÀÏ ¶ç¿ì±â
+	for (auto iter = tt.begin(); iter != tt.end(); iter++) { //í„°ë ›, ë¯¸ì‚¬ì¼ ë„ìš°ê¸°
 		(*iter)->show();
 		(*iter)->missileShow();
 	}
 
-	for (auto iter = hs.begin(); iter != hs.end(); iter++) { //ÅÍ·¿, ¹Ì»çÀÏ ¶ç¿ì±â
+	for (auto iter = hs.begin(); iter != hs.end(); iter++) { //í„°ë ›, ë¯¸ì‚¬ì¼ ë„ìš°ê¸°
 		(*iter)->show();
 		(*iter)->missileShow();
 	}
 
-	if (btn_down) {//¹öÆ°ÀÌ ´­·ÈÀ» ¶§¸¸ Åõ¸íÇÑ Å¸ÀÌ·¹³îÀ» º¸¿©ÁÖ°Ú´Ù.
+	if (btn_down) {//ë²„íŠ¼ì´ ëˆŒë ¸ì„ ë•Œë§Œ íˆ¬ëª…í•œ íƒ€ì´ë ˆë†€ì„ ë³´ì—¬ì£¼ê² ë‹¤.
 		switch (turret_kind) {
 		case TYLENOL:
 			tp->show();
@@ -137,12 +152,14 @@ void Stage::Render()
 	}
 
 	SDL_RenderPresent(g_renderer);
+	
 }
 
 
 
 void Stage::HandleEvents()
 {
+	
 	SDL_Event event;
 	if (SDL_PollEvent(&event))
 	{
@@ -160,7 +177,7 @@ void Stage::HandleEvents()
 
 		case SDL_MOUSEBUTTONDOWN:
 
-			// ¿ìÅ¬¸¯ ½Ã ÆäÀÌÁî ÀüÈ¯ ( ½ºÅ×ÀÌÁö È­¸éÀ¸·Î )
+			// ìš°í´ë¦­ ì‹œ í˜ì´ì¦ˆ ì „í™˜ ( ìŠ¤í…Œì´ì§€ í™”ë©´ìœ¼ë¡œ )
 			if (event.button.button == SDL_BUTTON_LEFT)
 			{
 				/*
