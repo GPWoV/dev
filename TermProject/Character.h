@@ -24,10 +24,17 @@ private:
 	SDL_Texture* gold_texture;
 	SDL_Rect gold_destination;
 
+	SDL_Texture* gold_num_texture;
+	SDL_Rect gold_num_destination;
+
 public:
-	int hp;
+	int character_hp;
 	const int w;
 	const int h;
+
+	int gold_int;
+	const char* gold_char;
+	char buf[10];
 
 	bool damage_state = false;
 	bool game_state = true;
@@ -37,5 +44,5 @@ public:
 	void show();
 	void getDamage(int missile_damage);
 	void addGold();
-	void useGold();
+	void useGold(int turret_price);
 };

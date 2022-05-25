@@ -1,6 +1,9 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "Character.h"
+#include <atlstr.h>
+#include <string.h>
 
-Character::Character():hp(1000), w(250), h(250) {
+Character::Character(): w(250), h(250) {
 	//main Ä³¸¯ÅÍ
 	SDL_Surface* character_surface = IMG_Load("../../Resources/Ä³¸¯ÅÍ");
 	character_texture = SDL_CreateTextureFromSurface(g_renderer, character_surface);
@@ -39,7 +42,7 @@ Character::Character():hp(1000), w(250), h(250) {
 	//°ñµå
 	font = TTF_OpenFont("../../Resources/°ñµå.ttf", 70);
 	SDL_Color black = { 0, 0, 0, 0 };
-	SDL_Surface* gold_surface = TTF_RenderText_Blended(font, "Gold : ", black);
+	SDL_Surface* gold_surface = TTF_RenderText_Blended(font, CW2A(L"°ñµå : ", CP_UTF8), black);
 
 	gold_destination.x = 0;
 	gold_destination.y = 0;
@@ -49,6 +52,19 @@ Character::Character():hp(1000), w(250), h(250) {
 	gold_texture = SDL_CreateTextureFromSurface(g_renderer, gold_surface);
 	SDL_FreeSurface(gold_surface);
 
+	gold_char = "0";
+	sprintf(buf, "%05d", gold_int);
+	gold_char = buf;
+	SDL_Surface* gold_num_surface = TTF_RenderText_Blended(font, gold_char, black);
+
+	gold_num_destination.x = 0;
+	gold_num_destination.y = 0;
+	gold_num_destination.w = gold_num_surface->w;
+	gold_num_destination.h = gold_num_surface->h;
+
+	gold_num_texture = SDL_CreateTextureFromSurface(g_renderer, gold_num_surface);
+	SDL_FreeSurface(gold_num_surface);
+
 }
 
 Character::~Character() {
@@ -56,6 +72,22 @@ Character::~Character() {
 }
 
 void Character::show() {
+
+	SDL_Rect gold_r;
+	gold_r.x = 100;
+	gold_r.y = 600;
+	gold_r.w = gold_destination.w;
+	gold_r.h = gold_destination.h;
+	SDL_RenderCopy(g_renderer, gold_texture, &gold_destination, &gold_r);
+
+	//gold_num
+	SDL_Rect gold_num_r;
+	gold_num_r.x = 200;
+	gold_num_r.y = 600;
+	gold_num_r.w = gold_num_destination.w;
+	gold_num_r.h = gold_num_destination.h;
+	SDL_RenderCopy(g_renderer, gold_num_texture, &gold_destination, &gold_num_r);
+
 	if (damage_state == false) {
 		SDL_RenderCopy(g_renderer, character_texture, &character_source, &character_destination);
 	}
@@ -72,8 +104,8 @@ void Character::show() {
 
 void Character::getDamage(int missile_damage) {
 	damage_state = true;
-	this->hp -= missile_damage;
-	if (hp <= 0) {
+	this->character_hp -= missile_damage;
+	if (character_hp <= 0) {
 		game_state = false;
 	}
 }
@@ -83,6 +115,6 @@ void Character::addGold() {
 }
 
 
-void Character::useGold() {
+void Character::useGold(int turret_price) {
 	//º¸Á¶±Ý ttf
 }
