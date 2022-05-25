@@ -154,6 +154,9 @@
     <ClInclude Include="Intro.h" />
     <ClInclude Include="Spray.h" />
     <ClInclude Include="SprayMissile.h" />
+    <ClInclude Include="SprayPreview.h" />
+    <ClInclude Include="Support.h" />
+    <ClInclude Include="SupportPreview.h" />
     <ClInclude Include="TylenolMissile.h" />
     <ClInclude Include="Phase.h" />
     <ClInclude Include="Stage.h" />
@@ -175,6 +178,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Spray.cpp" />
     <ClCompile Include="SprayMissile.cpp" />
+    <ClCompile Include="SprayPreview.cpp" />
+    <ClCompile Include="Support.cpp" />
+    <ClCompile Include="SupportPreview.cpp" />
     <ClCompile Include="TylenolMissile.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Tylenol.cpp" />
