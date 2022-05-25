@@ -1,5 +1,7 @@
-.vs
-include
-lib
-x64
-Debug
+.vs/
+include/
+lib/
+x64/
+Debug/
+TermProject/Debug/
+TermProject/x64/
