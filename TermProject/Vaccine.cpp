@@ -37,13 +37,13 @@ void Vaccine::shooting() {
 }
 
 void Vaccine::missileMove() {
-	for (auto iter = ++missile.begin(); iter != missile.end(); iter++) {
+	for (auto iter = missile.begin(); iter != missile.end(); iter++) {
 		(*iter).move();
 	}
 }
 
 void Vaccine::missileShow() {
-	for (auto iter = ++missile.begin(); iter != missile.end(); iter++) {
+	for (auto iter = missile.begin(); iter != missile.end(); iter++) {
 		int x = (*iter).getX();
 		int y = (*iter).getY();
 		bool state = (*iter).getState();
@@ -55,7 +55,7 @@ void Vaccine::missileShow() {
 }
 
 void Vaccine::missileCheck() {
-	for (auto iter = ++missile.begin(); iter != missile.end(); iter++) {
+	for (auto iter = missile.begin(); iter != missile.end(); iter++) {
 		(*iter).checkOut();
 		if ((*iter).getState() == false) {
 			missile.erase(iter);

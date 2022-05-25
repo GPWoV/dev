@@ -1,10 +1,9 @@
 #include "Spray.h"
 
-Spray::Spray(int x, int y) : gold(300), w(100), h(100), delay(33) {
-	SDL_Surface* tylenol_surface = IMG_Load("../../Resources/turret_03_spray.png");
-	//SDL_SetColorKey(tylenol_surface, SDL_TRUE, SDL_MapRGB(tylenol_surface->format, 255, 255, 255));
-	spray_texture = SDL_CreateTextureFromSurface(g_renderer, tylenol_surface);
-	SDL_FreeSurface(tylenol_surface);
+Spray::Spray(int x, int y) : gold(300), w(100), h(100), delay(66) {
+	SDL_Surface* spray_surface = IMG_Load("../../Resources/turret_03_spray.png");
+	spray_texture = SDL_CreateTextureFromSurface(g_renderer, spray_surface);
+	SDL_FreeSurface(spray_surface);
 	spray_source = { 0,0,100,100 };
 	spray_destination = { x - 50, y - 50, spray_source.w, spray_source.h };
 
@@ -40,18 +39,18 @@ void Spray::shooting() {
 
 void Spray::missileMove() {
 	for (auto iter = missile_top.begin(); iter != missile_top.end(); iter++) {
-		(*iter)->move();
+		(*iter)->move(0, spray_destination.x, spray_destination.y);
 	}
 	for (auto iter = missile_middle.begin(); iter != missile_middle.end(); iter++) {
-		(*iter)->move();
+		(*iter)->move(1, spray_destination.x, spray_destination.y);
 	}
 	for (auto iter = missile_bottom.begin(); iter != missile_bottom.end(); iter++) {
-		(*iter)->move();
+		(*iter)->move(2, spray_destination.x, spray_destination.y);
 	}
 }
 
 void Spray::missileShow() {
-	for (auto iter = ++missile_top.begin(); iter != missile_top.end(); iter++) {
+	for (auto iter = missile_top.begin(); iter != missile_top.end(); iter++) {
 		int x = (*iter)->getX();
 		int y = (*iter)->getY();
 		bool state = (*iter)->getState();
@@ -60,7 +59,7 @@ void Spray::missileShow() {
 			SDL_RenderCopy(g_renderer, missile_texture, &missile_source, &missile_destination);
 		}
 	}
-	for (auto iter = ++missile_middle.begin(); iter != missile_middle.end(); iter++) {
+	for (auto iter = missile_middle.begin(); iter != missile_middle.end(); iter++) {
 		int x = (*iter)->getX();
 		int y = (*iter)->getY();
 		bool state = (*iter)->getState();
@@ -69,7 +68,7 @@ void Spray::missileShow() {
 			SDL_RenderCopy(g_renderer, missile_texture, &missile_source, &missile_destination);
 		}
 	}
-	for (auto iter = ++missile_bottom.begin(); iter != missile_bottom.end(); iter++) {
+	for (auto iter = missile_bottom.begin(); iter != missile_bottom.end(); iter++) {
 		int x = (*iter)->getX();
 		int y = (*iter)->getY();
 		bool state = (*iter)->getState();

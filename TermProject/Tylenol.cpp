@@ -38,13 +38,13 @@ void Tylenol::shooting() {
 }
 
 void Tylenol::missileMove() {
-	for (auto iter = ++missile.begin(); iter != missile.end(); iter++) {
+	for (auto iter = missile.begin(); iter != missile.end(); iter++) {
 		(*iter).move();
 	}
 }
 
 void Tylenol::missileShow() {
-	for (auto iter = ++missile.begin(); iter != missile.end(); iter++) {
+	for (auto iter = missile.begin(); iter != missile.end(); iter++) {
 		int x = (*iter).getX();
 		int y = (*iter).getY();
 		bool state = (*iter).getState();
@@ -56,7 +56,7 @@ void Tylenol::missileShow() {
 }
 
 void Tylenol::missileCheck() {
-	for (auto iter = ++missile.begin(); iter != missile.end(); iter++) {
+	for (auto iter = missile.begin(); iter != missile.end(); iter++) {
 		(*iter).checkOut();
 		if ((*iter).getState() == false) {
 			missile.erase(iter);
