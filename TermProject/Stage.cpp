@@ -24,9 +24,11 @@ Stage::Stage()
 	destination_rectangle_.y = source_rectangle_.y = 0;
 	destination_rectangle_.w = source_rectangle_.w = 1280;
 	destination_rectangle_.h = source_rectangle_.h = 720;
-	
-	character = new Character();
-	character->damage_state = false;
+
+	srand((unsigned int)time(NULL));
+	round = 1;
+	for (int virus_cnt = 0; virus_cnt < 5; virus_cnt++)
+		flu_list.push_back(new Virus({ 1200+rand()%10*60,rand() % 6 * 120,10,100,200,round,10,true}));
 	
 	
 	// 시작 버튼
@@ -64,6 +66,10 @@ Stage::~Stage()
 {
 	SDL_DestroyTexture(texture_);
 	//SDL_DestroyTexture(start_texture_);
+	for (auto iter = flu_list.begin(); iter != flu_list.end(); iter++) { //���� �ͷ���� �����
+		delete (*iter);
+	}
+	flu_list.clear();
 
 	for (auto iter = tylenol_turret.begin(); iter != tylenol_turret.end(); iter++) { //���� �ͷ���� �����
 		delete (*iter);
@@ -93,11 +99,15 @@ Stage::~Stage()
 
 void Stage::Update()
 {
-
+	//virus 움직임,자기소멸 구현완료.
 	for (auto iter = flu_list.begin(); iter != flu_list.end(); iter++) {
 		(*iter)->move();
+		if (!((*iter)->virus_state)) {
+			flu_list.erase(iter);
+			iter--;
+		}
 	}
-  
+
     for (int i = 0; i < tylenol_delay.size(); i++) { //Ÿ�̷��� ���� �ɾ ����
 		if (tylenol_delay[i] > tylenol_turret[i]->delay) {
 			tylenol_turret[i]->shooting();
