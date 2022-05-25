@@ -44,10 +44,11 @@ Stage::Stage()
 
 
 	//about turret
-	turret_kind = -1; //터렛 종류
+	turret_kind = NONE; //터렛 종류
 	btn_down = false;
 	btn_up = false;
 	tp = new TylenolPreview(0, 0); //클릭시 보여질 투명한 타이레놀
+	hsp = new HandSanitPreview(0, 0); //클릭시 보여질 투명한 손소독제
 }
 
 Stage::~Stage()
@@ -59,6 +60,11 @@ Stage::~Stage()
 		delete (*iter);
 	}
 	tt.clear();
+
+	for (auto iter = hs.begin(); iter != hs.end(); iter++) { //생성한 터렛들을 지워줌
+		delete (*iter);
+	}
+	hs.clear();
 }
 
 void Stage::Update()
@@ -73,12 +79,28 @@ void Stage::Update()
 		}
 	}
 
+	for (int i = 0; i < hand_sanit_delay.size(); i++) { //손소독제 딜레이 걸어서 슈팅
+		if (hand_sanit_delay[i] > hs[i]->delay) {
+			hs[i]->shooting();
+			hand_sanit_delay[i] = 0;
+		}
+		else {
+			hand_sanit_delay[i]++;
+		}
+	}
+
 	for (auto iter = tt.begin(); iter != tt.end(); iter++) { //타이레놀 미사일 이동 및 삭제
 		(*iter)->missileMove();
 		(*iter)->missileCheck();
 	}
 
+	for (auto iter = hs.begin(); iter != hs.end(); iter++) { //타이레놀 미사일 이동 및 삭제
+		(*iter)->missileMove();
+		(*iter)->missileCheck();
+	}
+
 	tp->setXY(move_x, move_y); //투명한 타이레놀 위치 지정
+	hsp->setXY(move_x, move_y);
 }
 
 
@@ -95,8 +117,24 @@ void Stage::Render()
 		(*iter)->missileShow();
 	}
 
-	if (btn_down) //버튼이 눌렸을 때만 투명한 타이레놀을 보여주겠다.
-		tp->show();
+	for (auto iter = hs.begin(); iter != hs.end(); iter++) { //터렛, 미사일 띄우기
+		(*iter)->show();
+		(*iter)->missileShow();
+	}
+
+	if (btn_down) {//버튼이 눌렸을 때만 투명한 타이레놀을 보여주겠다.
+		switch (turret_kind) {
+		case TYLENOL:
+			tp->show();
+			break;
+		case HANDSANIT:
+			hsp->show();
+			break;
+		default:
+			break;
+		}
+		
+	}
 
 	SDL_RenderPresent(g_renderer);
 }
@@ -144,7 +182,13 @@ void Stage::HandleEvents()
 					event.button.x<177 &&
 					event.button.y>595 &&
 					event.button.y < 695) {
-					turret_kind = 0;
+					turret_kind = TYLENOL;
+				}
+				else if (event.button.x > 202 &&
+					event.button.x < 282 &&
+					event.button.y>595 &&
+					event.button.y < 695) {
+					turret_kind = HANDSANIT;
 				}
 			}
 			break;
@@ -163,23 +207,36 @@ void Stage::HandleEvents()
 	SDL_PumpEvents();
 	buttons = SDL_GetMouseState(&move_x, &move_y);
 	if ((buttons & SDL_BUTTON_LMASK) != 0) {
-		if (turret_kind != -1) {
+		if (turret_kind != NONE) {
 			btn_down = true;
 		}
 	}
 	else {
 		if (btn_up && btn_down) {
+			if (move_x < 50)
+				move_x = 50;
+			if (move_x > 1230)
+				move_x = 1230;
+			if (move_y < 50)
+				move_y = 50;
+			if (move_y > 520)
+				move_y = 520;
+
 			switch (turret_kind) {
-			case 0:
+			case TYLENOL:
 				tt.push_back(new Tylenol({ move_x, move_y }));
 				tylenol_delay.push_back(33);
+				break;
+			case HANDSANIT:
+				hs.push_back(new HandSanitizers({ move_x, move_y }));
+				hand_sanit_delay.push_back(99);
 				break;
 			default:
 				break;
 			}
 			btn_up = false;
 			btn_down = false;
-			turret_kind = -1;
+			turret_kind = NONE;
 		}
 	}
 }

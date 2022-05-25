@@ -72,6 +72,9 @@
     <ClInclude Include="TylenolPreview.h">
       <Filter>소스 파일\turret\Tylenol</Filter>
     </ClInclude>
+    <ClInclude Include="HandSanitPreivew.h">
+      <Filter>소스 파일\turret\HandSanitizers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -109,6 +112,9 @@
     </ClCompile>
     <ClCompile Include="TylenolPreview.cpp">
       <Filter>소스 파일\turret\Tylenol</Filter>
+    </ClCompile>
+    <ClCompile Include="HandSanitPreview.cpp">
+      <Filter>소스 파일\turret\HandSanitizers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

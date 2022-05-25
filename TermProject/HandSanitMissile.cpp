@@ -1,6 +1,6 @@
 #include "HandSanitMissile.h"
 
-HandSanitMissile::HandSanitMissile(int x, int y) : speed(5), damage(5) { //이 친구의 데미지는 느리게 할 속도
+HandSanitMissile::HandSanitMissile(int x, int y) : speed(10), damage(5) { //이 친구의 데미지는 느리게 할 속도
 	this->x = x;
 	this->y = y;
 	this->state = true;

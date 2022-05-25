@@ -3,6 +3,7 @@
 #include "Tylenol.h"
 #include "TylenolPreview.h"
 #include "HandSanitizers.h"
+#include "HandSanitPreivew.h"
 
 class Stage
 {
@@ -20,11 +21,13 @@ private:
 
 	//about turret
 	int turret_kind;
+	enum turret{TYLENOL, HANDSANIT, NONE};
 	vector<int>tylenol_delay;
 	vector<int>hand_sanit_delay;
 	vector<Tylenol*> tt;
 	TylenolPreview* tp;
 	vector<HandSanitizers*> hs;
+	HandSanitPreview* hsp;
 
 	bool btn_down;
 	bool btn_up;
