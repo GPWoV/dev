@@ -25,6 +25,7 @@ public:
 	void HandleEvents();
 	void Update();
 	void Render();
+	bool crash();
 	
 private:
 	SDL_Texture* texture_;

@@ -40,6 +40,14 @@ int Virus::getY() {
 	return this->virus_destination.y;
 }
 
+int Virus::getW() {
+	return this->virus_destination.w;
+}
+
+int Virus::getH() {
+	return this->virus_destination.h;
+}
+
 //미사일을 맞았을때
 void Virus::takeDamage(int missile_damage) {
 	this->virus_hp_destination.w -= missile_damage;
