@@ -156,12 +156,12 @@ void Stage::Update()
 
 	for (int i = 0; i < support_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (support_delay[i] > support_turret[i]->delay) {
-			//support_turret[i]->giveMoney(); ĳ���Ϳ��� �� �־��ֱ�
+			character->addGold();
 			support_delay[i] = 0;
+			support_turret[i]->coin_state = true;
 		}
 		else {
 			support_delay[i]++;
-			character->addGold();
 		}
 	}
 
@@ -199,6 +199,12 @@ void Stage::Update()
 				}
 			}
 		}
+	}
+
+	for (auto iter = support_turret.begin(); iter != support_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
+		if((*iter)->coin_state)
+			(*iter)->coinMove();
+		(*iter)->coinCheck();
 	}
 
 	tylenol_preview->setXY(move_x, move_y); //����� Ÿ�̷��� �ġ ���
@@ -246,6 +252,8 @@ void Stage::Render()
 
 	for (auto iter = support_turret.begin(); iter != support_turret.end(); iter++) { //�ͷ�, �̻��� ����
 		(*iter)->show();
+		if ((*iter)->coin_state)
+			(*iter)->coinShow();
 	}
 
 	if (btn_down) {//��ư�� ����� ���� ����� Ÿ�̷���� �����ְڴ�.
