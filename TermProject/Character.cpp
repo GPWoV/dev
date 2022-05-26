@@ -1,7 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
-#define ONE_SECOND 1000 // 1초 초기화
 #include "Character.h"
-#include <atlstr.h>
 #include <string.h>
 
 Character::Character() : character_hp(1000), w(250), h(250) {
