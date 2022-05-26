@@ -145,7 +145,10 @@ void Stage::Update()
 	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) {
 		(*iter)->move();
 		if (!((*iter)->virus_state)) {
-			character->getDamage(10);
+			if ((*iter)->getHpW())
+				character->getDamage((*iter)->virus_attack);
+			else
+				character->addGold();
 			virus_list.erase(iter);
 			iter--;
 		}
