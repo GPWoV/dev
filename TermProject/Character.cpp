@@ -112,9 +112,9 @@ void Character::getDamage(int missile_damage) {
 }
 
 
-void Character::addGold() {
+void Character::addGold(int gold) {
 	if (game_state == true) {
-		gold_int += goverment_gold; //1°ñµå¾¿
+		gold_int += gold;
 	}
 }
 

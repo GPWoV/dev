@@ -156,7 +156,7 @@ void Stage::Update()
 
 	for (int i = 0; i < support_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (support_delay[i] > support_turret[i]->delay) {
-			character->addGold();
+			character->addGold(character->goverment_gold);
 			support_delay[i] = 0;
 			support_turret[i]->coin_state = true;
 		}

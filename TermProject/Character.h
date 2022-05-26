@@ -46,7 +46,7 @@ public:
 	~Character();
 	void show();
 	void getDamage(int missile_damage);
-	void addGold();
+	void addGold(int gold);
 	void useGold(int turret_price);
 	void wait(int sec);
 };
