@@ -209,7 +209,6 @@ void Stage::Update()
 		for (auto iter_missile = (*iter)->missile.begin(); iter_missile != (*iter)->missile.end(); iter_missile++) {
 			for (auto iter_flu = virus_list.begin(); iter_flu != virus_list.end(); iter_flu++) {
 				if ((*iter_missile).crash((*iter_flu)->getX(), (*iter_flu)->getY(), (*iter_flu)->getW(), (*iter_flu)->getH())) {
-					printf("crash.\n");
 					slow_coord.push_back({ (*iter_missile).getX(), (*iter_missile).getY() });
 				}
 			}
