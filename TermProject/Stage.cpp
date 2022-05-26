@@ -167,10 +167,9 @@ void Stage::Update()
 			if ((*iter)->getHpW())
 				character->getDamage((*iter)->virus_attack);
 			else
-				character->addGold();
+				character->addGold((*iter)->virus_attack);
 			virus_list.erase(iter);
 			iter--;
-			character->addGold(10); // from yj / but if virus is died by character, it's also got 10G
 		}
 	}
 

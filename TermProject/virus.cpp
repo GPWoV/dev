@@ -1,4 +1,4 @@
-#include "Virus.h"
+#include "virus.h"
 
 
 Virus::Virus(int x, int y, int virus_speed, int virus_gold, int virus_hp, int level, int virus_attack, bool virus_state) {
