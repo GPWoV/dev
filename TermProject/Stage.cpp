@@ -131,6 +131,7 @@ Stage::~Stage()
 		delete (*iter);
 	}
 	vaccine_turret.clear();
+	vaccine_turret.clear();
 
 	for (auto iter = support_turret.begin(); iter != support_turret.end(); iter++) { //���� �ͷ���� �����
 		delete (*iter);
@@ -143,6 +144,24 @@ void Stage::Update()
 
 	//virus 움직임,자기소멸,캐릭터한테 데미지 주기 구현완료
 	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) {
+		int count = 0;
+		for(auto coord_iter = slow_coord.begin(); coord_iter != slow_coord.end(); coord_iter++){
+			if (((*iter)->getX() > (*coord_iter).first-50) && ((*iter)->getX() < (*coord_iter).first + 300)) {
+				if (((*coord_iter).second + 30 > (*iter)->getY()) && ((*coord_iter).second + 30 < (*iter)->getY() + (*iter)->getH())) {
+					(*iter)->slow_state = true;
+					(*iter)->slow_delay = 0;
+				}
+			}
+		}
+
+		if ((*iter)->slow_delay < 66) {
+			(*iter)->slow_delay++;
+			(*iter)->virus_speed = 1;
+		}
+		else {
+			(*iter)->virus_speed = (*iter)->virus_default_speed;
+		}
+
 		(*iter)->move();
 		if (!((*iter)->virus_state)) {
 			character->getDamage(10);
@@ -151,6 +170,11 @@ void Stage::Update()
 			character->addGold(10); // from yj / but if virus is died by character, it's also got 10G
 		}
 	}
+
+	for (auto coord_iter = slow_coord.begin(); coord_iter != slow_coord.end(); coord_iter++) {
+		slow_coord.erase(coord_iter);
+	}
+	slow_coord.clear();
 
     for (int i = 0; i < tylenol_delay.size(); i++) { //Ÿ�̷��� ���� �ɾ ����
 		if (tylenol_delay[i] > tylenol_turret[i]->delay) {
@@ -223,6 +247,15 @@ void Stage::Update()
 	for (auto iter = hand_sanit_turret.begin(); iter != hand_sanit_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
 		(*iter)->missileMove();
 		(*iter)->missileCheck();
+
+		for (auto iter_missile = (*iter)->missile.begin(); iter_missile != (*iter)->missile.end(); iter_missile++) {
+			for (auto iter_flu = virus_list.begin(); iter_flu != virus_list.end(); iter_flu++) {
+				if ((*iter_missile).crash((*iter_flu)->getX(), (*iter_flu)->getY(), (*iter_flu)->getW(), (*iter_flu)->getH())) {
+					printf("crash.\n");
+					slow_coord.push_back({ (*iter_missile).getX(), (*iter_missile).getY() });
+				}
+			}
+		}
 	}
 
 	for (auto iter = spray_turret.begin(); iter != spray_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���

@@ -7,10 +7,13 @@ Virus::Virus(int x, int y, int virus_speed, int virus_gold, int virus_hp, int le
 	this->x = x;
 	this->y = y;
 	this->virus_speed = virus_speed;
+	this->virus_default_speed = virus_speed;
 	this->virus_gold = virus_gold;
 	this->virus_hp = virus_hp;
 	this->virus_attack = virus_attack;
 	this->virus_state= virus_state;
+	this->slow_state = false;
+	this->slow_delay = 67;
 
 	//바이러스
 	this->virus_texture = SDL_CreateTextureFromSurface(g_renderer, Virus_surface);
@@ -22,9 +25,6 @@ Virus::Virus(int x, int y, int virus_speed, int virus_gold, int virus_hp, int le
 	this->virus_hp_source = { 0 ,213,230,17 };
 	this->virus_hp_destination = { virus_destination.x, virus_destination.y - 20, (int)(virus_source.w*virus_hp/100), virus_hp_source.h };
 	SDL_FreeSurface(Virus_surface);
-
-	
-
 }
 
 Virus::~Virus() {
