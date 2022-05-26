@@ -16,8 +16,13 @@ extern Mix_Music* ending_music_;
 
 // 사운드
 Mix_Chunk* click_;
+Mix_Chunk* coin_;
 Mix_Chunk* down_;
+Mix_Chunk* hit_;
 Mix_Chunk* tylenol_shot_;
+Mix_Chunk* spray_shot_;
+Mix_Chunk* vaccine_shot_;
+Mix_Chunk* sanitizer_shot_;
 
 Stage::Stage()
 {
@@ -59,7 +64,7 @@ Stage::Stage()
 	*/
 
 	// 인트로 BGM
-	Mix_VolumeMusic(90);
+	Mix_VolumeMusic(50);
 
 	stage_music_ = Mix_LoadMUS("../../Resources/stage.mp3");
 	if (!stage_music_)
@@ -81,8 +86,34 @@ Stage::Stage()
 	{
 		printf("Couldn't load the wav: %s\n", Mix_GetError());
 	}
+
+	hit_ = Mix_LoadWAV("../../Resources/hit.wav");
+	if (hit_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
 	tylenol_shot_ = Mix_LoadWAV("../../Resources/tylenol_shot.wav");
 	if (tylenol_shot_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
+	coin_ = Mix_LoadWAV("../../Resources/coin.wav"); 
+	if (coin_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
+	spray_shot_ = Mix_LoadWAV("../../Resources/spray_shot.wav");
+	if (spray_shot_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
+	sanitizer_shot_ = Mix_LoadWAV("../../Resources/sanitizer_shot.wav");
+	if (coin_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
+	vaccine_shot_ = Mix_LoadWAV("../../Resources/vaccine_shot.wav");
+	if (coin_ == NULL)
 	{
 		printf("Couldn't load the wav: %s\n", Mix_GetError());
 	}
@@ -106,7 +137,12 @@ Stage::~Stage()
 	//SDL_DestroyTexture(start_texture_);
 	if (click_) Mix_FreeChunk(click_);
 	if (down_) Mix_FreeChunk(down_);
+	if (coin_) Mix_FreeChunk(coin_);
+	if (hit_) Mix_FreeChunk(hit_);
 	if (tylenol_shot_) Mix_FreeChunk(tylenol_shot_);
+	if (sanitizer_shot_) Mix_FreeChunk(sanitizer_shot_);
+	if (vaccine_shot_) Mix_FreeChunk(vaccine_shot_);
+
 	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) { //���� �ͷ���� �����
 		delete (*iter);
 	}
@@ -180,7 +216,7 @@ void Stage::Update()
 
     for (int i = 0; i < tylenol_delay.size(); i++) { //Ÿ�̷��� ���� �ɾ ����
 		if (tylenol_delay[i] > tylenol_turret[i]->delay) {
-			Mix_VolumeChunk(tylenol_shot_, 70);
+			Mix_VolumeChunk(tylenol_shot_, 10);
 			Mix_PlayChannel(-1, tylenol_shot_, 0);
 			tylenol_turret[i]->shooting();
 			tylenol_delay[i] = 0;
@@ -192,6 +228,8 @@ void Stage::Update()
 
 	for (int i = 0; i < hand_sanit_delay.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (hand_sanit_delay[i] > hand_sanit_turret[i]->delay) {
+			Mix_VolumeChunk(sanitizer_shot_, 10);
+			Mix_PlayChannel(1, sanitizer_shot_, 0);
 			hand_sanit_turret[i]->shooting();
 			hand_sanit_delay[i] = 0;
 		}
@@ -202,6 +240,8 @@ void Stage::Update()
 
 	for (int i = 0; i < spray_delay.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (spray_delay[i] > spray_turret[i]->delay) {
+			Mix_VolumeChunk(spray_shot_, 30);
+			Mix_PlayChannel(6, spray_shot_, 0);
 			spray_turret[i]->shooting();
 			spray_delay[i] = 0;
 		}
@@ -212,6 +252,8 @@ void Stage::Update()
 
 	for (int i = 0; i < vaccine_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (vaccine_delay[i] > vaccine_turret[i]->delay) {
+			Mix_VolumeChunk(vaccine_shot_, 50);
+			Mix_PlayChannel(2, vaccine_shot_, 0);
 			vaccine_turret[i]->shooting();
 			vaccine_delay[i] = 0;
 		}
@@ -224,6 +266,8 @@ void Stage::Update()
 
 	for (int i = 0; i < support_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (support_delay[i] > support_turret[i]->delay) {
+			Mix_VolumeChunk(coin_, 80);
+			Mix_PlayChannel(3, coin_, 0);
 			character->addGold(character->goverment_gold); // from yj / change parameter
 			support_delay[i] = 0;
 			support_turret[i]->coin_state = true;
@@ -240,6 +284,8 @@ void Stage::Update()
 		for (auto iter_missile = (*iter)->missile.begin(); iter_missile != (*iter)->missile.end(); iter_missile++) {
 			for (auto iter_flu = virus_list.begin(); iter_flu != virus_list.end(); iter_flu++) {
 				if ((*iter_missile).crash((*iter_flu)->getX(), (*iter_flu)->getY(), (*iter_flu)->getW(), (*iter_flu)->getH())) {
+					Mix_VolumeChunk(hit_, 100);
+					Mix_PlayChannel(4, hit_, 0);
 					(*iter_flu)->takeDamage((*iter_missile).damage);
 				}
 			}
@@ -266,6 +312,8 @@ void Stage::Update()
 		for (auto iter_missile = (*iter)->missile_top.begin(); iter_missile != (*iter)->missile_top.end(); iter_missile++) {
 			for (auto iter_flu = virus_list.begin(); iter_flu != virus_list.end(); iter_flu++) {
 				if ((*iter_missile)->crash((*iter_flu)->getX(), (*iter_flu)->getY(), (*iter_flu)->getW(), (*iter_flu)->getH())) {
+					Mix_VolumeChunk(hit_, 70);
+					Mix_PlayChannel(4, hit_, 0);
 					(*iter_flu)->takeDamage((*iter_missile)->damage);
 				}
 			}
@@ -274,6 +322,8 @@ void Stage::Update()
 		for (auto iter_missile = (*iter)->missile_middle.begin(); iter_missile != (*iter)->missile_middle.end(); iter_missile++) {
 			for (auto iter_flu = virus_list.begin(); iter_flu != virus_list.end(); iter_flu++) {
 				if ((*iter_missile)->crash((*iter_flu)->getX(), (*iter_flu)->getY(), (*iter_flu)->getW(), (*iter_flu)->getH())) {
+					Mix_VolumeChunk(hit_, 70);
+					Mix_PlayChannel(4, hit_, 0);
 					(*iter_flu)->takeDamage((*iter_missile)->damage);
 				}
 			}
@@ -282,6 +332,8 @@ void Stage::Update()
 		for (auto iter_missile = (*iter)->missile_bottom.begin(); iter_missile != (*iter)->missile_bottom.end(); iter_missile++) {
 			for (auto iter_flu = virus_list.begin(); iter_flu != virus_list.end(); iter_flu++) {
 				if ((*iter_missile)->crash((*iter_flu)->getX(), (*iter_flu)->getY(), (*iter_flu)->getW(), (*iter_flu)->getH())) {
+					Mix_VolumeChunk(hit_, 70);
+					Mix_PlayChannel(4, hit_, 0);
 					(*iter_flu)->takeDamage((*iter_missile)->damage);
 				}
 			}
@@ -295,6 +347,8 @@ void Stage::Update()
 		for (auto iter_missile = (*iter)->missile.begin(); iter_missile != (*iter)->missile.end(); iter_missile++) {
 			for (auto iter_flu = virus_list.begin(); iter_flu != virus_list.end(); iter_flu++) {
 				if ((*iter_missile).crash((*iter_flu)->getX(), (*iter_flu)->getY(), (*iter_flu)->getW(), (*iter_flu)->getH())) {
+					Mix_VolumeChunk(hit_, 70);
+					Mix_PlayChannel(4, hit_, 0);
 					(*iter_flu)->takeDamage((*iter_missile).damage);
 				}
 			}

@@ -1,9 +1,10 @@
 #include "virus.h"
 
+Mix_Chunk* dead_;
 
 Virus::Virus(int x, int y, int virus_speed, int virus_gold, int virus_hp, int level, int virus_attack, bool virus_state) {
 	SDL_Surface* Virus_surface = IMG_Load("../../Resources/virus_sprite.png");
-	//±âÅ¸¿É¼Ç
+	//ê¸°íƒ€ì˜µì…˜
 	this->x = x;
 	this->y = y;
 	this->virus_speed = virus_speed;
@@ -15,21 +16,29 @@ Virus::Virus(int x, int y, int virus_speed, int virus_gold, int virus_hp, int le
 	this->slow_state = false;
 	this->slow_delay = 67;
 
-	//¹ÙÀÌ·¯½º
+	//ë°”ì´ëŸ¬ìŠ¤
 	this->virus_texture = SDL_CreateTextureFromSurface(g_renderer, Virus_surface);
 	this->virus_source = virus_img_sources[level];
 	this->virus_destination = { this->x, this->y, virus_source.w, virus_source.h };
 
-	//Ã¼·Â¹Ù
+	//ì²´ë ¥ë°”
 	this->virus_hp_texture = SDL_CreateTextureFromSurface(g_renderer, Virus_surface);
 	this->virus_hp_source = { 0 ,213,230,17 };
 	this->virus_hp_destination = { virus_destination.x, virus_destination.y - 20, (int)(virus_source.w*virus_hp/100), virus_hp_source.h };
 	SDL_FreeSurface(Virus_surface);
+
+	//ì‚¬ìš´ë“œ
+	dead_ = Mix_LoadWAV("../../Resources/dead.wav");
+	if (dead_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
 }
 
 Virus::~Virus() {
 	SDL_DestroyTexture(virus_texture);
 	SDL_DestroyTexture(virus_hp_texture);
+	if (dead_) Mix_FreeChunk(dead_);
 }
 
 int Virus::getX() {
@@ -54,23 +63,25 @@ int Virus::getHpW() {
 
 
 
-//¹Ì»çÀÏÀ» ¸Â¾ÒÀ»¶§
+//ë¯¸ì‚¬ì¼ì„ ë§ì•˜ì„ë•Œ
 void Virus::takeDamage(int missile_damage) {
 	this->virus_hp_destination.w -= missile_damage;
 	if (this->virus_hp_destination.w <= 0) {
-		//°ÔÀÓ °ñµåÁö±Ş ±¸Çö
+		//ê²Œì„ ê³¨ë“œì§€ê¸‰ êµ¬í˜„
 		this->die();
 	}
 }
 
-//ÁÖÀÎ°øÀÌ¶û ºÎµúÈú¶§
+//ì£¼ì¸ê³µì´ë‘ ë¶€ë”ªíë•Œ
 int Virus::hitDamage() {
 	this->die();
 	return this->virus_attack;
 }
 
-//ÁÖÀÎ°øÀÌ¶û ºÎµúÈ÷°Å³ª Ã¼·Â0
+//ì£¼ì¸ê³µì´ë‘ ë¶€ë”ªíˆê±°ë‚˜ ì²´ë ¥0
 void Virus::die() {
+	Mix_VolumeChunk(dead_, 100);
+	Mix_PlayChannel(5, dead_, 0);
 	this->virus_state = false;
 }
 
