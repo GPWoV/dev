@@ -56,7 +56,7 @@ Intro::Intro()
 	tutorial_destination_rectangle_.h = tutorial_source_rectangle_.h = 128;
 
 	// ¿Œ∆Æ∑Œ BGM
-	Mix_VolumeMusic(70);
+	Mix_VolumeMusic(50);
 
 	intro_music_ = Mix_LoadMUS("../../Resources/intro.mp3");
 	if (!intro_music_)

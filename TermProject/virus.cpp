@@ -1,5 +1,6 @@
 #include "Virus.h"
 
+Mix_Chunk* dead_;
 
 Virus::Virus(int x, int y, int virus_speed, int virus_gold, int virus_hp, int level, int virus_attack, bool virus_state) {
 	SDL_Surface* Virus_surface = IMG_Load("../../Resources/virus_sprite.png");
@@ -23,13 +24,19 @@ Virus::Virus(int x, int y, int virus_speed, int virus_gold, int virus_hp, int le
 	this->virus_hp_destination = { virus_destination.x, virus_destination.y - 20, (int)(virus_source.w*virus_hp/100), virus_hp_source.h };
 	SDL_FreeSurface(Virus_surface);
 
-	
+	//사운드
+	dead_ = Mix_LoadWAV("../../Resources/dead.wav");
+	if (dead_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
 
 }
 
 Virus::~Virus() {
 	SDL_DestroyTexture(virus_texture);
 	SDL_DestroyTexture(virus_hp_texture);
+	if (dead_) Mix_FreeChunk(dead_);
 }
 
 int Virus::getX() {
@@ -65,6 +72,8 @@ int Virus::hitDamage() {
 
 //주인공이랑 부딪히거나 체력0
 void Virus::die() {
+	Mix_VolumeChunk(dead_, 100);
+	Mix_PlayChannel(5, dead_, 0);
 	this->virus_state = false;
 }
 
