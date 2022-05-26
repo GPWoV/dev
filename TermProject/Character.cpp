@@ -104,8 +104,8 @@ void Character::show() {
 
 void Character::getDamage(int missile_damage) {
 	damage_state = true;
-	this->character_hp -= missile_damage;
-	if (character_hp <= 0) {
+	this->hp_destination.w -= missile_damage;
+	if (hp_destination.w <= 0) {
 		game_state = false;
 	}
 }

@@ -33,11 +33,7 @@ private:
 	SDL_Rect destination_rectangle_;
 
 	//about virus
-	vector<Virus*> flu_list;
-	vector<Virus> ebola_list;
-	vector<Virus> sars_list;
-	vector<Virus> mers_list;
-	vector<Virus> corona_list;
+	vector<Virus*> virus_list;
 	int round;
 	
 	//about turret
