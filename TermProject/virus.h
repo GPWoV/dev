@@ -38,6 +38,7 @@ public:
 	int getY();
 	int getW();
 	int getH();
+	int getHpW();
 	void takeDamage(int missile_damage);
 	int hitDamage();
 	void die();
