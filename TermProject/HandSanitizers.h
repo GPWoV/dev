@@ -11,8 +11,6 @@ private:
 	SDL_Rect hand_sanit_source;
 	SDL_Rect hand_sanit_destination;
 
-	list<HandSanitMissile> missile;
-
 	SDL_Texture* missile_texture;
 	SDL_Rect missile_source;
 	SDL_Rect missile_destination;
@@ -22,6 +20,8 @@ public:
 	const int w;
 	const int h;
 	const int delay;
+
+	list<HandSanitMissile> missile;
 
 	HandSanitizers(int x, int y);
 	~HandSanitizers();

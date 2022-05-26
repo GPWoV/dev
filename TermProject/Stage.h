@@ -32,6 +32,8 @@ private:
 	SDL_Rect source_rectangle_;
 	SDL_Rect destination_rectangle_;
 
+	list< pair<int, int> > slow_coord;
+
 	//about virus
 	vector<Virus*> virus_list;
 	int round;

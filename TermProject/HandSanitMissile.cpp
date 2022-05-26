@@ -27,10 +27,13 @@ void HandSanitMissile::move() {
 bool HandSanitMissile::crash(int x, int y, int w, int h) {
 	if (this->x >= x &&
 		this->x <= x + w &&
-		this->y >= y &&
-		this->y <= y + h) {
+		this->y+30 >= y &&
+		this->y+30 <= y + h) {
 		this->state = false;
 		return true;
+	}
+	else {
+		return false;
 	}
 }
 

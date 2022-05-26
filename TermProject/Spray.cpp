@@ -101,14 +101,14 @@ void Spray::missileCheck() {
 	for (auto iter = missile_middle.begin(); iter != missile_middle.end(); iter++) {
 		(*iter)->checkOut();
 		if ((*iter)->getState() == false) {
-			missile_top.erase(iter);
+			missile_middle.erase(iter);
 			delete* iter;
 		}
 	}
 	for (auto iter = missile_bottom.begin(); iter != missile_bottom.end(); iter++) {
 		(*iter)->checkOut();
 		if ((*iter)->getState() == false) {
-			missile_top.erase(iter);
+			missile_bottom.erase(iter);
 			delete* iter;
 		}
 	}
