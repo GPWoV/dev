@@ -60,6 +60,5 @@ void HandSanitizers::missileCheck() {
 		if ((*iter).getState() == false) {
 			missile.erase(iter);
 		}
-		printf("%d", (*iter).getState());
 	}
 }

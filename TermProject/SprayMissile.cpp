@@ -21,15 +21,11 @@ bool SprayMissile::getState() {
 }
 
 void SprayMissile::move(int direction, int turret_x, int turret_y) {
-	printf("일직선 미사일 x,y : %d, %d\n", this->x, this->y);
 	this->x += speed;
 	int temp_x = this->x - turret_x;
-	printf("temp_x : %d\n", temp_x);
-	printf("turret_y : %d\n", turret_y);
 	switch (direction) {
 	case 0:
 		this->y = turret_y + int(temp_x * 0.5);
-		printf("움직인 위치의 미사일 x,y : %d, %d\n", this->x, this->y);
 		break;
 	case 1:
 		this->y = turret_y;
