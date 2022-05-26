@@ -19,10 +19,12 @@ private:
 	SDL_Rect gameover_source;
 	SDL_Rect gameover_destination;
 
+	SDL_Texture* hp_texture;
+	SDL_Rect hp_source;
+	SDL_Rect hp_destination;
+
 
 	TTF_Font* font;
-	SDL_Texture* gold_texture;
-	SDL_Rect gold_destination;
 
 	SDL_Texture* gold_num_texture;
 	SDL_Rect gold_num_destination;
@@ -32,10 +34,10 @@ public:
 	const int w;
 	const int h;
 
-	int gold_int;
+	int gold_int = 5000;
 	const char* gold_char;
 	char buf[10];
-	int goverment_gold = 100;
+	int goverment_gold = 200;
 
 	bool damage_state = false;
 	bool game_state = true;
@@ -46,4 +48,5 @@ public:
 	void getDamage(int missile_damage);
 	void addGold();
 	void useGold(int turret_price);
+	void wait(int sec);
 };

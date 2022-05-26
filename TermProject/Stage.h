@@ -11,6 +11,11 @@
 #include "VaccinePreview.h"
 #include "Support.h"
 #include "SupportPreview.h"
+#include "Character.h"
+
+#include<cstdlib>
+#include<ctime>
+using namespace std;
 
 class Stage
 {
@@ -20,6 +25,7 @@ public:
 	void HandleEvents();
 	void Update();
 	void Render();
+	bool crash();
 	
 private:
 	SDL_Texture* texture_;
@@ -27,11 +33,8 @@ private:
 	SDL_Rect destination_rectangle_;
 
 	//about virus
-	vector<Virus*> flu_list;
-	vector<Virus> ebola_list;
-	vector<Virus> sars_list;
-	vector<Virus> mers_list;
-	vector<Virus> corona_list;
+	vector<Virus*> virus_list;
+	int round;
 	
 	//about turret
 	int turret_kind;
@@ -53,6 +56,10 @@ private:
 	SprayPreview* spray_preview;
 	VaccinePreview* vaccine_preview;
 	SupportPreview* support_preview;
+
+	Character* character;
+
+	
 
 	bool btn_down;
 	bool btn_up;
