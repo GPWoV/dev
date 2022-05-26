@@ -63,7 +63,6 @@ void Character::show() {
 	SDL_Rect character_r;
 	SDL_Rect damage_r;
 	SDL_Rect gold_num_r;
-	SDL_Rect hp_r;
 	SDL_Rect gameover_r;
 
 
