@@ -25,7 +25,6 @@ private:
 
 
 	TTF_Font* font;
-
 	SDL_Texture* gold_num_texture;
 	SDL_Rect gold_num_destination;
 
@@ -46,7 +45,6 @@ public:
 	~Character();
 	void show();
 	void getDamage(int missile_damage);
-	void addGold();
+	void addGold(int gold);
 	void useGold(int turret_price);
-	void wait(int sec);
 };

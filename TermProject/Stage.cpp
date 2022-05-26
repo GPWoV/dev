@@ -167,6 +167,7 @@ Stage::~Stage()
 		delete (*iter);
 	}
 	vaccine_turret.clear();
+	vaccine_turret.clear();
 
 	for (auto iter = support_turret.begin(); iter != support_turret.end(); iter++) { //���� �ͷ���� �����
 		delete (*iter);
@@ -179,13 +180,39 @@ void Stage::Update()
 
 	//virus 움직임,자기소멸,캐릭터한테 데미지 주기 구현완료
 	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) {
+		int count = 0;
+		for(auto coord_iter = slow_coord.begin(); coord_iter != slow_coord.end(); coord_iter++){
+			if (((*iter)->getX() > (*coord_iter).first-50) && ((*iter)->getX() < (*coord_iter).first + 300)) {
+				if (((*coord_iter).second + 30 > (*iter)->getY()) && ((*coord_iter).second + 30 < (*iter)->getY() + (*iter)->getH())) {
+					(*iter)->slow_state = true;
+					(*iter)->slow_delay = 0;
+				}
+			}
+		}
+
+		if ((*iter)->slow_delay < 66) {
+			(*iter)->slow_delay++;
+			(*iter)->virus_speed = 1;
+		}
+		else {
+			(*iter)->virus_speed = (*iter)->virus_default_speed;
+		}
+
 		(*iter)->move();
 		if (!((*iter)->virus_state)) {
-			character->getDamage(10);
+			if ((*iter)->getHpW())
+				character->getDamage((*iter)->virus_attack);
+			else
+				character->addGold((*iter)->virus_attack);
 			virus_list.erase(iter);
 			iter--;
 		}
 	}
+
+	for (auto coord_iter = slow_coord.begin(); coord_iter != slow_coord.end(); coord_iter++) {
+		slow_coord.erase(coord_iter);
+	}
+	slow_coord.clear();
 
     for (int i = 0; i < tylenol_delay.size(); i++) { //Ÿ�̷��� ���� �ɾ ����
 		if (tylenol_delay[i] > tylenol_turret[i]->delay) {
@@ -239,9 +266,9 @@ void Stage::Update()
 
 	for (int i = 0; i < support_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (support_delay[i] > support_turret[i]->delay) {
-			character->addGold();
 			Mix_VolumeChunk(coin_, 80);
 			Mix_PlayChannel(3, coin_, 0);
+			character->addGold(character->goverment_gold); // from yj / change parameter
 			support_delay[i] = 0;
 			support_turret[i]->coin_state = true;
 		}
@@ -268,6 +295,14 @@ void Stage::Update()
 	for (auto iter = hand_sanit_turret.begin(); iter != hand_sanit_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
 		(*iter)->missileMove();
 		(*iter)->missileCheck();
+
+		for (auto iter_missile = (*iter)->missile.begin(); iter_missile != (*iter)->missile.end(); iter_missile++) {
+			for (auto iter_flu = virus_list.begin(); iter_flu != virus_list.end(); iter_flu++) {
+				if ((*iter_missile).crash((*iter_flu)->getX(), (*iter_flu)->getY(), (*iter_flu)->getW(), (*iter_flu)->getH())) {
+					slow_coord.push_back({ (*iter_missile).getX(), (*iter_missile).getY() });
+				}
+			}
+		}
 	}
 
 	for (auto iter = spray_turret.begin(); iter != spray_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
@@ -523,64 +558,65 @@ void Stage::HandleEvents()
 
 			switch (turret_kind) {
 			case TYLENOL:
-				tylenol_turret.push_back(new Tylenol({ move_x, move_y }));
-				tylenol_delay.push_back(33);
-				Mix_VolumeChunk(down_, 70);
-				Mix_PlayChannel(-1, down_, 0);
 				if (character->gold_int < 300) break;
 				else {
 					tylenol_turret.push_back(new Tylenol({ move_x, move_y }));
 					tylenol_delay.push_back(33);
 					character->useGold(300);
 				}
-				break;
-			case HANDSANIT:
-				hand_sanit_turret.push_back(new HandSanitizers({ move_x, move_y }));
-				hand_sanit_delay.push_back(99);
+				tylenol_turret.push_back(new Tylenol({ move_x, move_y }));
+				tylenol_delay.push_back(33);
 				Mix_VolumeChunk(down_, 70);
 				Mix_PlayChannel(-1, down_, 0);
+				break;
+			case HANDSANIT:
 				if (character->gold_int < 500) break;
 				else {
 					hand_sanit_turret.push_back(new HandSanitizers({ move_x, move_y }));
 					hand_sanit_delay.push_back(99);
 					character->useGold(500);
 				}
-				break;
-			case SPRAY:
-				spray_turret.push_back(new Spray({ move_x, move_y }));
-				spray_delay.push_back(66);
+				hand_sanit_turret.push_back(new HandSanitizers({ move_x, move_y }));
+				hand_sanit_delay.push_back(99);
 				Mix_VolumeChunk(down_, 70);
 				Mix_PlayChannel(-1, down_, 0);
+				break;
+			case SPRAY:
 				if (character->gold_int < 700) break;
 				else {
 					spray_turret.push_back(new Spray({ move_x, move_y }));
 					spray_delay.push_back(66);
 					character->useGold(700);
 				}
-				break;
-			case VACCINE:
-				vaccine_turret.push_back(new Vaccine({ move_x, move_y }));
-				vaccine_delay.push_back(165);
+				spray_turret.push_back(new Spray({ move_x, move_y }));
+				spray_delay.push_back(66);
 				Mix_VolumeChunk(down_, 70);
 				Mix_PlayChannel(-1, down_, 0);
+				break;
+			case VACCINE:
 				if (character->gold_int < 1000) break;
 				else {
 					vaccine_turret.push_back(new Vaccine({ move_x, move_y }));
 					vaccine_delay.push_back(165);
 					character->useGold(1000);
 				}
-				break;
-			case SUPPORT:
-				support_turret.push_back(new Support({ move_x, move_y }));
-				support_delay.push_back(330);
+				vaccine_turret.push_back(new Vaccine({ move_x, move_y }));
+				vaccine_delay.push_back(165);
 				Mix_VolumeChunk(down_, 70);
 				Mix_PlayChannel(-1, down_, 0);
+				break;
+			case SUPPORT:
 				if (character->gold_int < 5000) break;
 				else {
 					support_turret.push_back(new Support({ move_x, move_y }));
 					support_delay.push_back(330);
 					character->useGold(5000);
 				}
+				support_turret.push_back(new Support({ move_x, move_y }));
+				support_delay.push_back(330);
+				Mix_VolumeChunk(down_, 70);
+				Mix_PlayChannel(-1, down_, 0);
+
 				break;
 			default:
 				break;

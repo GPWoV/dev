@@ -1,6 +1,6 @@
 #include "HandSanitizers.h"
 
-HandSanitizers::HandSanitizers(int x, int y) : gold(500), w(100), h(100), delay(99) {
+HandSanitizers::HandSanitizers(int x, int y) : gold(500), w(100), h(100), delay(66) {
 	SDL_Surface* hand_sanit_surface = IMG_Load("../../Resources/turret_02_sanitizer.png");
 	hand_sanit_texture = SDL_CreateTextureFromSurface(g_renderer, hand_sanit_surface);
 	SDL_FreeSurface(hand_sanit_surface);
@@ -60,6 +60,5 @@ void HandSanitizers::missileCheck() {
 		if ((*iter).getState() == false) {
 			missile.erase(iter);
 		}
-		printf("%d", (*iter).getState());
 	}
 }

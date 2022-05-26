@@ -1,7 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
-#define ONE_SECOND 1000 // 1초 초기화
 #include "Character.h"
-#include <atlstr.h>
 #include <string.h>
 
 Character::Character() : character_hp(1000), w(250), h(250) {
@@ -42,7 +40,7 @@ Character::Character() : character_hp(1000), w(250), h(250) {
 	SDL_Color black = { 0, 0, 0, 0 };
 
 	sprintf_s(buf, "%d", gold_int);
-	gold_char = buf;
+	this->gold_char = this->buf;
 	SDL_Surface* gold_num_surface = TTF_RenderText_Blended(font, gold_char, black);
 	gold_num_destination = { 0, 0, gold_num_surface->w, gold_num_surface->h };
 	gold_num_texture = SDL_CreateTextureFromSurface(g_renderer, gold_num_surface);
@@ -63,14 +61,13 @@ void Character::show() {
 	SDL_Rect character_r;
 	SDL_Rect damage_r;
 	SDL_Rect gold_num_r;
-	SDL_Rect hp_r;
 	SDL_Rect gameover_r;
 
 
 	//gold_num
 	SDL_Color black = { 0, 0, 0, 0 };
 	sprintf_s(buf, "%d", gold_int);
-	gold_char = buf;
+	this->gold_char = this->buf;
 	SDL_Surface* gold_num_surface = TTF_RenderText_Blended(font, gold_char, black);
 	gold_num_destination = { 0, 0, gold_num_surface->w, gold_num_surface->h };
 	gold_num_texture = SDL_CreateTextureFromSurface(g_renderer, gold_num_surface);
@@ -86,7 +83,7 @@ void Character::show() {
 
 
 	//캐릭터, 데미지
-	if (damage_state == false) {
+	if (this->damage_state == false) {
 		character_r = { character_destination.x, character_destination.y, character_destination.w, character_destination.h };
 		SDL_RenderCopy(g_renderer, character_texture, &character_source, &character_destination);
 	}
@@ -96,27 +93,28 @@ void Character::show() {
 		damage_state = false;
 	}
 
-	if (game_state == false) {
+	//게임오버
+	if (this->game_state == false) {
 		gameover_r = { (1280 - gameover_destination.w / 2) / 2, (720 - gameover_destination.h / 2) / 2, gameover_destination.w / 2, gameover_destination.h / 2 };
 		SDL_RenderCopy(g_renderer, gameover_texture, &gameover_source, &gameover_destination);
 	}
 }
 
 void Character::getDamage(int missile_damage) {
-	damage_state = true;
+	this->damage_state = true;
 	this->hp_destination.w -= missile_damage;
-	if (hp_destination.w <= 0) {
-		game_state = false;
+	if (this->hp_destination.w <= 0) {
+		this->game_state = false;
 	}
 }
 
 
-void Character::addGold() {
-	if (game_state == true) {
-		gold_int += goverment_gold; //1골드씩
+void Character::addGold(int gold) {
+	if (this->game_state == true) {
+		this->gold_int += gold;
 	}
 }
 
 void Character::useGold(int turret_price) {
-	gold_int -= turret_price;
+	this->gold_int -= turret_price;
 }

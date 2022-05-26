@@ -34,25 +34,19 @@ void Spray::show() {
 }
 
 void Spray::shooting() {
-	printf("top missile 생성\n");
 	missile_top.push_back(new SprayMissile(this->spray_destination.x + 75, this->spray_destination.y + 35));
-	printf("middle missile 생성\n");
 	missile_middle.push_back(new SprayMissile(this->spray_destination.x + 75, this->spray_destination.y + 35));
-	printf("bottom missile 생성\n");
 	missile_bottom.push_back(new SprayMissile(this->spray_destination.x + 75, this->spray_destination.y + 35));
 }
 
 void Spray::missileMove() {
 	for (auto iter = missile_top.begin(); iter != missile_top.end(); iter++) {
-		printf("top missile 이동\n");
 		(*iter)->move(0, spray_destination.x, spray_destination.y);
 	}
 	for (auto iter = missile_middle.begin(); iter != missile_middle.end(); iter++) {
-		printf("middle missile 이동\n");
 		(*iter)->move(1, spray_destination.x, spray_destination.y);
 	}
 	for (auto iter = missile_bottom.begin(); iter != missile_bottom.end(); iter++) {
-		printf("bottom missile 이동\n");
 		(*iter)->move(2, spray_destination.x, spray_destination.y);
 	}
 }
@@ -64,7 +58,6 @@ void Spray::missileShow() {
 		bool state = (*iter)->getState();
 		if (state) {
 			top_destination = { x,y,25,25 };
-			printf("top 렌더카피\n");
 			SDL_RenderCopy(g_renderer, missile_texture, &missile_source, &top_destination);
 		}
 	}
@@ -74,7 +67,6 @@ void Spray::missileShow() {
 		bool state = (*iter)->getState();
 		if (state) {
 			middle_destination = { x,y,25,25 };
-			printf("middle 렌더카피\n");
 			SDL_RenderCopy(g_renderer, missile_texture, &missile_source, &middle_destination);
 		}
 	}
@@ -84,7 +76,6 @@ void Spray::missileShow() {
 		bool state = (*iter)->getState();
 		if (state) {
 			bottom_destination = { x,y,25,25 };
-			printf("bottom 렌더카피\n");
 			SDL_RenderCopy(g_renderer, missile_texture, &missile_source, &bottom_destination);
 		}
 	}
@@ -101,14 +92,14 @@ void Spray::missileCheck() {
 	for (auto iter = missile_middle.begin(); iter != missile_middle.end(); iter++) {
 		(*iter)->checkOut();
 		if ((*iter)->getState() == false) {
-			missile_top.erase(iter);
+			missile_middle.erase(iter);
 			delete* iter;
 		}
 	}
 	for (auto iter = missile_bottom.begin(); iter != missile_bottom.end(); iter++) {
 		(*iter)->checkOut();
 		if ((*iter)->getState() == false) {
-			missile_top.erase(iter);
+			missile_bottom.erase(iter);
 			delete* iter;
 		}
 	}

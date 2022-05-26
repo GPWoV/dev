@@ -1,6 +1,6 @@
 #include "TylenolMissile.h"
 
-TylenolMissile::TylenolMissile(int x, int y) :speed(25), damage(20) {
+TylenolMissile::TylenolMissile(int x, int y) :speed(25), damage(5) {
 	this->x = x;
 	this->y = y;
 	this->state = true;
