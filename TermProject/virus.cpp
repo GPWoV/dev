@@ -72,7 +72,6 @@ void Virus::die() {
 void Virus::move(){
 	this->virus_destination.x -= this->virus_speed;
 	this->virus_hp_destination.x -= this->virus_speed;
-	this->virus_hp_destination.w -= 2;
 	
 	if (this->virus_destination.x <= 227) {
 		this->hitDamage();
