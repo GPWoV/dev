@@ -109,6 +109,7 @@ void Stage::Update()
 			character->getDamage(10);
 			virus_list.erase(iter);
 			iter--;
+			character->addGold(10); // from yj / but if virus is died by character, it's also got 10G
 		}
 	}
 
@@ -156,7 +157,7 @@ void Stage::Update()
 
 	for (int i = 0; i < support_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (support_delay[i] > support_turret[i]->delay) {
-			character->addGold(character->goverment_gold);
+			character->addGold(character->goverment_gold); // from yj / change parameter
 			support_delay[i] = 0;
 			support_turret[i]->coin_state = true;
 		}
