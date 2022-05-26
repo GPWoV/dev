@@ -21,23 +21,25 @@ Mix_Chunk* tylenol_shot_;
 
 Stage::Stage()
 {
-	// 인트로 이미지
+	//stage01 img
 	SDL_Surface* temp_surface = IMG_Load("../../Resources/background_stage_01.png");
 	texture_ = SDL_CreateTextureFromSurface(g_renderer, temp_surface);
 	SDL_FreeSurface(temp_surface);
 
 	SDL_QueryTexture(texture_, NULL, NULL, &source_rectangle_.w, &source_rectangle_.h);
+	destination_rectangle_ = {0,0,1280,720};
 
-	destination_rectangle_.x = source_rectangle_.x = 0;
-	destination_rectangle_.y = source_rectangle_.y = 0;
-	destination_rectangle_.w = source_rectangle_.w = 1280;
-	destination_rectangle_.h = source_rectangle_.h = 720;
+	//about character
+	character = new Character();
+	character->damage_state = false;
+	character->game_state = true;
 
-
-	//level에 따라 (감기)list 출현하게끔 구현 해볼생각
-	//x,y,speed,gold,hp,level,attack
-	flu_list.push_back(new Virus({ 1200,300,10,100,100,3,10 }));
-	flu_list.push_back(new Virus({ 1200,200,20,100,100,2,10 }));
+	//about virus
+	srand((unsigned int)time(NULL));
+	round = 1;
+	for (int virus_cnt = 0; virus_cnt < 10; virus_cnt++)
+		virus_list.push_back(new Virus({ 1200 + rand() % 20 *60,rand() % 10 * 50 + 20,5,100,100,round,10,true }));
+	
 	
 	// 시작 버튼
 	/*
@@ -95,15 +97,22 @@ Stage::Stage()
 	spray_preview = new SprayPreview(0, 0);
 	vaccine_preview = new VaccinePreview(0, 0);
 	support_preview = new SupportPreview(0, 0);
+
 }
 
 Stage::~Stage()
 {
 	SDL_DestroyTexture(texture_);
 	//SDL_DestroyTexture(start_texture_);
+
 	if (click_) Mix_FreeChunk(click_);
 	if (down_) Mix_FreeChunk(down_);
 	if (tylenol_shot_) Mix_FreeChunk(tylenol_shot_);
+
+	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) { //���� �ͷ���� �����
+		delete (*iter);
+	}
+	virus_list.clear();
 
 	for (auto iter = tylenol_turret.begin(); iter != tylenol_turret.end(); iter++) { //���� �ͷ���� �����
 		delete (*iter);
@@ -134,10 +143,16 @@ Stage::~Stage()
 void Stage::Update()
 {
 
-	for (auto iter = flu_list.begin(); iter != flu_list.end(); iter++) {
+	//virus 움직임,자기소멸,캐릭터한테 데미지 주기 구현완료
+	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) {
 		(*iter)->move();
+		if (!((*iter)->virus_state)) {
+			character->getDamage(10);
+			virus_list.erase(iter);
+			iter--;
+		}
 	}
-  
+
     for (int i = 0; i < tylenol_delay.size(); i++) { //Ÿ�̷��� ���� �ɾ ����
 		if (tylenol_delay[i] > tylenol_turret[i]->delay) {
 			Mix_VolumeChunk(tylenol_shot_, 70);
@@ -180,10 +195,13 @@ void Stage::Update()
 		}
 	}
 
+	
+
 	for (int i = 0; i < support_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (support_delay[i] > support_turret[i]->delay) {
-			//support_turret[i]->giveMoney(); ĳ���Ϳ��� �� �־��ֱ�
+			character->addGold();
 			support_delay[i] = 0;
+			support_turret[i]->coin_state = true;
 		}
 		else {
 			support_delay[i]++;
@@ -193,6 +211,14 @@ void Stage::Update()
 	for (auto iter = tylenol_turret.begin(); iter != tylenol_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
 		(*iter)->missileMove();
 		(*iter)->missileCheck();
+		
+		for (auto iter_missile = (*iter)->missile.begin(); iter_missile != (*iter)->missile.end(); iter_missile++) {
+			for (auto iter_flu = virus_list.begin(); iter_flu != virus_list.end(); iter_flu++) {
+				if ((*iter_missile).crash((*iter_flu)->getX(), (*iter_flu)->getY(), (*iter_flu)->getW(), (*iter_flu)->getH())) {
+					(*iter_flu)->takeDamage((*iter_missile).damage);
+				}
+			}
+		}
 	}
 
 	for (auto iter = hand_sanit_turret.begin(); iter != hand_sanit_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
@@ -203,11 +229,49 @@ void Stage::Update()
 	for (auto iter = spray_turret.begin(); iter != spray_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
 		(*iter)->missileMove();
 		(*iter)->missileCheck();
+
+		for (auto iter_missile = (*iter)->missile_top.begin(); iter_missile != (*iter)->missile_top.end(); iter_missile++) {
+			for (auto iter_flu = virus_list.begin(); iter_flu != virus_list.end(); iter_flu++) {
+				if ((*iter_missile)->crash((*iter_flu)->getX(), (*iter_flu)->getY(), (*iter_flu)->getW(), (*iter_flu)->getH())) {
+					(*iter_flu)->takeDamage((*iter_missile)->damage);
+				}
+			}
+		}
+
+		for (auto iter_missile = (*iter)->missile_middle.begin(); iter_missile != (*iter)->missile_middle.end(); iter_missile++) {
+			for (auto iter_flu = virus_list.begin(); iter_flu != virus_list.end(); iter_flu++) {
+				if ((*iter_missile)->crash((*iter_flu)->getX(), (*iter_flu)->getY(), (*iter_flu)->getW(), (*iter_flu)->getH())) {
+					(*iter_flu)->takeDamage((*iter_missile)->damage);
+				}
+			}
+		}
+
+		for (auto iter_missile = (*iter)->missile_bottom.begin(); iter_missile != (*iter)->missile_bottom.end(); iter_missile++) {
+			for (auto iter_flu = virus_list.begin(); iter_flu != virus_list.end(); iter_flu++) {
+				if ((*iter_missile)->crash((*iter_flu)->getX(), (*iter_flu)->getY(), (*iter_flu)->getW(), (*iter_flu)->getH())) {
+					(*iter_flu)->takeDamage((*iter_missile)->damage);
+				}
+			}
+		}
 	}
 
 	for (auto iter = vaccine_turret.begin(); iter != vaccine_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
 		(*iter)->missileMove();
 		(*iter)->missileCheck();
+
+		for (auto iter_missile = (*iter)->missile.begin(); iter_missile != (*iter)->missile.end(); iter_missile++) {
+			for (auto iter_flu = virus_list.begin(); iter_flu != virus_list.end(); iter_flu++) {
+				if ((*iter_missile).crash((*iter_flu)->getX(), (*iter_flu)->getY(), (*iter_flu)->getW(), (*iter_flu)->getH())) {
+					(*iter_flu)->takeDamage((*iter_missile).damage);
+				}
+			}
+		}
+	}
+
+	for (auto iter = support_turret.begin(); iter != support_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
+		if((*iter)->coin_state)
+			(*iter)->coinMove();
+		(*iter)->coinCheck();
 	}
 
 	tylenol_preview->setXY(move_x, move_y); //����� Ÿ�̷��� �ġ ���
@@ -226,7 +290,9 @@ void Stage::Render()
 	SDL_RenderCopy(g_renderer, texture_, &source_rectangle_, &destination_rectangle_);
 	//SDL_RenderCopy(g_renderer, start_texture_, &start_source_rectangle_, &start_destination_rectangle_);
 	
-  for (auto iter = flu_list.begin(); iter != flu_list.end(); iter++) {
+	character->show();
+
+  for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) {
 		(*iter)-> show();
 	}
 	
@@ -253,6 +319,8 @@ void Stage::Render()
 
 	for (auto iter = support_turret.begin(); iter != support_turret.end(); iter++) { //�ͷ�, �̻��� ����
 		(*iter)->show();
+		if ((*iter)->coin_state)
+			(*iter)->coinShow();
 	}
 
 	if (btn_down) {//��ư�� ����� ���� ����� Ÿ�̷���� �����ְڴ�.
@@ -277,6 +345,7 @@ void Stage::Render()
 		}
 		
 	}
+
 
 	SDL_RenderPresent(g_renderer);
 	
@@ -430,6 +499,44 @@ void Stage::HandleEvents()
 				support_delay.push_back(330);
 				Mix_VolumeChunk(down_, 70);
 				Mix_PlayChannel(-1, down_, 0);
+				if (character->gold_int < 300) break;
+				else {
+					tylenol_turret.push_back(new Tylenol({ move_x, move_y }));
+					tylenol_delay.push_back(33);
+					character->useGold(300);
+				}
+				break;
+			case HANDSANIT:
+				if (character->gold_int < 500) break;
+				else {
+					hand_sanit_turret.push_back(new HandSanitizers({ move_x, move_y }));
+					hand_sanit_delay.push_back(99);
+					character->useGold(500);
+				}
+				break;
+			case SPRAY:
+				if (character->gold_int < 700) break;
+				else {
+					spray_turret.push_back(new Spray({ move_x, move_y }));
+					spray_delay.push_back(66);
+					character->useGold(700);
+				}
+				break;
+			case VACCINE:
+				if (character->gold_int < 1000) break;
+				else {
+					vaccine_turret.push_back(new Vaccine({ move_x, move_y }));
+					vaccine_delay.push_back(165);
+					character->useGold(1000);
+				}
+				break;
+			case SUPPORT:
+				if (character->gold_int < 5000) break;
+				else {
+					support_turret.push_back(new Support({ move_x, move_y }));
+					support_delay.push_back(330);
+					character->useGold(5000);
+				}
 				break;
 			default:
 				break;

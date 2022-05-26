@@ -28,10 +28,13 @@ public:
 	int virus_gold;
 	int virus_hp;
 	int level;
-	Virus(int x, int y, int virus_speed, int virus_gold, int virus_hp, int level, int virus_attack);
+	bool virus_state;
+	Virus(int x, int y, int virus_speed, int virus_gold, int virus_hp, int level, int virus_attack, bool virus_state);
 	~Virus();
 	int getX();
 	int getY();
+	int getW();
+	int getH();
 	void takeDamage(int missile_damage);
 	int hitDamage();
 	void die();

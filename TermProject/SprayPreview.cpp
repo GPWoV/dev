@@ -1,7 +1,7 @@
 #include "SprayPreview.h"
 
 SprayPreview::SprayPreview(int x, int y) {
-	SDL_Surface* spray_surface = IMG_Load("../../Resources/turret_01_ tylenol_move.png");
+	SDL_Surface* spray_surface = IMG_Load("../../Resources/turret_03_spray_move.png");
 	spray_texture = SDL_CreateTextureFromSurface(g_renderer, spray_surface);
 	SDL_FreeSurface(spray_surface);
 	spray_source = { 0,0,100,100 };
