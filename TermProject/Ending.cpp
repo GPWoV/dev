@@ -11,6 +11,9 @@ extern bool g_flag_running;
 extern int g_current_game_phase;
 extern int renewal;
 
+//intro_music_
+extern Mix_Music* intro_music_;
+
 Ending::Ending()
 {
 	// 인트로 이미지
@@ -39,6 +42,17 @@ Ending::Ending()
 	restart_source_rectangle_.y = 0;
 	restart_destination_rectangle_.w = restart_source_rectangle_.w = 380;
 	restart_destination_rectangle_.h = restart_source_rectangle_.h = 128;
+
+	// 엔딩 BGM
+	Mix_VolumeMusic(70);
+
+	ending_music_ = Mix_LoadMUS("../../Resources/ending.mp3");
+	if (!ending_music_)
+	{
+		printf("Couldn't load the Intro music  %s\n", Mix_GetError());
+	}
+
+	Mix_FadeInMusic(ending_music_, -1, 2000);
 
 }
 
@@ -91,7 +105,10 @@ void Ending::HandleEvents()
 					mouse_x < restart_destination_rectangle_.x + restart_destination_rectangle_.w &&
 					mouse_y < restart_destination_rectangle_.y + restart_destination_rectangle_.h
 					) {
+					Mix_HaltMusic();
+
 					g_current_game_phase = PHASE_INTRO;
+					Mix_PlayMusic(intro_music_, -1);
 				}
 			}
 			break;

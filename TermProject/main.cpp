@@ -16,6 +16,7 @@ SDL_Renderer* g_renderer;
 Mix_Music* intro_music_;
 Mix_Music* ending_music_;
 Mix_Music* stage_music_;
+Mix_Music* game_over_music_;
 
 bool g_flag_running;
 Uint32 g_last_time_ms;

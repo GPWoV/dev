@@ -56,9 +56,9 @@ Intro::Intro()
 	tutorial_destination_rectangle_.h = tutorial_source_rectangle_.h = 128;
 
 	// ÀÎÆ®·Î BGM
-	Mix_VolumeMusic(120);
+	Mix_VolumeMusic(70);
 
-	intro_music_ = Mix_LoadMUS("../../Resources/Intro.mp3");
+	intro_music_ = Mix_LoadMUS("../../Resources/intro.mp3");
 	if (!intro_music_)
 	{
 		printf("Couldn't load the Intro music  %s\n", Mix_GetError());
@@ -119,7 +119,7 @@ void Intro::HandleEvents()
 					Mix_HaltMusic();
 
 					g_current_game_phase = PHASE_STAGE;
-					
+					Mix_PlayMusic(stage_music_, -1);
 				}
 
 				if (mouse_x > tutorial_destination_rectangle_.x &&
