@@ -92,7 +92,10 @@ void How::HandleEvents()
 					mouse_x < start_destination_rectangle_.x + start_destination_rectangle_.w &&
 					mouse_y < start_destination_rectangle_.y + start_destination_rectangle_.h
 					) {
+					Mix_HaltMusic();
+
 					g_current_game_phase = PHASE_STAGE;
+					Mix_PlayMusic(stage_music_, -1);
 
 				}
 

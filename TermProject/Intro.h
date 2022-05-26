@@ -1,6 +1,9 @@
 #pragma once
 #include "SDL.h"
 
+extern Mix_Music* intro_music_;
+extern Mix_Music* stage_music_;
+
 class Intro
 {
 public:

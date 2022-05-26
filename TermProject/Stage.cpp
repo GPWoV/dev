@@ -11,6 +11,14 @@ extern bool g_flag_running;
 extern int g_current_game_phase;
 extern int renewal;
 
+extern Mix_Music* stage_music_;
+extern Mix_Music* ending_music_;
+
+// 사운드
+Mix_Chunk* click_;
+Mix_Chunk* down_;
+Mix_Chunk* tylenol_shot_;
+
 Stage::Stage()
 {
 	//stage01 img
@@ -50,6 +58,34 @@ Stage::Stage()
 	start_destination_rectangle_.h = start_source_rectangle_.h = 57;
 	*/
 
+	// 인트로 BGM
+	Mix_VolumeMusic(90);
+
+	stage_music_ = Mix_LoadMUS("../../Resources/stage.mp3");
+	if (!stage_music_)
+	{
+		printf("Couldn't load the Intro music  %s\n", Mix_GetError());
+	}
+
+	Mix_FadeInMusic(stage_music_, -1, 2000);
+
+	Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, AUDIO_S16SYS, 2, 4096);
+
+	click_ = Mix_LoadWAV("../../Resources/click.wav");
+	if (click_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
+	down_ = Mix_LoadWAV("../../Resources/down.wav");
+	if (down_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
+	tylenol_shot_ = Mix_LoadWAV("../../Resources/tylenol_shot.wav");
+	if (tylenol_shot_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
 
 	//about turret
 	turret_kind = NONE; //터렛 종류
@@ -68,6 +104,11 @@ Stage::~Stage()
 {
 	SDL_DestroyTexture(texture_);
 	//SDL_DestroyTexture(start_texture_);
+
+	if (click_) Mix_FreeChunk(click_);
+	if (down_) Mix_FreeChunk(down_);
+	if (tylenol_shot_) Mix_FreeChunk(tylenol_shot_);
+
 	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) { //���� �ͷ���� �����
 		delete (*iter);
 	}
@@ -114,6 +155,8 @@ void Stage::Update()
 
     for (int i = 0; i < tylenol_delay.size(); i++) { //Ÿ�̷��� ���� �ɾ ����
 		if (tylenol_delay[i] > tylenol_turret[i]->delay) {
+			Mix_VolumeChunk(tylenol_shot_, 70);
+			Mix_PlayChannel(-1, tylenol_shot_, 0);
 			tylenol_turret[i]->shooting();
 			tylenol_delay[i] = 0;
 		}
@@ -325,7 +368,10 @@ void Stage::HandleEvents()
 		case SDL_KEYDOWN:
 
 			if (event.key.keysym.sym == SDLK_SPACE) {
+				Mix_HaltMusic();
 				g_current_game_phase = PHASE_ENDING;
+
+				Mix_PlayMusic(ending_music_, -1);
 			}
 
 		case SDL_MOUSEBUTTONDOWN:
@@ -352,30 +398,40 @@ void Stage::HandleEvents()
 					event.button.x<177 &&
 					event.button.y>595 &&
 					event.button.y < 695) {
+					Mix_VolumeChunk(click_, 70);
+					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = TYLENOL;
 				}
 				else if (event.button.x > 202 &&
 					event.button.x < 282 &&
 					event.button.y>595 &&
 					event.button.y < 695) {
+					Mix_VolumeChunk(click_, 70);
+					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = HANDSANIT;
 				}
 				else if (event.button.x > 307 &&
 					event.button.x < 387 &&
 					event.button.y>595 &&
 					event.button.y < 695) {
+					Mix_VolumeChunk(click_, 70);
+					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = SPRAY;
 				}
 				else if (event.button.x > 412 &&
 					event.button.x < 492 &&
 					event.button.y>595 &&
 					event.button.y < 695) {
+					Mix_VolumeChunk(click_, 70);
+					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = VACCINE;
 				}
 				else if (event.button.x > 788 &&
 					event.button.x < 868 &&
 					event.button.y>595 &&
 					event.button.y < 695) {
+					Mix_VolumeChunk(click_, 70);
+					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = SUPPORT;
 				}
 				else {
@@ -415,6 +471,34 @@ void Stage::HandleEvents()
 
 			switch (turret_kind) {
 			case TYLENOL:
+				tylenol_turret.push_back(new Tylenol({ move_x, move_y }));
+				tylenol_delay.push_back(33);
+				Mix_VolumeChunk(down_, 70);
+				Mix_PlayChannel(-1, down_, 0);
+				break;
+			case HANDSANIT:
+				hand_sanit_turret.push_back(new HandSanitizers({ move_x, move_y }));
+				hand_sanit_delay.push_back(99);
+				Mix_VolumeChunk(down_, 70);
+				Mix_PlayChannel(-1, down_, 0);
+				break;
+			case SPRAY:
+				spray_turret.push_back(new Spray({ move_x, move_y }));
+				spray_delay.push_back(66);
+				Mix_VolumeChunk(down_, 70);
+				Mix_PlayChannel(-1, down_, 0);
+				break;
+			case VACCINE:
+				vaccine_turret.push_back(new Vaccine({ move_x, move_y }));
+				vaccine_delay.push_back(165);
+				Mix_VolumeChunk(down_, 70);
+				Mix_PlayChannel(-1, down_, 0);
+				break;
+			case SUPPORT:
+				support_turret.push_back(new Support({ move_x, move_y }));
+				support_delay.push_back(330);
+				Mix_VolumeChunk(down_, 70);
+				Mix_PlayChannel(-1, down_, 0);
 				if (character->gold_int < 300) break;
 				else {
 					tylenol_turret.push_back(new Tylenol({ move_x, move_y }));
