@@ -96,6 +96,7 @@ void Character::show() {
 		damage_state = false;
 	}
 
+	//게임오버
 	if (game_state == false) {
 		gameover_r = { (1280 - gameover_destination.w / 2) / 2, (720 - gameover_destination.h / 2) / 2, gameover_destination.w / 2, gameover_destination.h / 2 };
 		SDL_RenderCopy(g_renderer, gameover_texture, &gameover_source, &gameover_destination);
