@@ -156,12 +156,12 @@ void Stage::Update()
 
 	for (int i = 0; i < support_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (support_delay[i] > support_turret[i]->delay) {
-			//support_turret[i]->giveMoney(); ĳ���Ϳ��� �� �־��ֱ�
+			character->addGold();
 			support_delay[i] = 0;
+			support_turret[i]->coin_state = true;
 		}
 		else {
 			support_delay[i]++;
-			character->addGold();
 		}
 	}
 
@@ -191,6 +191,20 @@ void Stage::Update()
 	for (auto iter = vaccine_turret.begin(); iter != vaccine_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
 		(*iter)->missileMove();
 		(*iter)->missileCheck();
+
+		for (auto iter_missile = (*iter)->missile.begin(); iter_missile != (*iter)->missile.end(); iter_missile++) {
+			for (auto iter_flu = virus_list.begin(); iter_flu != virus_list.end(); iter_flu++) {
+				if ((*iter_missile).crash((*iter_flu)->getX(), (*iter_flu)->getY(), (*iter_flu)->getW(), (*iter_flu)->getH())) {
+					(*iter_flu)->takeDamage((*iter_missile).damage);
+				}
+			}
+		}
+	}
+
+	for (auto iter = support_turret.begin(); iter != support_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
+		if((*iter)->coin_state)
+			(*iter)->coinMove();
+		(*iter)->coinCheck();
 	}
 
 	tylenol_preview->setXY(move_x, move_y); //����� Ÿ�̷��� �ġ ���
@@ -238,6 +252,8 @@ void Stage::Render()
 
 	for (auto iter = support_turret.begin(); iter != support_turret.end(); iter++) { //�ͷ�, �̻��� ����
 		(*iter)->show();
+		if ((*iter)->coin_state)
+			(*iter)->coinShow();
 	}
 
 	if (btn_down) {//��ư�� ����� ���� ����� Ÿ�̷���� �����ְڴ�.

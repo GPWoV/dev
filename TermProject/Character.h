@@ -37,7 +37,7 @@ public:
 	int gold_int = 5000;
 	const char* gold_char;
 	char buf[10];
-	int goverment_gold = 1;
+	int goverment_gold = 200;
 
 	bool damage_state = false;
 	bool game_state = true;
