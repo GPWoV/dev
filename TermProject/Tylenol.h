@@ -13,8 +13,6 @@ private:
 	SDL_Rect tylenol_source;
 	SDL_Rect tylenol_destination;
 
-	list<TylenolMissile> missile;
-
 	SDL_Texture* missile_texture;
 	SDL_Rect missile_source;
 	SDL_Rect missile_destination;
@@ -24,6 +22,8 @@ public:
 	const int w;
 	const int h;
 	const int delay;
+
+	list<TylenolMissile> missile;
 
 	Tylenol(int x, int y);
 	~Tylenol();

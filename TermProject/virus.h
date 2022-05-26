@@ -33,6 +33,8 @@ public:
 	~Virus();
 	int getX();
 	int getY();
+	int getW();
+	int getH();
 	void takeDamage(int missile_damage);
 	int hitDamage();
 	void die();
