@@ -186,6 +186,30 @@ void Stage::Update()
 	for (auto iter = spray_turret.begin(); iter != spray_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
 		(*iter)->missileMove();
 		(*iter)->missileCheck();
+
+		for (auto iter_missile = (*iter)->missile_top.begin(); iter_missile != (*iter)->missile_top.end(); iter_missile++) {
+			for (auto iter_flu = virus_list.begin(); iter_flu != virus_list.end(); iter_flu++) {
+				if ((*iter_missile)->crash((*iter_flu)->getX(), (*iter_flu)->getY(), (*iter_flu)->getW(), (*iter_flu)->getH())) {
+					(*iter_flu)->takeDamage((*iter_missile)->damage);
+				}
+			}
+		}
+
+		for (auto iter_missile = (*iter)->missile_middle.begin(); iter_missile != (*iter)->missile_middle.end(); iter_missile++) {
+			for (auto iter_flu = virus_list.begin(); iter_flu != virus_list.end(); iter_flu++) {
+				if ((*iter_missile)->crash((*iter_flu)->getX(), (*iter_flu)->getY(), (*iter_flu)->getW(), (*iter_flu)->getH())) {
+					(*iter_flu)->takeDamage((*iter_missile)->damage);
+				}
+			}
+		}
+
+		for (auto iter_missile = (*iter)->missile_bottom.begin(); iter_missile != (*iter)->missile_bottom.end(); iter_missile++) {
+			for (auto iter_flu = virus_list.begin(); iter_flu != virus_list.end(); iter_flu++) {
+				if ((*iter_missile)->crash((*iter_flu)->getX(), (*iter_flu)->getY(), (*iter_flu)->getW(), (*iter_flu)->getH())) {
+					(*iter_flu)->takeDamage((*iter_missile)->damage);
+				}
+			}
+		}
 	}
 
 	for (auto iter = vaccine_turret.begin(); iter != vaccine_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
