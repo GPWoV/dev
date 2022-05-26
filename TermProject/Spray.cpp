@@ -1,6 +1,6 @@
 #include "Spray.h"
 
-Spray::Spray(int x, int y) : gold(300), w(100), h(100), delay(66) {
+Spray::Spray(int x, int y) : gold(300), w(100), h(100), delay(33) {
 	SDL_Surface* spray_surface = IMG_Load("../../Resources/turret_03_spray.png");
 	spray_texture = SDL_CreateTextureFromSurface(g_renderer, spray_surface);
 	SDL_FreeSurface(spray_surface);
@@ -11,7 +11,9 @@ Spray::Spray(int x, int y) : gold(300), w(100), h(100), delay(66) {
 	missile_texture = SDL_CreateTextureFromSurface(g_renderer, missile_surface);
 	SDL_FreeSurface(missile_surface);
 	missile_source = { 0,0,25,25 };
-	missile_destination = { 0,0,25,25 };
+	top_destination = { 0,0,25,25 };
+	middle_destination = { 0,0,25,25 };
+	bottom_destination = { 0,0,25,25 };
 }
 
 Spray::~Spray() {
@@ -32,19 +34,25 @@ void Spray::show() {
 }
 
 void Spray::shooting() {
+	printf("top missile 생성\n");
 	missile_top.push_back(new SprayMissile(this->spray_destination.x + 75, this->spray_destination.y + 35));
+	printf("middle missile 생성\n");
 	missile_middle.push_back(new SprayMissile(this->spray_destination.x + 75, this->spray_destination.y + 35));
+	printf("bottom missile 생성\n");
 	missile_bottom.push_back(new SprayMissile(this->spray_destination.x + 75, this->spray_destination.y + 35));
 }
 
 void Spray::missileMove() {
 	for (auto iter = missile_top.begin(); iter != missile_top.end(); iter++) {
+		printf("top missile 이동\n");
 		(*iter)->move(0, spray_destination.x, spray_destination.y);
 	}
 	for (auto iter = missile_middle.begin(); iter != missile_middle.end(); iter++) {
+		printf("middle missile 이동\n");
 		(*iter)->move(1, spray_destination.x, spray_destination.y);
 	}
 	for (auto iter = missile_bottom.begin(); iter != missile_bottom.end(); iter++) {
+		printf("bottom missile 이동\n");
 		(*iter)->move(2, spray_destination.x, spray_destination.y);
 	}
 }
@@ -55,8 +63,9 @@ void Spray::missileShow() {
 		int y = (*iter)->getY();
 		bool state = (*iter)->getState();
 		if (state) {
-			missile_destination = { x,y,25,25 };
-			SDL_RenderCopy(g_renderer, missile_texture, &missile_source, &missile_destination);
+			top_destination = { x,y,25,25 };
+			printf("top 렌더카피\n");
+			SDL_RenderCopy(g_renderer, missile_texture, &missile_source, &top_destination);
 		}
 	}
 	for (auto iter = missile_middle.begin(); iter != missile_middle.end(); iter++) {
@@ -64,8 +73,9 @@ void Spray::missileShow() {
 		int y = (*iter)->getY();
 		bool state = (*iter)->getState();
 		if (state) {
-			missile_destination = { x,y,25,25 };
-			SDL_RenderCopy(g_renderer, missile_texture, &missile_source, &missile_destination);
+			middle_destination = { x,y,25,25 };
+			printf("middle 렌더카피\n");
+			SDL_RenderCopy(g_renderer, missile_texture, &missile_source, &middle_destination);
 		}
 	}
 	for (auto iter = missile_bottom.begin(); iter != missile_bottom.end(); iter++) {
@@ -73,8 +83,9 @@ void Spray::missileShow() {
 		int y = (*iter)->getY();
 		bool state = (*iter)->getState();
 		if (state) {
-			missile_destination = { x,y,25,25 };
-			SDL_RenderCopy(g_renderer, missile_texture, &missile_source, &missile_destination);
+			bottom_destination = { x,y,25,25 };
+			printf("bottom 렌더카피\n");
+			SDL_RenderCopy(g_renderer, missile_texture, &missile_source, &bottom_destination);
 		}
 	}
 }
