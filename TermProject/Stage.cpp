@@ -16,8 +16,11 @@ extern Mix_Music* ending_music_;
 
 // 사운드
 Mix_Chunk* click_;
+Mix_Chunk* coin_;
 Mix_Chunk* down_;
 Mix_Chunk* tylenol_shot_;
+Mix_Chunk* vaccine_shot_;
+Mix_Chunk* sanitizer_shot_;
 
 Stage::Stage()
 {
@@ -86,6 +89,21 @@ Stage::Stage()
 	{
 		printf("Couldn't load the wav: %s\n", Mix_GetError());
 	}
+	coin_ = Mix_LoadWAV("../../Resources/coin.wav");
+	if (coin_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
+	sanitizer_shot_ = Mix_LoadWAV("../../Resources/sanitizer_shot.wav");
+	if (coin_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
+	vaccine_shot_ = Mix_LoadWAV("../../Resources/vaccine_shot.wav");
+	if (coin_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
 
 	//about turret
 	turret_kind = NONE; //터렛 종류
@@ -106,7 +124,11 @@ Stage::~Stage()
 	//SDL_DestroyTexture(start_texture_);
 	if (click_) Mix_FreeChunk(click_);
 	if (down_) Mix_FreeChunk(down_);
+	if (coin_) Mix_FreeChunk(coin_);
 	if (tylenol_shot_) Mix_FreeChunk(tylenol_shot_);
+	if (sanitizer_shot_) Mix_FreeChunk(sanitizer_shot_);
+	if (vaccine_shot_) Mix_FreeChunk(vaccine_shot_);
+
 	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) { //���� �ͷ���� �����
 		delete (*iter);
 	}
@@ -165,6 +187,8 @@ void Stage::Update()
 
 	for (int i = 0; i < hand_sanit_delay.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (hand_sanit_delay[i] > hand_sanit_turret[i]->delay) {
+			Mix_VolumeChunk(sanitizer_shot_, 70);
+			Mix_PlayChannel(1, sanitizer_shot_, 0);
 			hand_sanit_turret[i]->shooting();
 			hand_sanit_delay[i] = 0;
 		}
@@ -185,6 +209,8 @@ void Stage::Update()
 
 	for (int i = 0; i < vaccine_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (vaccine_delay[i] > vaccine_turret[i]->delay) {
+			Mix_VolumeChunk(vaccine_shot_, 70);
+			Mix_PlayChannel(2, vaccine_shot_, 0);
 			vaccine_turret[i]->shooting();
 			vaccine_delay[i] = 0;
 		}
@@ -198,6 +224,8 @@ void Stage::Update()
 	for (int i = 0; i < support_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (support_delay[i] > support_turret[i]->delay) {
 			character->addGold();
+			Mix_VolumeChunk(coin_, 70);
+			Mix_PlayChannel(3, coin_, 0);
 			support_delay[i] = 0;
 			support_turret[i]->coin_state = true;
 		}
