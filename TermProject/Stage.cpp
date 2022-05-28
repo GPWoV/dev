@@ -198,6 +198,7 @@ void Stage::Update()
 	if (stage_clear) {
 		Mix_HaltMusic();
 		renewal_stage_2 = 1;
+		SDL_Delay(2000);
 		g_current_game_phase = PHASE_STAGE_2;
 		Mix_PlayMusic(stage2_music_, -1);
 	}
@@ -461,6 +462,10 @@ void Stage::Render()
 			break;
 		}
 		
+	}
+
+	if (stage_clear) {
+		character->nextLevel();
 	}
 
 
