@@ -24,6 +24,19 @@ extern Mix_Chunk* spray_shot_;
 extern Mix_Chunk* vaccine_shot_;
 extern Mix_Chunk* sanitizer_shot_;
 
+extern Character* character;
+
+extern vector<int>tylenol_delay;
+extern vector<int>hand_sanit_delay;
+extern vector<int>spray_delay;
+extern vector<int>vaccine_delay;
+extern vector<int>support_delay;
+
+extern vector<Tylenol*> tylenol_turret;
+extern vector<HandSanitizers*> hand_sanit_turret;
+extern vector<Spray*>spray_turret;
+extern vector<Vaccine*>vaccine_turret;
+extern vector<Support*>support_turret;
 
 Stage5::Stage5()
 {
@@ -36,7 +49,6 @@ Stage5::Stage5()
 	destination_rectangle_ = { 0,0,1280,720 };
 
 	//about character
-	character = new Character();
 	character->damage_state = false;
 	character->game_state = true;
 
