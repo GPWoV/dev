@@ -42,10 +42,10 @@ Stage::Stage()
 
 	//about virus
 	srand((unsigned int)time(NULL));
-	round = 1;
+	round = 0;
 	stage_clear = false;
 	for (int virus_cnt = 0; virus_cnt < 10; virus_cnt++)
-		virus_list.push_back(new Virus({ 1200 + rand() % 20 *60,rand() % 10 * 50 + 20,5,100,100,round,10,true }));
+		virus_list.push_back(new Virus({ 1200 + rand() % 20 *60,rand() % 10 * 50 + 20,3,100,100,round,10,true }));
 	
 	
 	// 시작 버튼
