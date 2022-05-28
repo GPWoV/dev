@@ -206,7 +206,7 @@ void Stage2::Update()
 			if ((*iter)->getHpW())
 				character->getDamage((*iter)->virus_attack);
 			else
-				character->addGold((*iter)->virus_attack);
+				character->addGold((*iter)->virus_gold);
 			virus_list.erase(iter);
 			if (virus_list.size() == 1) {
 				printf("stage finish");
