@@ -38,8 +38,11 @@ private:
 	vector<Virus*> virus_list;
 	int round;
 	bool stage_clear;
+
+	const int total_virus;
 	int virus_delay;
 	int respawn_count;
+	int dead_virus;
 
 	//about turret
 	int turret_kind;

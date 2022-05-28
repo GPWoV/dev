@@ -33,6 +33,11 @@ private:
 	SDL_Rect source_rectangle_;
 	SDL_Rect destination_rectangle_;
 
+	const int total_virus;
+	int virus_delay;
+	int respawn_count;
+	int dead_virus;
+
 	list< pair<int, int> > slow_coord;
 
 	//about virus
