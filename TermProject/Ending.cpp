@@ -4,12 +4,33 @@
 
 #include "Ending.h"
 #include "Phase.h"
+#include "Tylenol.h"
+#include "HandSanitizers.h"
+#include "Spray.h"
+#include "Vaccine.h"
+#include "Support.h"
+#include "Character.h"
 
 extern SDL_Window* g_window;
 extern SDL_Renderer* g_renderer;
 extern bool g_flag_running;
 extern int g_current_game_phase;
 extern int renewal;
+
+extern Character* character;
+
+extern vector<int>tylenol_delay;
+extern vector<int>hand_sanit_delay;
+extern vector<int>spray_delay;
+extern vector<int>vaccine_delay;
+extern vector<int>support_delay;
+
+extern vector<Tylenol*> tylenol_turret;
+extern vector<HandSanitizers*> hand_sanit_turret;
+extern vector<Spray*>spray_turret;
+extern vector<Vaccine*>vaccine_turret;
+extern vector<Support*>support_turret;
+
 
 //intro_music_
 extern Mix_Music* intro_music_;
@@ -64,7 +85,38 @@ Ending::~Ending()
 
 void Ending::Update()
 {
+	tylenol_delay.clear();
+	hand_sanit_delay.clear();
+	spray_delay.clear();
+	vaccine_delay.clear();
+	support_delay.clear();
+	
+	for (auto iter = tylenol_turret.begin(); iter != tylenol_turret.end(); iter++) {
+		delete (*iter);
+	}
+	tylenol_turret.clear();
 
+	for (auto iter = hand_sanit_turret.begin(); iter != hand_sanit_turret.end(); iter++) {
+		delete (*iter);
+	}
+	hand_sanit_turret.clear();
+
+	for (auto iter = spray_turret.begin(); iter != spray_turret.end(); iter++) {
+		delete (*iter);
+	}
+	spray_turret.clear();
+
+	for (auto iter = vaccine_turret.begin(); iter != vaccine_turret.end(); iter++) {
+		delete (*iter);
+	}
+	vaccine_turret.clear();
+
+	for (auto iter = support_turret.begin(); iter != support_turret.end(); iter++) {
+		delete (*iter);
+	}
+	support_turret.clear();
+	
+	character->Renewal();
 }
 
 
