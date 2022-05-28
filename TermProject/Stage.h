@@ -25,6 +25,7 @@ public:
 	void HandleEvents();
 	void Update();
 	void Render();
+	void Renewal();
 	bool crash();
 	
 private:

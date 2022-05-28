@@ -9,7 +9,7 @@ extern SDL_Window* g_window;
 extern SDL_Renderer* g_renderer;
 extern bool g_flag_running;
 extern int g_current_game_phase;
-extern int renewal;
+extern int renewal_stage_5;
 
 extern Mix_Music* stage4_music_;
 extern Mix_Music* ending_music_;
@@ -196,9 +196,12 @@ void Stage4::Update()
 			virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 10 * 50 + 20,3,300,300,round,30,true }));
 	}
 
+	SDL_Log("stage4 -> %d", stage_clear);
 	if (stage_clear) {
 		Mix_HaltMusic();
+		renewal_stage_5 = 1;
 
+		SDL_Delay(2000);
 		g_current_game_phase = PHASE_STAGE_5;
 		Mix_PlayMusic(stage5_music_, -1);
 	}
@@ -462,6 +465,10 @@ void Stage4::Render()
 			break;
 		}
 
+	}
+
+	if (stage_clear) {
+		character->nextLevel();
 	}
 
 	SDL_RenderPresent(g_renderer);

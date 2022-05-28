@@ -462,7 +462,6 @@ void Stage5::Render()
 
 	}
 
-
 	SDL_RenderPresent(g_renderer);
 
 }

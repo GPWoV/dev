@@ -1,5 +1,7 @@
 #pragma once
 #include "SDL.h"
+#include "Character.h"
+#include "virus.h"
 
 extern Mix_Music* intro_music_;
 extern Mix_Music* stage_music_;
@@ -25,4 +27,7 @@ private:
 	SDL_Texture* tutorial_texture_;
 	SDL_Rect tutorial_source_rectangle_;
 	SDL_Rect tutorial_destination_rectangle_;
+
+	Character* character;
+	Virus* virus;
 };

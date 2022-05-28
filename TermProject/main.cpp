@@ -59,7 +59,7 @@ void CleanWindow();
 
 // Game Phases
 int g_current_game_phase;
-int renewal;
+int renewal_stage_1, renewal_stage_2, renewal_stage_3, renewal_stage_4, renewal_stage_5;
 
 int main(int argc, char* argv[])
 {
@@ -98,6 +98,11 @@ int main(int argc, char* argv[])
 
 	g_last_time_ms = SDL_GetTicks();
 	g_current_game_phase = PHASE_INTRO;
+	renewal_stage_1 = 0;
+	renewal_stage_2 = 0;
+	renewal_stage_3 = 0;
+	renewal_stage_4 = 0;
+	renewal_stage_5 = 0;
 
 	while (g_flag_running)
 	{
@@ -120,30 +125,50 @@ int main(int argc, char* argv[])
 		}
 		else if (g_current_game_phase == PHASE_STAGE)
 		{
+			if (renewal_stage_1 == 1) {
+				stage.Renewal();
+				renewal_stage_1 = 0;
+			}
 			stage.HandleEvents();
 			stage.Update();
 			stage.Render();
 		}
 		else if (g_current_game_phase == PHASE_STAGE_2)
 		{
+			if (renewal_stage_2 == 1) {
+				stage.Renewal();
+				renewal_stage_2 = 0;
+			}
 			stage2.HandleEvents();
 			stage2.Update();
 			stage2.Render();
 		}
 		else if (g_current_game_phase == PHASE_STAGE_3)
 		{
+			if (renewal_stage_3 == 1) {
+				stage.Renewal();
+				renewal_stage_3 = 0;
+			}
 			stage3.HandleEvents();
 			stage3.Update();
 			stage3.Render();
 		}
 		else if (g_current_game_phase == PHASE_STAGE_4)
 		{
+			if (renewal_stage_4 == 1) {
+				stage.Renewal();
+				renewal_stage_4 = 0;
+			}
 			stage4.HandleEvents();
 			stage4.Update();
 			stage4.Render();
 		}
 		else if (g_current_game_phase == PHASE_STAGE_5)
 		{
+			if (renewal_stage_5 == 1) {
+				stage.Renewal();
+				renewal_stage_5 = 0;
+			}
 			stage5.HandleEvents();
 			stage5.Update();
 			stage5.Render();
