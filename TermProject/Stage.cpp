@@ -43,6 +43,7 @@ Stage::Stage()
 	//about virus
 	srand((unsigned int)time(NULL));
 	round = 1;
+	stage_clear = false;
 	for (int virus_cnt = 0; virus_cnt < 10; virus_cnt++)
 		virus_list.push_back(new Virus({ 1200 + rand() % 20 *60,rand() % 10 * 50 + 20,5,100,100,round,10,true }));
 	
@@ -181,6 +182,7 @@ void Stage::Update()
 {
 
 	//virus 움직임,자기소멸,캐릭터한테 데미지 주기 구현완료
+	
 	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) {
 		int count = 0;
 		for(auto coord_iter = slow_coord.begin(); coord_iter != slow_coord.end(); coord_iter++){
@@ -202,11 +204,17 @@ void Stage::Update()
 
 		(*iter)->move();
 		if (!((*iter)->virus_state)) {
+
 			if ((*iter)->getHpW())
 				character->getDamage((*iter)->virus_attack);
 			else
 				character->addGold((*iter)->virus_attack);
 			virus_list.erase(iter);
+			if (virus_list.size() == 1) {
+				printf("stage finish");
+				stage_clear = true;
+				break;
+			}
 			iter--;
 		}
 	}
