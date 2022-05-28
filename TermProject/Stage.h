@@ -37,6 +37,7 @@ private:
 	//about virus
 	vector<Virus*> virus_list;
 	int round;
+	bool stage_clear;
 	
 	//about turret
 	int turret_kind;
