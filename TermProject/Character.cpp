@@ -121,6 +121,11 @@ void Character::useGold(int turret_price) {
 	this->gold_int -= turret_price;
 }
 
+void Character::Renewal() {
+
+
+}
+
 void Character::nextLevel() {
 	SDL_RenderCopy(g_renderer, level_texture, &level_source, &level_destination);
 	

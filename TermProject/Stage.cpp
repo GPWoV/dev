@@ -9,7 +9,7 @@ extern SDL_Window* g_window;
 extern SDL_Renderer* g_renderer;
 extern bool g_flag_running;
 extern int g_current_game_phase;
-extern int renewal;
+extern int renewal_stage_2;
 
 extern Mix_Music* stage_music_;
 extern Mix_Music* ending_music_;
@@ -193,10 +193,11 @@ Stage::~Stage()
 
 void Stage::Update()
 {
-
+	SDL_Log("%d", stage_clear);
 	//virus 움직임,자기소멸,캐릭터한테 데미지 주기 구현완료
 	if (stage_clear) {
 		Mix_HaltMusic();
+		renewal_stage_2 = 1;
 		SDL_Delay(2000);
 		g_current_game_phase = PHASE_STAGE_2;
 		Mix_PlayMusic(stage2_music_, -1);
@@ -490,6 +491,7 @@ void Stage::HandleEvents()
 
 			if (event.key.keysym.sym == SDLK_SPACE) {
 				Mix_HaltMusic();
+				
 				g_current_game_phase = PHASE_ENDING;
 
 				Mix_PlayMusic(ending_music_, -1);
@@ -660,4 +662,8 @@ void Stage::HandleEvents()
 			turret_kind = NONE;
 		}
 	}
+}
+
+void Stage::Renewal() {
+	stage_clear = false;
 }

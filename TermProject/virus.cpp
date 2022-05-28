@@ -103,3 +103,7 @@ void Virus::show() {
 
 }
 
+void Virus::Renewal() {
+
+}
+
