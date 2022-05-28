@@ -43,7 +43,7 @@ Stage2::Stage2()
 
 	//about virus
 	srand((unsigned int)time(NULL));
-	round = 1;
+	round = 2;
 	for (int virus_cnt = 0; virus_cnt < 10; virus_cnt++)
 		virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 10 * 50 + 20,5,100,100,round,10,true }));
 
@@ -201,6 +201,11 @@ void Stage2::Update()
 			else
 				character->addGold((*iter)->virus_attack);
 			virus_list.erase(iter);
+			if (virus_list.size() == 1) {
+				printf("stage finish");
+				stage_clear = true;
+				break;
+			}
 			iter--;
 		}
 	}
