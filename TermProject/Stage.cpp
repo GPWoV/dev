@@ -13,6 +13,7 @@ extern int renewal;
 
 extern Mix_Music* stage_music_;
 extern Mix_Music* ending_music_;
+extern Mix_Music* stage2_music_;
 
 // 사운드
 Mix_Chunk* click_;
@@ -139,7 +140,8 @@ Stage::~Stage()
 	if (down_) Mix_FreeChunk(down_);
 	if (coin_) Mix_FreeChunk(coin_);
 	if (hit_) Mix_FreeChunk(hit_);
-	if (tylenol_shot_) Mix_FreeChunk(tylenol_shot_);
+	if (tylenol_shot_) Mix_FreeChunk(tylenol_shot_); 
+	if (spray_shot_) Mix_FreeChunk(spray_shot_);
 	if (sanitizer_shot_) Mix_FreeChunk(sanitizer_shot_);
 	if (vaccine_shot_) Mix_FreeChunk(vaccine_shot_);
 
