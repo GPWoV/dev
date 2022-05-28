@@ -216,7 +216,7 @@ void Stage::Update()
 			else
 				character->addGold((*iter)->virus_attack);
 			virus_list.erase(iter);
-			if (virus_list.size() == 0) { // yj changes 1 to 0
+			if (virus_list.size() == 0) {
 				printf("stage finish");
 				stage_clear = true;
 				break;
