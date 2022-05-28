@@ -206,7 +206,7 @@ void Stage5::Update()
 			else
 				character->addGold((*iter)->virus_attack);
 			virus_list.erase(iter);
-			if (virus_list.size() == 1) {
+			if (virus_list.size() == 0) {
 				printf("stage finish");
 				stage_clear = true;
 				break;
@@ -438,7 +438,6 @@ void Stage5::Render()
 		}
 
 	}
-
 
 	SDL_RenderPresent(g_renderer);
 

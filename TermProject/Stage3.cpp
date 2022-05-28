@@ -175,7 +175,7 @@ void Stage3::Update()
 {
 	if (stage_clear) {
 		Mix_HaltMusic();
-
+		SDL_Delay(2000);
 		g_current_game_phase = PHASE_STAGE_4;
 		Mix_PlayMusic(stage4_music_, -1);
 	}
@@ -207,7 +207,7 @@ void Stage3::Update()
 			else
 				character->addGold((*iter)->virus_attack);
 			virus_list.erase(iter);
-			if (virus_list.size() == 1) {
+			if (virus_list.size() == 0) {
 				printf("stage finish");
 				stage_clear = true;
 				break;
@@ -440,6 +440,9 @@ void Stage3::Render()
 
 	}
 
+	if (stage_clear) {
+		character->nextLevel();
+	}
 
 	SDL_RenderPresent(g_renderer);
 
