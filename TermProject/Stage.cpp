@@ -197,7 +197,7 @@ void Stage::Update()
 {
 	SDL_Log("%d", stage_clear);
 	virus_delay++;
-	if ((virus_delay > 165) && (respawn_count < total_virus/3)) {
+	if ((virus_delay > 165) && (respawn_count < total_virus/3 -1)) {
 		virus_delay = 0;
 		respawn_count++;
 		for (int virus_cnt = 0; virus_cnt < 3; virus_cnt++)

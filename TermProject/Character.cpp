@@ -122,8 +122,10 @@ void Character::useGold(int turret_price) {
 }
 
 void Character::Renewal() {
-
-
+	gold_int = 5000;
+	damage_state = false;
+	game_state = true;
+	hp_destination = { character_destination.x, character_destination.y - 20, (int)(character_source.w * character_hp / 1000), hp_source.h };
 }
 
 void Character::nextLevel() {
