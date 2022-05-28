@@ -512,7 +512,7 @@ void Stage3::HandleEvents()
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = SPRAY;
 				}
-				else if (event.button.x > 412 &&
+				/*else if (event.button.x > 412 &&
 					event.button.x < 492 &&
 					event.button.y>595 &&
 					event.button.y < 695) {
@@ -527,7 +527,7 @@ void Stage3::HandleEvents()
 					Mix_VolumeChunk(click_, 70);
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = SUPPORT;
-				}
+				}*/
 				else {
 					turret_kind = NONE;
 				}

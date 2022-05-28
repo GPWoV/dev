@@ -520,14 +520,14 @@ void Stage4::HandleEvents()
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = VACCINE;
 				}
-				else if (event.button.x > 788 &&
+				/*else if (event.button.x > 788 &&
 					event.button.x < 868 &&
 					event.button.y>595 &&
 					event.button.y < 695) {
 					Mix_VolumeChunk(click_, 70);
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = SUPPORT;
-				}
+				}*/
 				else {
 					turret_kind = NONE;
 				}
