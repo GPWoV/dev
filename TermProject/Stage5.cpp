@@ -42,6 +42,7 @@ Stage5::Stage5()
 
 	//about virus
 	srand((unsigned int)time(NULL));
+	stage_clear = false;
 	round = 5;
 	for (int virus_cnt = 0; virus_cnt < 10; virus_cnt++)
 		virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 10 * 50 + 20,5,100,100,round,10,true }));
@@ -172,7 +173,12 @@ Stage5::~Stage5()
 
 void Stage5::Update()
 {
+	if (stage_clear) {
+		Mix_HaltMusic();
 
+		g_current_game_phase = PHASE_ENDING;
+		Mix_PlayMusic(ending_music_, -1);
+	}
 	//virus 움직임,자기소멸,캐릭터한테 데미지 주기 구현완료
 	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) {
 		int count = 0;

@@ -182,6 +182,12 @@ void Stage::Update()
 {
 
 	//virus 움직임,자기소멸,캐릭터한테 데미지 주기 구현완료
+	if (stage_clear) {
+		Mix_HaltMusic();
+
+		g_current_game_phase = PHASE_STAGE_2;
+		Mix_PlayMusic(stage2_music_, -1);
+	}
 	
 	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) {
 		int count = 0;
@@ -381,6 +387,7 @@ void Stage::Update()
 
 void Stage::Render()
 {
+
 	SDL_SetRenderDrawColor(g_renderer, 255, 255, 255, 255);
 	SDL_RenderClear(g_renderer);
 	
