@@ -13,16 +13,17 @@ extern int renewal;
 
 extern Mix_Music* stage_music_;
 extern Mix_Music* ending_music_;
+extern Mix_Music* stage2_music_;
 
 // 사운드
-Mix_Chunk* click_;
-Mix_Chunk* coin_;
-Mix_Chunk* down_;
-Mix_Chunk* hit_;
-Mix_Chunk* tylenol_shot_;
-Mix_Chunk* spray_shot_;
-Mix_Chunk* vaccine_shot_;
-Mix_Chunk* sanitizer_shot_;
+extern Mix_Chunk* click_;
+extern Mix_Chunk* coin_;
+extern Mix_Chunk* down_;
+extern Mix_Chunk* hit_;
+extern Mix_Chunk* tylenol_shot_;
+extern Mix_Chunk* spray_shot_;
+extern Mix_Chunk* vaccine_shot_;
+extern Mix_Chunk* sanitizer_shot_;
 
 Stage::Stage()
 {
@@ -42,6 +43,7 @@ Stage::Stage()
 	//about virus
 	srand((unsigned int)time(NULL));
 	round = 1;
+	stage_clear = false;
 	for (int virus_cnt = 0; virus_cnt < 10; virus_cnt++)
 		virus_list.push_back(new Virus({ 1200 + rand() % 20 *60,rand() % 10 * 50 + 20,5,100,100,round,10,true }));
 	
@@ -139,7 +141,8 @@ Stage::~Stage()
 	if (down_) Mix_FreeChunk(down_);
 	if (coin_) Mix_FreeChunk(coin_);
 	if (hit_) Mix_FreeChunk(hit_);
-	if (tylenol_shot_) Mix_FreeChunk(tylenol_shot_);
+	if (tylenol_shot_) Mix_FreeChunk(tylenol_shot_); 
+	if (spray_shot_) Mix_FreeChunk(spray_shot_);
 	if (sanitizer_shot_) Mix_FreeChunk(sanitizer_shot_);
 	if (vaccine_shot_) Mix_FreeChunk(vaccine_shot_);
 
@@ -179,6 +182,7 @@ void Stage::Update()
 {
 
 	//virus 움직임,자기소멸,캐릭터한테 데미지 주기 구현완료
+	
 	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) {
 		int count = 0;
 		for(auto coord_iter = slow_coord.begin(); coord_iter != slow_coord.end(); coord_iter++){
@@ -200,11 +204,17 @@ void Stage::Update()
 
 		(*iter)->move();
 		if (!((*iter)->virus_state)) {
+
 			if ((*iter)->getHpW())
 				character->getDamage((*iter)->virus_attack);
 			else
 				character->addGold((*iter)->virus_attack);
 			virus_list.erase(iter);
+			if (virus_list.size() == 1) {
+				printf("stage finish");
+				stage_clear = true;
+				break;
+			}
 			iter--;
 		}
 	}
