@@ -39,7 +39,7 @@ extern vector<Spray*>spray_turret;
 extern vector<Vaccine*>vaccine_turret;
 extern vector<Support*>support_turret;
 
-Stage4::Stage4()
+Stage4::Stage4() : total_virus(15)
 {
 	//stage01 img
 	SDL_Surface* temp_surface = IMG_Load("../../Resources/background_stage_04.png");
@@ -57,9 +57,11 @@ Stage4::Stage4()
 	srand((unsigned int)time(NULL));
 	stage_clear = false;
 	round = 3;
-	for (int virus_cnt = 0; virus_cnt < 10; virus_cnt++)
-		virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 10 * 50 + 20,3,100,100,round,10,true }));
-
+	for (int virus_cnt = 0; virus_cnt < 3; virus_cnt++)
+		virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 10 * 50 + 20,3,300,300,round,30,true }));
+	virus_delay = 0;
+	respawn_count = 0;
+	dead_virus = 0;
 
 	// 시작 버튼
 	/*
@@ -186,6 +188,14 @@ Stage4::~Stage4()
 
 void Stage4::Update()
 {
+	virus_delay++;
+	if ((virus_delay > 330) && (respawn_count < total_virus / 3 - 1)) {
+		virus_delay = 0;
+		respawn_count++;
+		for (int virus_cnt = 0; virus_cnt < 3; virus_cnt++)
+			virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 10 * 50 + 20,3,300,300,round,30,true }));
+	}
+
 	if (stage_clear) {
 		Mix_HaltMusic();
 
@@ -215,12 +225,13 @@ void Stage4::Update()
 
 		(*iter)->move();
 		if (!((*iter)->virus_state)) {
+			dead_virus++;
 			if ((*iter)->getHpW())
 				character->getDamage((*iter)->virus_attack);
 			else
 				character->addGold((*iter)->virus_gold);
 			virus_list.erase(iter);
-			if (virus_list.size() == 0) {
+			if (dead_virus == total_virus) {
 				printf("stage finish");
 				stage_clear = true;
 				break;
@@ -532,14 +543,14 @@ void Stage4::HandleEvents()
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = VACCINE;
 				}
-				/*else if (event.button.x > 788 &&
+				else if (event.button.x > 788 &&
 					event.button.x < 868 &&
 					event.button.y>595 &&
 					event.button.y < 695) {
 					Mix_VolumeChunk(click_, 70);
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = SUPPORT;
-				}*/
+				}
 				else {
 					turret_kind = NONE;
 				}

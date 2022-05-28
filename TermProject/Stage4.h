@@ -39,6 +39,11 @@ private:
 	int round;
 	bool stage_clear;
 
+	const int total_virus;
+	int virus_delay;
+	int respawn_count;
+	int dead_virus;
+
 	//about turret
 	int turret_kind;
 	enum turret { TYLENOL, HANDSANIT, SPRAY, VACCINE, SUPPORT, NONE };
