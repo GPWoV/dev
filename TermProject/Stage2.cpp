@@ -58,8 +58,6 @@ Stage2::Stage2() : total_virus(12)
 	srand((unsigned int)time(NULL));
 	stage_clear = false;
 	round = 1;
-	for (int virus_cnt = 0; virus_cnt < 3; virus_cnt++)
-		virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 10 * 50 + 20,3,100,100,round,10,true }));
 	virus_delay = 0;
 	respawn_count = 0;
 	dead_virus = 0;
@@ -190,7 +188,7 @@ Stage2::~Stage2()
 void Stage2::Update()
 {
 	virus_delay++;
-	if ((virus_delay > 165) && (respawn_count < total_virus / 3 - 1)) {
+	if ((virus_delay > 165) && (respawn_count < total_virus / 3)) {
 		virus_delay = 0;
 		respawn_count++;
 		for (int virus_cnt = 0; virus_cnt < 3; virus_cnt++)
@@ -664,4 +662,15 @@ void Stage2::HandleEvents()
 			turret_kind = NONE;
 		}
 	}
+}
+
+void Stage2::Renewal() {
+	stage_clear = false;
+	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) {
+		delete (*iter);
+	}
+	virus_list.clear();
+	virus_delay = 0;
+	respawn_count = 0;
+	dead_virus = 0;
 }

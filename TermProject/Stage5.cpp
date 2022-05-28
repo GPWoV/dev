@@ -56,8 +56,6 @@ Stage5::Stage5() : total_virus(18)
 	srand((unsigned int)time(NULL));
 	stage_clear = false;
 	round = 4;
-	for (int virus_cnt = 0; virus_cnt < 3; virus_cnt++)
-		virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 10 * 50 + 20,3,500,500,round,50,true }));
 	virus_delay = 0;
 	respawn_count = 0;
 	dead_virus = 0;
@@ -189,7 +187,7 @@ Stage5::~Stage5()
 void Stage5::Update()
 {
 	virus_delay++;
-	if ((virus_delay > 330) && (respawn_count<5)) {
+	if ((virus_delay > 330) && (respawn_count<total_virus/3)) {
 		virus_delay = 0;
 		respawn_count++;
 		for (int virus_cnt = 0; virus_cnt < 3; virus_cnt++)
@@ -655,3 +653,15 @@ void Stage5::HandleEvents()
 		}
 	}
 }
+
+void Stage5::Renewal() {
+	stage_clear = false;
+	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) {
+		delete (*iter);
+	}
+	virus_list.clear();
+	virus_delay = 0;
+	respawn_count = 0;
+	dead_virus = 0;
+}
+
