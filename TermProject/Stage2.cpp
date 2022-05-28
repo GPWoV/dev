@@ -505,7 +505,7 @@ void Stage2::HandleEvents()
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = HANDSANIT;
 				}
-				else if (event.button.x > 307 &&
+				/*else if (event.button.x > 307 &&
 					event.button.x < 387 &&
 					event.button.y>595 &&
 					event.button.y < 695) {
@@ -528,7 +528,7 @@ void Stage2::HandleEvents()
 					Mix_VolumeChunk(click_, 70);
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = SUPPORT;
-				}
+				}*/
 				else {
 					turret_kind = NONE;
 				}

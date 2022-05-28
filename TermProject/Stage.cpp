@@ -506,7 +506,7 @@ void Stage::HandleEvents()
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = TYLENOL;
 				}
-				else if (event.button.x > 202 &&
+				/*else if (event.button.x > 202 &&
 					event.button.x < 282 &&
 					event.button.y>595 &&
 					event.button.y < 695) {
@@ -537,7 +537,7 @@ void Stage::HandleEvents()
 					Mix_VolumeChunk(click_, 70);
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = SUPPORT;
-				}
+				}*/
 				else {
 					turret_kind = NONE;
 				}
