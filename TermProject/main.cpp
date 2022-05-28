@@ -22,6 +22,15 @@ Mix_Music* stage4_music_;
 Mix_Music* stage5_music_;
 Mix_Music* game_over_music_;
 
+Mix_Chunk* click_;
+Mix_Chunk* coin_;
+Mix_Chunk* down_;
+Mix_Chunk* hit_;
+Mix_Chunk* tylenol_shot_;
+Mix_Chunk* spray_shot_;
+Mix_Chunk* vaccine_shot_;
+Mix_Chunk* sanitizer_shot_;
+
 bool g_flag_running;
 Uint32 g_last_time_ms;
 int g_frame_time_ms = 30;
