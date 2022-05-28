@@ -38,31 +38,18 @@ private:
 	vector<Virus*> virus_list;
 	int round;
 	bool stage_clear;
+	int virus_delay;
+	int respawn_count;
 
 	//about turret
 	int turret_kind;
 	enum turret { TYLENOL, HANDSANIT, SPRAY, VACCINE, SUPPORT, NONE };
-	vector<int>tylenol_delay;
-	vector<int>hand_sanit_delay;
-	vector<int>spray_delay;
-	vector<int>vaccine_delay;
-	vector<int>support_delay;
-
-	vector<Tylenol*> tylenol_turret;
-	vector<HandSanitizers*> hand_sanit_turret;
-	vector<Spray*>spray_turret;
-	vector<Vaccine*>vaccine_turret;
-	vector<Support*>support_turret;
 
 	TylenolPreview* tylenol_preview;
 	HandSanitPreview* hand_sanit_preview;
 	SprayPreview* spray_preview;
 	VaccinePreview* vaccine_preview;
 	SupportPreview* support_preview;
-
-	Character* character;
-
-
 
 	bool btn_down;
 	bool btn_up;
