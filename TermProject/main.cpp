@@ -7,6 +7,10 @@
 #include "Intro.h"
 #include "How.h"
 #include "Stage.h"
+#include "Stage2.h"
+#include "Stage3.h"
+#include "Stage4.h"
+#include "Stage5.h"
 #include "Ending.h"
 
 /////////////////////////////////////////////////
@@ -69,6 +73,10 @@ int main(int argc, char* argv[])
 	}
 
 	Stage stage;
+	Stage2 stage2;
+	Stage3 stage3;
+	Stage4 stage4;
+	Stage5 stage5;
 	Ending ending;
 	Intro intro;
 	How how;
@@ -100,6 +108,30 @@ int main(int argc, char* argv[])
 			stage.HandleEvents();
 			stage.Update();
 			stage.Render();
+		}
+		else if (g_current_game_phase == PHASE_STAGE_2)
+		{
+			stage2.HandleEvents();
+			stage2.Update();
+			stage2.Render();
+		}
+		else if (g_current_game_phase == PHASE_STAGE_3)
+		{
+			stage3.HandleEvents();
+			stage3.Update();
+			stage3.Render();
+		}
+		else if (g_current_game_phase == PHASE_STAGE_4)
+		{
+			stage4.HandleEvents();
+			stage4.Update();
+			stage4.Render();
+		}
+		else if (g_current_game_phase == PHASE_STAGE_5)
+		{
+			stage5.HandleEvents();
+			stage5.Update();
+			stage5.Render();
 		}
 		else if (g_current_game_phase == PHASE_ENDING)
 		{
