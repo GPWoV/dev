@@ -9,7 +9,7 @@ extern SDL_Window* g_window;
 extern SDL_Renderer* g_renderer;
 extern bool g_flag_running;
 extern int g_current_game_phase;
-extern int renewal;
+extern int renewal_stage_1;
 
 Intro::Intro()
 {
@@ -120,6 +120,8 @@ void Intro::HandleEvents()
 					Mix_HaltMusic();
 
 					g_current_game_phase = PHASE_STAGE;
+					renewal_stage_1 = 1;
+
 					Mix_PlayMusic(stage_music_, -1);
 				}
 

@@ -9,7 +9,7 @@ extern SDL_Window* g_window;
 extern SDL_Renderer* g_renderer;
 extern bool g_flag_running;
 extern int g_current_game_phase;
-extern int renewal;
+extern int renewal_stage_5;
 
 extern Mix_Music* stage4_music_;
 extern Mix_Music* ending_music_;
@@ -186,8 +186,10 @@ Stage4::~Stage4()
 
 void Stage4::Update()
 {
+	SDL_Log("stage4 -> %d", stage_clear);
 	if (stage_clear) {
 		Mix_HaltMusic();
+		renewal_stage_5 = 1;
 
 		g_current_game_phase = PHASE_STAGE_5;
 		Mix_PlayMusic(stage5_music_, -1);
