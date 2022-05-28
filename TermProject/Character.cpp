@@ -2,7 +2,7 @@
 #include "Character.h"
 #include <string.h>
 
-Character::Character() : character_hp(1000), w(250), h(250) {
+Character::Character() {
 	//main Ä³¸¯ÅÍ
 	SDL_Surface* character_surface = IMG_Load("../../Resources/character_normal.png");
 	character_texture = SDL_CreateTextureFromSurface(g_renderer, character_surface);
@@ -61,6 +61,7 @@ Character::~Character() {
 	SDL_DestroyTexture(damage_texture);
 	SDL_DestroyTexture(gold_num_texture);
 	SDL_DestroyTexture(gameover_texture);
+	SDL_DestroyTexture(level_texture);
 	SDL_DestroyTexture(hp_texture);
 
 }
