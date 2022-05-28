@@ -2,7 +2,7 @@
 #include "SDL_image.h"
 #include "SDL_mixer.h"
 
-#include "Stage.h"
+#include "Stage2.h"
 #include "Phase.h"
 
 extern SDL_Window* g_window;
@@ -16,19 +16,20 @@ extern Mix_Music* ending_music_;
 extern Mix_Music* stage3_music_;
 
 // 사운드
-Mix_Chunk* click_;
-Mix_Chunk* coin_;
-Mix_Chunk* down_;
-Mix_Chunk* hit_;
-Mix_Chunk* tylenol_shot_;
-Mix_Chunk* spray_shot_;
-Mix_Chunk* vaccine_shot_;
-Mix_Chunk* sanitizer_shot_;
+extern Mix_Chunk* click_;
+extern Mix_Chunk* coin_;
+extern Mix_Chunk* down_;
+extern Mix_Chunk* hit_;
+extern Mix_Chunk* tylenol_shot_;
+extern Mix_Chunk* spray_shot_;
+extern Mix_Chunk* vaccine_shot_;
+extern Mix_Chunk* sanitizer_shot_;
 
-Stage::Stage()
+
+Stage2::Stage2()
 {
 	//stage01 img
-	SDL_Surface* temp_surface = IMG_Load("../../Resources/background_stage_01.png");
+	SDL_Surface* temp_surface = IMG_Load("../../Resources/background_stage_02.png");
 	texture_ = SDL_CreateTextureFromSurface(g_renderer, temp_surface);
 	SDL_FreeSurface(temp_surface);
 
@@ -132,7 +133,7 @@ Stage::Stage()
 
 }
 
-Stage::~Stage()
+Stage2::~Stage2()
 {
 	SDL_DestroyTexture(texture_);
 	//SDL_DestroyTexture(start_texture_);
@@ -177,7 +178,7 @@ Stage::~Stage()
 	support_turret.clear();
 }
 
-void Stage::Update()
+void Stage2::Update()
 {
 
 	//virus 움직임,자기소멸,캐릭터한테 데미지 주기 구현완료
@@ -371,7 +372,7 @@ void Stage::Update()
 }
 
 
-void Stage::Render()
+void Stage2::Render()
 {
 	SDL_SetRenderDrawColor(g_renderer, 255, 255, 255, 255);
 	SDL_RenderClear(g_renderer);
@@ -442,7 +443,7 @@ void Stage::Render()
 
 
 
-void Stage::HandleEvents()
+void Stage2::HandleEvents()
 {
 
 	SDL_Event event;

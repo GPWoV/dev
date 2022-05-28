@@ -108,6 +108,18 @@
     <ClInclude Include="SupportPreview.h">
       <Filter>소스 파일\turret\GovernmentSupport</Filter>
     </ClInclude>
+    <ClInclude Include="Stage2.h">
+      <Filter>소스 파일\phase</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage3.h">
+      <Filter>소스 파일\phase</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage4.h">
+      <Filter>소스 파일\phase</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage5.h">
+      <Filter>소스 파일\phase</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -172,6 +184,18 @@
     </ClCompile>
     <ClCompile Include="SupportPreview.cpp">
       <Filter>소스 파일\turret\GovernmentSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage2.cpp">
+      <Filter>소스 파일\phase</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage3.cpp">
+      <Filter>소스 파일\phase</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage4.cpp">
+      <Filter>소스 파일\phase</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage5.cpp">
+      <Filter>소스 파일\phase</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

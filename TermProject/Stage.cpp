@@ -16,14 +16,14 @@ extern Mix_Music* ending_music_;
 extern Mix_Music* stage2_music_;
 
 // 사운드
-Mix_Chunk* click_;
-Mix_Chunk* coin_;
-Mix_Chunk* down_;
-Mix_Chunk* hit_;
-Mix_Chunk* tylenol_shot_;
-Mix_Chunk* spray_shot_;
-Mix_Chunk* vaccine_shot_;
-Mix_Chunk* sanitizer_shot_;
+extern Mix_Chunk* click_;
+extern Mix_Chunk* coin_;
+extern Mix_Chunk* down_;
+extern Mix_Chunk* hit_;
+extern Mix_Chunk* tylenol_shot_;
+extern Mix_Chunk* spray_shot_;
+extern Mix_Chunk* vaccine_shot_;
+extern Mix_Chunk* sanitizer_shot_;
 
 Stage::Stage()
 {
