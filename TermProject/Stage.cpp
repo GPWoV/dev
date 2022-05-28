@@ -481,42 +481,42 @@ void Stage::HandleEvents()
 				*/
 
 				btn_up = false;
-				if (event.button.x > 144 &&
-					event.button.x<244 &&
-					event.button.y>772 &&
-					event.button.y < 872) {
+				if (event.button.x > 97 &&
+					event.button.x < 177 &&
+					event.button.y>595 &&
+					event.button.y < 695) {
 					Mix_VolumeChunk(click_, 70);
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = TYLENOL;
 				}
-				else if (event.button.x > 264 &&
-					event.button.x < 364 &&
-					event.button.y>772 &&
-					event.button.y < 872) {
+				else if (event.button.x > 202 &&
+					event.button.x < 282 &&
+					event.button.y>595 &&
+					event.button.y < 695) {
 					Mix_VolumeChunk(click_, 70);
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = HANDSANIT;
 				}
-				else if (event.button.x > 384 &&
-					event.button.x < 484 &&
-					event.button.y>772 &&
-					event.button.y < 872) {
+				else if (event.button.x > 307 &&
+					event.button.x < 387 &&
+					event.button.y>595 &&
+					event.button.y < 695) {
 					Mix_VolumeChunk(click_, 70);
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = SPRAY;
 				}
-				else if (event.button.x > 504 &&
-					event.button.x < 604 &&
-					event.button.y>772 &&
-					event.button.y < 872) {
+				else if (event.button.x > 412 &&
+					event.button.x < 492 &&
+					event.button.y>595 &&
+					event.button.y < 695) {
 					Mix_VolumeChunk(click_, 70);
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = VACCINE;
 				}
-				else if (event.button.x > 996 &&
-					event.button.x < 1096 &&
-					event.button.y>772 &&
-					event.button.y < 872) {
+				else if (event.button.x > 788 &&
+					event.button.x < 868 &&
+					event.button.y>595 &&
+					event.button.y < 695) {
 					Mix_VolumeChunk(click_, 70);
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = SUPPORT;
