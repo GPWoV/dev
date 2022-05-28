@@ -11,7 +11,7 @@ extern bool g_flag_running;
 extern int g_current_game_phase;
 extern int renewal;
 
-extern Mix_Music* stage_music_;
+extern Mix_Music* stage5_music_;
 extern Mix_Music* ending_music_;
 
 // 사운드
@@ -67,13 +67,13 @@ Stage5::Stage5()
 	// 인트로 BGM
 	Mix_VolumeMusic(50);
 
-	stage_music_ = Mix_LoadMUS("../../Resources/stage5.mp3");
-	if (!stage_music_)
+	stage5_music_ = Mix_LoadMUS("../../Resources/stage5.mp3");
+	if (!stage5_music_)
 	{
 		printf("Couldn't load the Intro music  %s\n", Mix_GetError());
 	}
 
-	Mix_FadeInMusic(stage_music_, -1, 2000);
+	Mix_FadeInMusic(stage5_music_, -1, 2000);
 
 	Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, AUDIO_S16SYS, 2, 4096);
 
@@ -136,14 +136,7 @@ Stage5::~Stage5()
 {
 	SDL_DestroyTexture(texture_);
 	//SDL_DestroyTexture(start_texture_);
-	if (click_) Mix_FreeChunk(click_);
-	if (down_) Mix_FreeChunk(down_);
-	if (coin_) Mix_FreeChunk(coin_);
-	if (hit_) Mix_FreeChunk(hit_);
-	if (tylenol_shot_) Mix_FreeChunk(tylenol_shot_);
-	if (spray_shot_) Mix_FreeChunk(spray_shot_);
-	if (sanitizer_shot_) Mix_FreeChunk(sanitizer_shot_);
-	if (vaccine_shot_) Mix_FreeChunk(vaccine_shot_);
+
 
 	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) { //���� �ͷ���� �����
 		delete (*iter);
