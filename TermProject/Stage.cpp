@@ -197,7 +197,7 @@ void Stage::Update()
 	//virus 움직임,자기소멸,캐릭터한테 데미지 주기 구현완료
 	if (stage_clear) {
 		Mix_HaltMusic();
-
+		SDL_Delay(2000);
 		g_current_game_phase = PHASE_STAGE_2;
 		Mix_PlayMusic(stage2_music_, -1);
 	}
@@ -461,6 +461,10 @@ void Stage::Render()
 			break;
 		}
 		
+	}
+
+	if (stage_clear) {
+		character->nextLevel();
 	}
 
 

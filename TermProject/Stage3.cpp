@@ -188,7 +188,7 @@ void Stage3::Update()
 {
 	if (stage_clear) {
 		Mix_HaltMusic();
-
+		SDL_Delay(2000);
 		g_current_game_phase = PHASE_STAGE_4;
 		Mix_PlayMusic(stage4_music_, -1);
 	}
@@ -453,6 +453,9 @@ void Stage3::Render()
 
 	}
 
+	if (stage_clear) {
+		character->nextLevel();
+	}
 
 	SDL_RenderPresent(g_renderer);
 
