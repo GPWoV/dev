@@ -16,6 +16,10 @@ SDL_Renderer* g_renderer;
 Mix_Music* intro_music_;
 Mix_Music* ending_music_;
 Mix_Music* stage_music_;
+Mix_Music* stage2_music_;
+Mix_Music* stage3_music_;
+Mix_Music* stage4_music_;
+Mix_Music* stage5_music_;
 Mix_Music* game_over_music_;
 
 bool g_flag_running;
