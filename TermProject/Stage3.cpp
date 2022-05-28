@@ -25,6 +25,19 @@ extern Mix_Chunk* spray_shot_;
 extern Mix_Chunk* vaccine_shot_;
 extern Mix_Chunk* sanitizer_shot_;
 
+extern Character* character;
+
+extern vector<int>tylenol_delay;
+extern vector<int>hand_sanit_delay;
+extern vector<int>spray_delay;
+extern vector<int>vaccine_delay;
+extern vector<int>support_delay;
+
+extern vector<Tylenol*> tylenol_turret;
+extern vector<HandSanitizers*> hand_sanit_turret;
+extern vector<Spray*>spray_turret;
+extern vector<Vaccine*>vaccine_turret;
+extern vector<Support*>support_turret;
 
 Stage3::Stage3()
 {
@@ -37,7 +50,7 @@ Stage3::Stage3()
 	destination_rectangle_ = { 0,0,1280,720 };
 
 	//about character
-	character = new Character();
+	//character = new Character();
 	character->damage_state = false;
 	character->game_state = true;
 
@@ -205,9 +218,9 @@ void Stage3::Update()
 			if ((*iter)->getHpW())
 				character->getDamage((*iter)->virus_attack);
 			else
-				character->addGold((*iter)->virus_attack);
+				character->addGold((*iter)->virus_gold);
 			virus_list.erase(iter);
-			if (virus_list.size() == 1) {
+			if (virus_list.size() == 0) {
 				printf("stage finish");
 				stage_clear = true;
 				break;
@@ -519,7 +532,7 @@ void Stage3::HandleEvents()
 					Mix_VolumeChunk(click_, 70);
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = VACCINE;
-				}
+				}*/
 				else if (event.button.x > 788 &&
 					event.button.x < 868 &&
 					event.button.y>595 &&
@@ -527,7 +540,7 @@ void Stage3::HandleEvents()
 					Mix_VolumeChunk(click_, 70);
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = SUPPORT;
-				}*/
+				}
 				else {
 					turret_kind = NONE;
 				}

@@ -35,6 +35,20 @@ Mix_Chunk* spray_shot_;
 Mix_Chunk* vaccine_shot_;
 Mix_Chunk* sanitizer_shot_;
 
+Character* character;
+
+vector<int>tylenol_delay;
+vector<int>hand_sanit_delay;
+vector<int>spray_delay;
+vector<int>vaccine_delay;
+vector<int>support_delay;
+
+vector<Tylenol*> tylenol_turret;
+vector<HandSanitizers*> hand_sanit_turret;
+vector<Spray*>spray_turret;
+vector<Vaccine*>vaccine_turret;
+vector<Support*>support_turret;
+
 bool g_flag_running;
 Uint32 g_last_time_ms;
 int g_frame_time_ms = 30;
@@ -72,6 +86,7 @@ int main(int argc, char* argv[])
 
 	}
 
+	character = new Character();
 	Stage stage;
 	Stage2 stage2;
 	Stage3 stage3;
