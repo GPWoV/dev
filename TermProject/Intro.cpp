@@ -13,6 +13,7 @@ extern int renewal;
 
 Intro::Intro()
 {
+
 	// 인트로 이미지
 	SDL_Surface* temp_surface = IMG_Load("../../Resources/background_intro.png");
 	texture_ = SDL_CreateTextureFromSurface(g_renderer, temp_surface);

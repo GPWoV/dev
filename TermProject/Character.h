@@ -47,4 +47,5 @@ public:
 	void getDamage(int missile_damage);
 	void addGold(int gold);
 	void useGold(int turret_price);
+	void Renewal();
 };

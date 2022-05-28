@@ -44,4 +44,5 @@ public:
 	void die();
 	void move();
 	void show();
+	void Renewal();
 };

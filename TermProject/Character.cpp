@@ -118,3 +118,7 @@ void Character::addGold(int gold) {
 void Character::useGold(int turret_price) {
 	this->gold_int -= turret_price;
 }
+
+void Character::Renewal() {
+
+}
