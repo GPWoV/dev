@@ -1,6 +1,6 @@
 #include "Tylenol.h"
 
-Tylenol::Tylenol(int x, int y) : gold(300), w(100), h(100), delay(10) {
+Tylenol::Tylenol(int x, int y) : gold(300), w(100), h(100), delay(20) {
 	SDL_Surface* tylenol_surface = IMG_Load("../../Resources/turret_01_ tylenol.png");
 	//SDL_SetColorKey(tylenol_surface, SDL_TRUE, SDL_MapRGB(tylenol_surface->format, 255, 255, 255));
 	tylenol_texture = SDL_CreateTextureFromSurface(g_renderer, tylenol_surface);

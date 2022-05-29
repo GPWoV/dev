@@ -39,10 +39,10 @@ private:
 public:
 	int character_hp = 1000;
 
-	int gold_int = 5000;
+	int gold_int = 1000;
 	const char* gold_char;
 	char buf[10];
-	int goverment_gold = 200;
+	int goverment_gold = 50;
 
 	bool damage_state = false;
 	bool game_state = true;
