@@ -307,7 +307,7 @@ void Stage5::Update()
 	}
 
 	for (auto iter = tylenol_turret.begin(); iter != tylenol_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
-		(*iter)->missileMove();
+		if (character->game_state) (*iter)->missileMove();
 		(*iter)->missileCheck();
 
 		for (auto iter_missile = (*iter)->missile.begin(); iter_missile != (*iter)->missile.end(); iter_missile++) {
@@ -322,7 +322,7 @@ void Stage5::Update()
 	}
 
 	for (auto iter = hand_sanit_turret.begin(); iter != hand_sanit_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
-		(*iter)->missileMove();
+		if (character->game_state) (*iter)->missileMove();
 		(*iter)->missileCheck();
 
 		for (auto iter_missile = (*iter)->missile.begin(); iter_missile != (*iter)->missile.end(); iter_missile++) {
@@ -335,7 +335,7 @@ void Stage5::Update()
 	}
 
 	for (auto iter = spray_turret.begin(); iter != spray_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
-		(*iter)->missileMove();
+		if (character->game_state) (*iter)->missileMove();
 		(*iter)->missileCheck();
 
 		for (auto iter_missile = (*iter)->missile_top.begin(); iter_missile != (*iter)->missile_top.end(); iter_missile++) {
@@ -370,7 +370,7 @@ void Stage5::Update()
 	}
 
 	for (auto iter = vaccine_turret.begin(); iter != vaccine_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
-		(*iter)->missileMove();
+		if (character->game_state) (*iter)->missileMove();
 		(*iter)->missileCheck();
 
 		for (auto iter_missile = (*iter)->missile.begin(); iter_missile != (*iter)->missile.end(); iter_missile++) {
@@ -386,7 +386,7 @@ void Stage5::Update()
 
 	for (auto iter = support_turret.begin(); iter != support_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
 		if ((*iter)->coin_state)
-			(*iter)->coinMove();
+			if (character->game_state) (*iter)->coinMove();
 		(*iter)->coinCheck();
 	}
 
