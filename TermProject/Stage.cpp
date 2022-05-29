@@ -234,7 +234,10 @@ void Stage::Update()
 			(*iter)->virus_speed = (*iter)->virus_default_speed;
 		}
 
-		(*iter)->move();
+		if (character->game_state) {
+			(*iter)->move();
+		}
+
 		if (!((*iter)->virus_state)) {
 			dead_virus++;
 			if ((*iter)->getHpW())
@@ -267,8 +270,15 @@ void Stage::Update()
 
     for (int i = 0; i < tylenol_delay.size(); i++) { //Ÿ�̷��� ���� �ɾ ����
 		if (tylenol_delay[i] > tylenol_turret[i]->delay) {
+<<<<<<< HEAD
+			if (character->game_state) {
+				Mix_VolumeChunk(tylenol_shot_, 10);
+				Mix_PlayChannel(-1, tylenol_shot_, 0);
+			}
+=======
 			Mix_VolumeChunk(tylenol_shot_, 15);
 			Mix_PlayChannel(8, tylenol_shot_, 0);
+>>>>>>> 6674f4809090b6f18532e4c505fdb152a7b1ca26
 			tylenol_turret[i]->shooting();
 			tylenol_delay[i] = 0;
 		}
@@ -279,8 +289,15 @@ void Stage::Update()
 
 	for (int i = 0; i < hand_sanit_delay.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (hand_sanit_delay[i] > hand_sanit_turret[i]->delay) {
+<<<<<<< HEAD
+			if (character->game_state) {
+				Mix_VolumeChunk(sanitizer_shot_, 10);
+				Mix_PlayChannel(1, sanitizer_shot_, 0);
+			}
+=======
 			Mix_VolumeChunk(sanitizer_shot_, 20);
 			Mix_PlayChannel(1, sanitizer_shot_, 0);
+>>>>>>> 6674f4809090b6f18532e4c505fdb152a7b1ca26
 			hand_sanit_turret[i]->shooting();
 			hand_sanit_delay[i] = 0;
 		}
@@ -291,8 +308,10 @@ void Stage::Update()
 
 	for (int i = 0; i < spray_delay.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (spray_delay[i] > spray_turret[i]->delay) {
-			Mix_VolumeChunk(spray_shot_, 30);
-			Mix_PlayChannel(6, spray_shot_, 0);
+			if (character->game_state) {
+				Mix_VolumeChunk(spray_shot_, 30);
+				Mix_PlayChannel(6, spray_shot_, 0);
+			}
 			spray_turret[i]->shooting();
 			spray_delay[i] = 0;
 		}
@@ -303,8 +322,10 @@ void Stage::Update()
 
 	for (int i = 0; i < vaccine_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (vaccine_delay[i] > vaccine_turret[i]->delay) {
-			Mix_VolumeChunk(vaccine_shot_, 50);
-			Mix_PlayChannel(2, vaccine_shot_, 0);
+			if (character->game_state) {
+				Mix_VolumeChunk(vaccine_shot_, 50);
+				Mix_PlayChannel(2, vaccine_shot_, 0);
+			}
 			vaccine_turret[i]->shooting();
 			vaccine_delay[i] = 0;
 		}
@@ -317,8 +338,10 @@ void Stage::Update()
 
 	for (int i = 0; i < support_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (support_delay[i] > support_turret[i]->delay) {
-			Mix_VolumeChunk(coin_, 80);
-			Mix_PlayChannel(3, coin_, 0);
+			if (character->game_state) {
+				Mix_VolumeChunk(coin_, 80);
+				Mix_PlayChannel(3, coin_, 0);
+			}
 			character->addGold(character->goverment_gold); // from yj / change parameter
 			support_delay[i] = 0;
 			support_turret[i]->coin_state = true;
@@ -329,7 +352,7 @@ void Stage::Update()
 	}
 
 	for (auto iter = tylenol_turret.begin(); iter != tylenol_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
-		(*iter)->missileMove();
+		if (character->game_state) (*iter)->missileMove();
 		(*iter)->missileCheck();
 		
 		for (auto iter_missile = (*iter)->missile.begin(); iter_missile != (*iter)->missile.end(); iter_missile++) {
@@ -344,7 +367,7 @@ void Stage::Update()
 	}
 
 	for (auto iter = hand_sanit_turret.begin(); iter != hand_sanit_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
-		(*iter)->missileMove();
+		if(character->game_state) (*iter)->missileMove();
 		(*iter)->missileCheck();
 
 		for (auto iter_missile = (*iter)->missile.begin(); iter_missile != (*iter)->missile.end(); iter_missile++) {
@@ -357,7 +380,7 @@ void Stage::Update()
 	}
 
 	for (auto iter = spray_turret.begin(); iter != spray_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
-		(*iter)->missileMove();
+		if (character->game_state) (*iter)->missileMove();
 		(*iter)->missileCheck();
 
 		for (auto iter_missile = (*iter)->missile_top.begin(); iter_missile != (*iter)->missile_top.end(); iter_missile++) {
@@ -392,7 +415,7 @@ void Stage::Update()
 	}
 
 	for (auto iter = vaccine_turret.begin(); iter != vaccine_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
-		(*iter)->missileMove();
+		if (character->game_state) (*iter)->missileMove();
 		(*iter)->missileCheck();
 
 		for (auto iter_missile = (*iter)->missile.begin(); iter_missile != (*iter)->missile.end(); iter_missile++) {
@@ -408,7 +431,7 @@ void Stage::Update()
 
 	for (auto iter = support_turret.begin(); iter != support_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
 		if((*iter)->coin_state)
-			(*iter)->coinMove();
+			if (character->game_state) (*iter)->coinMove();
 		(*iter)->coinCheck();
 	}
 

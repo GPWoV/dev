@@ -64,6 +64,8 @@ void CleanWindow();
 int g_current_game_phase;
 int renewal_stage_1, renewal_stage_2, renewal_stage_3, renewal_stage_4, renewal_stage_5;
 
+int character_hp = 1000;
+
 int main(int argc, char* argv[])
 {
 	InitializeWindow("WoV", 10, 50, 1280, 720, false);
@@ -88,8 +90,8 @@ int main(int argc, char* argv[])
 			(audio_channels > 1) ? "stereo" : "mono");
 
 	}
-
-	character = new Character();
+	
+	character = new Character(1000);
 	Stage stage;
 	Stage2 stage2;
 	Stage3 stage3;
