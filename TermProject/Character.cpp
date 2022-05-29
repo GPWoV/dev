@@ -64,14 +64,6 @@ Character::Character(int character_hp) {
 
 	//골드
 	font = TTF_OpenFont("../../Resources/game_over.ttf", 150);
-	SDL_Color black = { 0, 0, 0, 0 };
-
-	sprintf_s(buf, "%d", gold_int);
-	this->gold_char = this->buf;
-	SDL_Surface* gold_num_surface = TTF_RenderText_Blended(font, gold_char, black);
-	gold_num_destination = { 0, 0, gold_num_surface->w, gold_num_surface->h };
-	gold_num_texture = SDL_CreateTextureFromSurface(g_renderer, gold_num_surface);
-	SDL_FreeSurface(gold_num_surface);
 
 }
 
