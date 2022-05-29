@@ -190,7 +190,6 @@ Stage3::~Stage3()
 
 void Stage3::Update()
 {
-	SDL_Log("stage3 -> %d", stage_clear);
 	virus_delay++;
 	if ((virus_delay > 165) && (respawn_count < total_virus / 3)) {
 		virus_delay = 0;
@@ -491,7 +490,7 @@ void Stage3::Render()
 	}
 
 	if (stage_clear) {
-		character->nextLevel();
+		character->nextLevel(4);
 	}
 
 	//게임오버

@@ -198,7 +198,6 @@ void Stage4::Update()
 			virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 10 * 50 + 20,3,300,300,round,30,true }));
 	}
 
-	SDL_Log("stage4 -> %d", stage_clear);
 	if (stage_clear) {
 		Mix_HaltMusic();
 		renewal_stage_5 = 1;
@@ -491,7 +490,7 @@ void Stage4::Render()
 	}
 
 	if (stage_clear) {
-		character->nextLevel();
+		character->nextLevel(5);
 	}
 	//게임오버
 	if (!character->game_state) {

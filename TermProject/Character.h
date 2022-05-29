@@ -21,7 +21,10 @@ private:
 	SDL_Rect gameover_source;
 	SDL_Rect gameover_destination;
 
-	SDL_Texture* level_texture;
+	SDL_Texture* level2_texture;
+	SDL_Texture* level3_texture;
+	SDL_Texture* level4_texture;
+	SDL_Texture* level5_texture;
 	SDL_Rect level_source;
 	SDL_Rect level_destination;
 
@@ -51,6 +54,6 @@ public:
 	void addGold(int gold);
 	void useGold(int turret_price);
 	void Renewal();
-	void nextLevel();
+	void nextLevel(int stage);
 	void gameOver();
 };

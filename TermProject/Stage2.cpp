@@ -11,8 +11,6 @@ extern bool g_flag_running;
 extern int g_current_game_phase;
 extern int renewal_stage_3;
 
-
-
 extern Character* character;
 
 extern vector<int>tylenol_delay;
@@ -199,8 +197,6 @@ void Stage2::Update()
 			virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 10 * 50 + 20,3,200,200,round,10,true }));
 	}
 	
-
-	SDL_Log("stage2 -> %d", stage_clear);
 	if (stage_clear) {
 		Mix_HaltMusic();
 		renewal_stage_3 = 1;
@@ -492,7 +488,7 @@ void Stage2::Render()
 	}
 
 	if (stage_clear) {
-		character->nextLevel();
+		character->nextLevel(3);
 	}
 
 	//게임오버
