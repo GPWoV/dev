@@ -1,6 +1,6 @@
 #include "Spray.h"
 
-Spray::Spray(int x, int y) : gold(300), w(100), h(100), delay(33) {
+Spray::Spray(int x, int y) : gold(500), w(100), h(100), delay(33) {
 	SDL_Surface* spray_surface = IMG_Load("../../Resources/turret_03_spray.png");
 	spray_texture = SDL_CreateTextureFromSurface(g_renderer, spray_surface);
 	SDL_FreeSurface(spray_surface);

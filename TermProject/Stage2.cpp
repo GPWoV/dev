@@ -25,6 +25,12 @@ extern vector<Spray*>spray_turret;
 extern vector<Vaccine*>vaccine_turret;
 extern vector<Support*>support_turret;
 
+extern int tylenol_price;
+extern int hand_sanitizers_price;
+extern int spray_price;
+extern int vaccine_price;
+extern int support_price;
+
 
 Stage2::Stage2() : total_virus(12)
 {
@@ -189,6 +195,8 @@ Stage2::~Stage2()
 
 void Stage2::Update()
 {
+	character->goldShow();
+
 	virus_delay++;
 	if ((virus_delay > 165) && (respawn_count < total_virus / 3)) {
 		virus_delay = 0;
@@ -620,11 +628,11 @@ void Stage2::HandleEvents()
 
 			switch (turret_kind) {
 			case TYLENOL:
-				if (character->gold_int < 300) break;
+				if (character->gold_int < tylenol_price) break;
 				else {
 					tylenol_turret.push_back(new Tylenol({ move_x, move_y }));
 					tylenol_delay.push_back(33);
-					character->useGold(300);
+					character->useGold(tylenol_price);
 				}
 				tylenol_turret.push_back(new Tylenol({ move_x, move_y }));
 				tylenol_delay.push_back(33);
@@ -632,11 +640,11 @@ void Stage2::HandleEvents()
 				Mix_PlayChannel(-1, down_, 0);
 				break;
 			case HANDSANIT:
-				if (character->gold_int < 500) break;
+				if (character->gold_int < hand_sanitizers_price) break;
 				else {
 					hand_sanit_turret.push_back(new HandSanitizers({ move_x, move_y }));
 					hand_sanit_delay.push_back(99);
-					character->useGold(500);
+					character->useGold(hand_sanitizers_price);
 				}
 				hand_sanit_turret.push_back(new HandSanitizers({ move_x, move_y }));
 				hand_sanit_delay.push_back(99);
@@ -644,11 +652,11 @@ void Stage2::HandleEvents()
 				Mix_PlayChannel(-1, down_, 0);
 				break;
 			case SPRAY:
-				if (character->gold_int < 700) break;
+				if (character->gold_int < spray_price) break;
 				else {
 					spray_turret.push_back(new Spray({ move_x, move_y }));
 					spray_delay.push_back(66);
-					character->useGold(700);
+					character->useGold(spray_price);
 				}
 				spray_turret.push_back(new Spray({ move_x, move_y }));
 				spray_delay.push_back(66);
@@ -656,11 +664,11 @@ void Stage2::HandleEvents()
 				Mix_PlayChannel(-1, down_, 0);
 				break;
 			case VACCINE:
-				if (character->gold_int < 1000) break;
+				if (character->gold_int < vaccine_price) break;
 				else {
 					vaccine_turret.push_back(new Vaccine({ move_x, move_y }));
 					vaccine_delay.push_back(165);
-					character->useGold(1000);
+					character->useGold(vaccine_price);
 				}
 				vaccine_turret.push_back(new Vaccine({ move_x, move_y }));
 				vaccine_delay.push_back(165);
@@ -668,11 +676,11 @@ void Stage2::HandleEvents()
 				Mix_PlayChannel(-1, down_, 0);
 				break;
 			case SUPPORT:
-				if (character->gold_int < 5000) break;
+				if (character->gold_int < support_price) break;
 				else {
 					support_turret.push_back(new Support({ move_x, move_y }));
 					support_delay.push_back(330);
-					character->useGold(5000);
+					character->useGold(support_price);
 				}
 				support_turret.push_back(new Support({ move_x, move_y }));
 				support_delay.push_back(330);
