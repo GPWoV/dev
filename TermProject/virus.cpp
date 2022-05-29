@@ -33,12 +33,14 @@ Virus::Virus(int x, int y, int virus_speed, int virus_gold, int virus_hp, int le
 	{
 		printf("Couldn't load the wav: %s\n", Mix_GetError());
 	}
+
 }
 
 Virus::~Virus() {
 	SDL_DestroyTexture(virus_texture);
 	SDL_DestroyTexture(virus_hp_texture);
 	if (dead_) Mix_FreeChunk(dead_);
+
 }
 
 int Virus::getX() {

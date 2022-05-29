@@ -9,21 +9,7 @@ extern SDL_Window* g_window;
 extern SDL_Renderer* g_renderer;
 extern bool g_flag_running;
 extern int g_current_game_phase;
-extern int renewal_stage_2;
-
-extern Mix_Music* stage_music_;
-extern Mix_Music* ending_music_;
-extern Mix_Music* stage2_music_;
-
-// 사운드
-extern Mix_Chunk* click_;
-extern Mix_Chunk* coin_;
-extern Mix_Chunk* down_;
-extern Mix_Chunk* hit_;
-extern Mix_Chunk* tylenol_shot_;
-extern Mix_Chunk* spray_shot_;
-extern Mix_Chunk* vaccine_shot_;
-extern Mix_Chunk* sanitizer_shot_;
+extern int renewal_stage_1;
 
 extern Character* character;
 
@@ -123,12 +109,27 @@ Stage::Stage() : total_virus(12)
 		printf("Couldn't load the wav: %s\n", Mix_GetError());
 	}
 	sanitizer_shot_ = Mix_LoadWAV("../../Resources/sanitizer_shot.wav");
-	if (coin_ == NULL)
+	if (sanitizer_shot_ == NULL)
 	{
 		printf("Couldn't load the wav: %s\n", Mix_GetError());
 	}
 	vaccine_shot_ = Mix_LoadWAV("../../Resources/vaccine_shot.wav");
-	if (coin_ == NULL)
+	if (vaccine_shot_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
+	game_over_ = Mix_LoadWAV("../../Resources/game_over.wav");
+	if (game_over_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
+	next_level_ = Mix_LoadWAV("../../Resources/next_level.wav");
+	if (next_level_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
+	character_hit_ = Mix_LoadWAV("../../Resources/character_hit.wav");
+	if (character_hit_ == NULL)
 	{
 		printf("Couldn't load the wav: %s\n", Mix_GetError());
 	}
@@ -158,6 +159,9 @@ Stage::~Stage()
 	if (spray_shot_) Mix_FreeChunk(spray_shot_);
 	if (sanitizer_shot_) Mix_FreeChunk(sanitizer_shot_);
 	if (vaccine_shot_) Mix_FreeChunk(vaccine_shot_);
+	if (game_over_) Mix_FreeChunk(game_over_);
+	if (next_level_) Mix_FreeChunk(next_level_);
+	if (character_hit_) Mix_FreeChunk(character_hit_);
 
 	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) { //���� �ͷ���� �����
 		delete (*iter);
@@ -193,20 +197,21 @@ Stage::~Stage()
 
 void Stage::Update()
 {
-	SDL_Log("%d", stage_clear);
 	virus_delay++;
 	if ((virus_delay > 165) && (respawn_count < total_virus/3)) {
 		virus_delay = 0;
 		respawn_count++;
 		for (int virus_cnt = 0; virus_cnt < 3; virus_cnt++)
-			virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 10 * 50 + 20,3,100,100,round,10,true }));
+			virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 38 * 10 + 120,3,100,100,round,10,true }));
+		printf("stage1 new moster count\n");
+		printf("stage1 moster capacity : %d\n", virus_list.capacity());
 	}
 	
 
 	//virus 움직임,자기소멸,캐릭터한테 데미지 주기 구현완료
 	if (stage_clear) {
 		Mix_HaltMusic();
-		renewal_stage_2 = 1;
+		renewal_stage_1 = 1;
 		SDL_Delay(2000);
 		g_current_game_phase = PHASE_STAGE_2;
 		Mix_PlayMusic(stage2_music_, -1);
@@ -231,16 +236,28 @@ void Stage::Update()
 			(*iter)->virus_speed = (*iter)->virus_default_speed;
 		}
 
-		(*iter)->move();
+		if (character->game_state) {
+			(*iter)->move();
+		}
+
 		if (!((*iter)->virus_state)) {
 			dead_virus++;
-			if ((*iter)->getHpW())
+			if ((*iter)->getHpW()>0)
+			{
+				Mix_VolumeChunk(character_hit_, 100);
+				Mix_PlayChannel(6, character_hit_, 0);
 				character->getDamage((*iter)->virus_attack);
-			else
+			}
+			else {
+				Mix_VolumeChunk(coin_, 80);
+				Mix_PlayChannel(3, coin_, 0);
 				character->addGold((*iter)->virus_gold);
+			}
 			virus_list.erase(iter);
 			if (dead_virus == total_virus) {
 				printf("stage finish");
+				Mix_VolumeChunk(next_level_, 100);
+				Mix_PlayChannel(7, next_level_, 0);
 				stage_clear = true;
 				break;
 			}
@@ -255,8 +272,10 @@ void Stage::Update()
 
     for (int i = 0; i < tylenol_delay.size(); i++) { //Ÿ�̷��� ���� �ɾ ����
 		if (tylenol_delay[i] > tylenol_turret[i]->delay) {
-			Mix_VolumeChunk(tylenol_shot_, 10);
-			Mix_PlayChannel(-1, tylenol_shot_, 0);
+			if (character->game_state) {
+				Mix_VolumeChunk(tylenol_shot_, 10);
+				Mix_PlayChannel(-1, tylenol_shot_, 0);
+			}
 			tylenol_turret[i]->shooting();
 			tylenol_delay[i] = 0;
 		}
@@ -267,8 +286,10 @@ void Stage::Update()
 
 	for (int i = 0; i < hand_sanit_delay.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (hand_sanit_delay[i] > hand_sanit_turret[i]->delay) {
-			Mix_VolumeChunk(sanitizer_shot_, 10);
-			Mix_PlayChannel(1, sanitizer_shot_, 0);
+			if (character->game_state) {
+				Mix_VolumeChunk(sanitizer_shot_, 10);
+				Mix_PlayChannel(1, sanitizer_shot_, 0);
+			}
 			hand_sanit_turret[i]->shooting();
 			hand_sanit_delay[i] = 0;
 		}
@@ -279,8 +300,10 @@ void Stage::Update()
 
 	for (int i = 0; i < spray_delay.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (spray_delay[i] > spray_turret[i]->delay) {
-			Mix_VolumeChunk(spray_shot_, 30);
-			Mix_PlayChannel(6, spray_shot_, 0);
+			if (character->game_state) {
+				Mix_VolumeChunk(spray_shot_, 30);
+				Mix_PlayChannel(6, spray_shot_, 0);
+			}
 			spray_turret[i]->shooting();
 			spray_delay[i] = 0;
 		}
@@ -291,8 +314,10 @@ void Stage::Update()
 
 	for (int i = 0; i < vaccine_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (vaccine_delay[i] > vaccine_turret[i]->delay) {
-			Mix_VolumeChunk(vaccine_shot_, 50);
-			Mix_PlayChannel(2, vaccine_shot_, 0);
+			if (character->game_state) {
+				Mix_VolumeChunk(vaccine_shot_, 50);
+				Mix_PlayChannel(2, vaccine_shot_, 0);
+			}
 			vaccine_turret[i]->shooting();
 			vaccine_delay[i] = 0;
 		}
@@ -305,8 +330,10 @@ void Stage::Update()
 
 	for (int i = 0; i < support_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (support_delay[i] > support_turret[i]->delay) {
-			Mix_VolumeChunk(coin_, 80);
-			Mix_PlayChannel(3, coin_, 0);
+			if (character->game_state) {
+				Mix_VolumeChunk(coin_, 80);
+				Mix_PlayChannel(3, coin_, 0);
+			}
 			character->addGold(character->goverment_gold); // from yj / change parameter
 			support_delay[i] = 0;
 			support_turret[i]->coin_state = true;
@@ -317,7 +344,7 @@ void Stage::Update()
 	}
 
 	for (auto iter = tylenol_turret.begin(); iter != tylenol_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
-		(*iter)->missileMove();
+		if (character->game_state) (*iter)->missileMove();
 		(*iter)->missileCheck();
 		
 		for (auto iter_missile = (*iter)->missile.begin(); iter_missile != (*iter)->missile.end(); iter_missile++) {
@@ -332,7 +359,7 @@ void Stage::Update()
 	}
 
 	for (auto iter = hand_sanit_turret.begin(); iter != hand_sanit_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
-		(*iter)->missileMove();
+		if(character->game_state) (*iter)->missileMove();
 		(*iter)->missileCheck();
 
 		for (auto iter_missile = (*iter)->missile.begin(); iter_missile != (*iter)->missile.end(); iter_missile++) {
@@ -345,7 +372,7 @@ void Stage::Update()
 	}
 
 	for (auto iter = spray_turret.begin(); iter != spray_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
-		(*iter)->missileMove();
+		if (character->game_state) (*iter)->missileMove();
 		(*iter)->missileCheck();
 
 		for (auto iter_missile = (*iter)->missile_top.begin(); iter_missile != (*iter)->missile_top.end(); iter_missile++) {
@@ -380,7 +407,7 @@ void Stage::Update()
 	}
 
 	for (auto iter = vaccine_turret.begin(); iter != vaccine_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
-		(*iter)->missileMove();
+		if (character->game_state) (*iter)->missileMove();
 		(*iter)->missileCheck();
 
 		for (auto iter_missile = (*iter)->missile.begin(); iter_missile != (*iter)->missile.end(); iter_missile++) {
@@ -396,7 +423,7 @@ void Stage::Update()
 
 	for (auto iter = support_turret.begin(); iter != support_turret.end(); iter++) { //Ÿ�̷��� �̻��� �̵� �� ���
 		if((*iter)->coin_state)
-			(*iter)->coinMove();
+			if (character->game_state) (*iter)->coinMove();
 		(*iter)->coinCheck();
 	}
 
@@ -474,7 +501,13 @@ void Stage::Render()
 	}
 
 	if (stage_clear) {
-		character->nextLevel();
+
+		character->nextLevel(2);
+	}
+
+	//게임오버
+	if (!character->game_state) {
+		character->gameOver();
 	}
 
 
@@ -596,8 +629,8 @@ void Stage::HandleEvents()
 				move_x = 50;
 			if (move_x > 1230)
 				move_x = 1230;
-			if (move_y < 50)
-				move_y = 50;
+			if (move_y < 120)
+				move_y = 120;
 			if (move_y > 520)
 				move_y = 520;
 
@@ -679,6 +712,7 @@ void Stage::Renewal() {
 		delete (*iter);
 	}
 	virus_list.clear();
+	vector<Virus*>().swap(virus_list);
 	virus_delay = 0;
 	respawn_count = 0;
 	dead_virus = 0;

@@ -5,6 +5,8 @@ extern SDL_Renderer* g_renderer;
 extern bool g_glag_running;
 extern phase game_phase;
 
+
+
 class Character {
 private:
 	SDL_Texture* character_texture;
@@ -19,7 +21,10 @@ private:
 	SDL_Rect gameover_source;
 	SDL_Rect gameover_destination;
 
-	SDL_Texture* level_texture;
+	SDL_Texture* level2_texture;
+	SDL_Texture* level3_texture;
+	SDL_Texture* level4_texture;
+	SDL_Texture* level5_texture;
 	SDL_Rect level_source;
 	SDL_Rect level_destination;
 
@@ -27,15 +32,12 @@ private:
 	SDL_Rect hp_source;
 	SDL_Rect hp_destination;
 
-
 	TTF_Font* font;
 	SDL_Texture* gold_num_texture;
 	SDL_Rect gold_num_destination;
 
 public:
-	int character_hp;
-	const int w;
-	const int h;
+	int character_hp = 1000;
 
 	int gold_int = 5000;
 	const char* gold_char;
@@ -45,12 +47,13 @@ public:
 	bool damage_state = false;
 	bool game_state = true;
 
-	Character();
+	Character(int character_hp);
 	~Character();
 	void show();
 	void getDamage(int missile_damage);
 	void addGold(int gold);
 	void useGold(int turret_price);
 	void Renewal();
-	void nextLevel();
+	void nextLevel(int stage);
+	void gameOver();
 };
