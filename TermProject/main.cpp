@@ -207,7 +207,7 @@ int main(int argc, char* argv[])
 			stage3.Renewal();
 			stage4.Renewal();
 			stage5.Renewal();
-			tylenol_price = 300;
+			tylenol_price = 200;
 			hand_sanitizers_price = 200;
 			spray_price = 200;
 			vaccine_price = 2000;
