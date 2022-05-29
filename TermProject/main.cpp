@@ -165,10 +165,11 @@ int main(int argc, char* argv[])
 			if (renewal_stage_3 == 1) {
 				stage3.Renewal();
 				renewal_stage_3 = 0;
-				tylenol_price += 100;
-				hand_sanitizers_price += 100;
-				spray_price += 100;
-				support_price += 100;
+				tylenol_price += 200;
+				hand_sanitizers_price += 200;
+				spray_price += 200;
+				vaccine_price += 1000;
+				support_price += 200;
 			}
 		}
 		else if (g_current_game_phase == PHASE_STAGE_4)
@@ -182,6 +183,7 @@ int main(int argc, char* argv[])
 				tylenol_price += 100;
 				hand_sanitizers_price += 100;
 				spray_price += 100;
+				vaccine_price += 1000;
 				support_price += 100;
 			}
 		}
@@ -205,9 +207,10 @@ int main(int argc, char* argv[])
 			stage3.Renewal();
 			stage4.Renewal();
 			stage5.Renewal();
-			tylenol_price = 300;
+			tylenol_price = 200;
 			hand_sanitizers_price = 200;
 			spray_price = 200;
+			vaccine_price = 2000;
 			vaccine_price = 2000;
 			support_price = 200;
 		}
