@@ -196,11 +196,10 @@ Stage2::~Stage2()
 void Stage2::Update()
 {
 	virus_delay++;
-	if ((virus_delay > 165) && (respawn_count < total_virus / 3)) {
+	if ((virus_delay > 165) && (respawn_count < total_virus)) {
 		virus_delay = 0;
 		respawn_count++;
-		for (int virus_cnt = 0; virus_cnt < 3; virus_cnt++)
-			virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 36 * 10 + 120,3,200,200,round,10,true }));
+		virus_list.push_back(new Virus({ 1200, rand() % 36 * 10 + 120,3,50,200,round,10,true }));
 	}
 	
 	if (stage_clear) {
@@ -565,7 +564,7 @@ void Stage2::HandleEvents()
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = HANDSANIT;
 				}
-				/*else if (event.button.x > 307 &&
+				else if (event.button.x > 307 &&
 					event.button.x < 387 &&
 					event.button.y>595 &&
 					event.button.y < 695) {
@@ -580,7 +579,7 @@ void Stage2::HandleEvents()
 					Mix_VolumeChunk(click_, 70);
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = VACCINE;
-				}*/
+				}
 				else if (event.button.x > 788 &&
 					event.button.x < 868 &&
 					event.button.y>595 &&
@@ -632,8 +631,6 @@ void Stage2::HandleEvents()
 					tylenol_delay.push_back(33);
 					character->useGold(tylenol_price);
 				}
-				tylenol_turret.push_back(new Tylenol({ move_x, move_y }));
-				tylenol_delay.push_back(33);
 				Mix_VolumeChunk(down_, 70);
 				Mix_PlayChannel(-1, down_, 0);
 				break;
@@ -644,8 +641,6 @@ void Stage2::HandleEvents()
 					hand_sanit_delay.push_back(99);
 					character->useGold(hand_sanitizers_price);
 				}
-				hand_sanit_turret.push_back(new HandSanitizers({ move_x, move_y }));
-				hand_sanit_delay.push_back(99);
 				Mix_VolumeChunk(down_, 70);
 				Mix_PlayChannel(-1, down_, 0);
 				break;
@@ -656,8 +651,6 @@ void Stage2::HandleEvents()
 					spray_delay.push_back(66);
 					character->useGold(spray_price);
 				}
-				spray_turret.push_back(new Spray({ move_x, move_y }));
-				spray_delay.push_back(66);
 				Mix_VolumeChunk(down_, 70);
 				Mix_PlayChannel(-1, down_, 0);
 				break;
@@ -668,8 +661,6 @@ void Stage2::HandleEvents()
 					vaccine_delay.push_back(165);
 					character->useGold(vaccine_price);
 				}
-				vaccine_turret.push_back(new Vaccine({ move_x, move_y }));
-				vaccine_delay.push_back(165);
 				Mix_VolumeChunk(down_, 70);
 				Mix_PlayChannel(-1, down_, 0);
 				break;
@@ -680,8 +671,6 @@ void Stage2::HandleEvents()
 					support_delay.push_back(330);
 					character->useGold(support_price);
 				}
-				support_turret.push_back(new Support({ move_x, move_y }));
-				support_delay.push_back(330);
 				Mix_VolumeChunk(down_, 70);
 				Mix_PlayChannel(-1, down_, 0);
 

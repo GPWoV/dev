@@ -52,9 +52,9 @@ vector<Spray*>spray_turret;
 vector<Vaccine*>vaccine_turret;
 vector<Support*>support_turret;
 
-int tylenol_price = 300;
-int hand_sanitizers_price = 400;
-int spray_price = 500;
+int tylenol_price = 200;
+int hand_sanitizers_price = 200;
+int spray_price = 200;
 int vaccine_price = 2000;
 int support_price = 200;
 
@@ -151,6 +151,10 @@ int main(int argc, char* argv[])
 			if (renewal_stage_2 == 1) {
 				stage2.Renewal();
 				renewal_stage_2 = 0;
+				tylenol_price += 100;
+				hand_sanitizers_price += 100;
+				spray_price += 100;
+				support_price += 100;
 			}
 		}
 		else if (g_current_game_phase == PHASE_STAGE_3)
@@ -161,6 +165,10 @@ int main(int argc, char* argv[])
 			if (renewal_stage_3 == 1) {
 				stage3.Renewal();
 				renewal_stage_3 = 0;
+				tylenol_price += 100;
+				hand_sanitizers_price += 100;
+				spray_price += 100;
+				support_price += 100;
 			}
 		}
 		else if (g_current_game_phase == PHASE_STAGE_4)
@@ -171,6 +179,10 @@ int main(int argc, char* argv[])
 			if (renewal_stage_4 == 1) {
 				stage4.Renewal();
 				renewal_stage_4 = 0;
+				tylenol_price += 100;
+				hand_sanitizers_price += 100;
+				spray_price += 100;
+				support_price += 100;
 			}
 		}
 		else if (g_current_game_phase == PHASE_STAGE_5)
@@ -193,6 +205,11 @@ int main(int argc, char* argv[])
 			stage3.Renewal();
 			stage4.Renewal();
 			stage5.Renewal();
+			tylenol_price = 300;
+			hand_sanitizers_price = 200;
+			spray_price = 200;
+			vaccine_price = 2000;
+			support_price = 200;
 		}
 
 		g_last_time_ms = cur_time_ms;
