@@ -160,6 +160,7 @@ void Character::nextLevel(int stage) {
 	else {
 		SDL_RenderCopy(g_renderer, level5_texture, &level_source, &level_destination);
 	}
+}
 
 void Character::gameOver() {
 	SDL_RenderCopy(g_renderer, gameover_texture, &gameover_source, &gameover_destination);
