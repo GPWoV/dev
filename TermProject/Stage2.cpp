@@ -265,15 +265,10 @@ void Stage2::Update()
 
 	for (int i = 0; i < tylenol_delay.size(); i++) { //Ÿ�̷��� ���� �ɾ ����
 		if (tylenol_delay[i] > tylenol_turret[i]->delay) {
-<<<<<<< HEAD
 			if (character->game_state) {
 				Mix_VolumeChunk(tylenol_shot_, 10);
 				Mix_PlayChannel(-1, tylenol_shot_, 0);
 			}
-=======
-			Mix_VolumeChunk(tylenol_shot_, 10);
-			Mix_PlayChannel(8, tylenol_shot_, 0);
->>>>>>> 6674f4809090b6f18532e4c505fdb152a7b1ca26
 			tylenol_turret[i]->shooting();
 			tylenol_delay[i] = 0;
 		}
