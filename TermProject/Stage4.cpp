@@ -9,7 +9,7 @@ extern SDL_Window* g_window;
 extern SDL_Renderer* g_renderer;
 extern bool g_flag_running;
 extern int g_current_game_phase;
-extern int renewal_stage_5;
+extern int renewal_stage_4;
 
 
 
@@ -200,7 +200,7 @@ void Stage4::Update()
 
 	if (stage_clear) {
 		Mix_HaltMusic();
-		renewal_stage_5 = 1;
+		renewal_stage_4 = 1;
 
 		SDL_Delay(2000);
 		g_current_game_phase = PHASE_STAGE_5;
@@ -697,6 +697,9 @@ void Stage4::Renewal() {
 		delete (*iter);
 	}
 	virus_list.clear();
+	printf("stage4 monseter capacity before swap : %d\n", virus_list.capacity());
+	vector<Virus*>().swap(virus_list);
+	printf("stage4 monseter capacity after swap : %d\n", virus_list.capacity());
 	virus_delay = 0;
 	respawn_count = 0;
 	dead_virus = 0;

@@ -9,7 +9,7 @@ extern SDL_Window* g_window;
 extern SDL_Renderer* g_renderer;
 extern bool g_flag_running;
 extern int g_current_game_phase;
-extern int renewal_stage_2;
+extern int renewal_stage_1;
 
 extern Character* character;
 
@@ -203,13 +203,15 @@ void Stage::Update()
 		respawn_count++;
 		for (int virus_cnt = 0; virus_cnt < 3; virus_cnt++)
 			virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 10 * 50 + 20,3,100,100,round,10,true }));
+		printf("stage1 new moster count\n");
+		printf("stage1 moster capacity : %d\n", virus_list.capacity());
 	}
 	
 
 	//virus 움직임,자기소멸,캐릭터한테 데미지 주기 구현완료
 	if (stage_clear) {
 		Mix_HaltMusic();
-		renewal_stage_2 = 1;
+		renewal_stage_1 = 1;
 		SDL_Delay(2000);
 		g_current_game_phase = PHASE_STAGE_2;
 		Mix_PlayMusic(stage2_music_, -1);
@@ -710,6 +712,9 @@ void Stage::Renewal() {
 		delete (*iter);
 	}
 	virus_list.clear();
+	printf("stage1 monseter capacity before swap : %d\n", virus_list.capacity());
+	vector<Virus*>().swap(virus_list);
+	printf("stage1 monseter capacity after swap : %d\n", virus_list.capacity());
 	virus_delay = 0;
 	respawn_count = 0;
 	dead_virus = 0;
