@@ -231,7 +231,7 @@ void Stage2::Update()
 		}
 		if (!((*iter)->virus_state)) {
 			dead_virus++;
-			if ((*iter)->getHpW())
+			if ((*iter)->getHpW()>0)
 			{
 				Mix_VolumeChunk(character_hit_, 100);
 				Mix_PlayChannel(6, character_hit_, 0);
