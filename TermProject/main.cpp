@@ -52,6 +52,12 @@ vector<Spray*>spray_turret;
 vector<Vaccine*>vaccine_turret;
 vector<Support*>support_turret;
 
+int tylenol_price = 300;
+int hand_sanitizers_price = 400;
+int spray_price = 500;
+int vaccine_price = 2000;
+int support_price = 200;
+
 bool g_flag_running;
 Uint32 g_last_time_ms;
 int g_frame_time_ms = 30;
