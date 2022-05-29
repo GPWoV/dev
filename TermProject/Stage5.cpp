@@ -198,8 +198,6 @@ Stage5::~Stage5()
 
 void Stage5::Update()
 {
-	character->goldShow();
-
 	virus_delay++;
 	if ((virus_delay > 330) && (respawn_count<total_virus/3)) {
 		virus_delay = 0;
