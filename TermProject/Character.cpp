@@ -98,11 +98,6 @@ void Character::show() {
 		SDL_RenderCopy(g_renderer, damage_texture, &damage_source, &damage_destination);
 		this->damage_state = false;
 	}
-
-	//게임오버
-	if (this->game_state == false) {
-		SDL_RenderCopy(g_renderer, gameover_texture, &gameover_source, &gameover_destination);
-	}
 }
 
 void Character::getDamage(int missile_damage) {
@@ -134,6 +129,9 @@ void Character::Renewal() {
 }
 
 void Character::nextLevel() {
-
 	SDL_RenderCopy(g_renderer, level_texture, &level_source, &level_destination);
+}
+
+void Character::gameOver() {
+	SDL_RenderCopy(g_renderer, gameover_texture, &gameover_source, &gameover_destination);
 }
