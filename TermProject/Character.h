@@ -38,7 +38,7 @@ private:
 
 public:
 	int character_hp = 1000;
-	int gold_int = 5000;
+	int gold_int = 1000;
 	int goverment_gold = 200;
 	int font_size = 150;
 
@@ -54,5 +54,4 @@ public:
 	void Renewal();
 	void nextLevel(int stage);
 	void gameOver();
-	void goldShow();
 };
