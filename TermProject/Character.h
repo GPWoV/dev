@@ -5,6 +5,8 @@ extern SDL_Renderer* g_renderer;
 extern bool g_glag_running;
 extern phase game_phase;
 
+
+
 class Character {
 private:
 	SDL_Texture* character_texture;
@@ -26,7 +28,6 @@ private:
 	SDL_Texture* hp_texture;
 	SDL_Rect hp_source;
 	SDL_Rect hp_destination;
-
 
 	TTF_Font* font;
 	SDL_Texture* gold_num_texture;

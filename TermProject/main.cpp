@@ -34,6 +34,9 @@ Mix_Chunk* tylenol_shot_;
 Mix_Chunk* spray_shot_;
 Mix_Chunk* vaccine_shot_;
 Mix_Chunk* sanitizer_shot_;
+Mix_Chunk* character_hit_;
+Mix_Chunk* game_over_;
+Mix_Chunk* next_level_;
 
 Character* character;
 

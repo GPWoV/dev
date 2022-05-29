@@ -54,6 +54,9 @@ Character::Character() : character_hp(1000), w(250), h(250) {
 	gold_num_texture = SDL_CreateTextureFromSurface(g_renderer, gold_num_surface);
 	SDL_FreeSurface(gold_num_surface);
 
+
+
+
 }
 
 Character::~Character() {
@@ -103,6 +106,7 @@ void Character::show() {
 }
 
 void Character::getDamage(int missile_damage) {
+
 	this->damage_state = true;
 	this->hp_destination.w -= missile_damage;
 	if (this->hp_destination.w <= 0) {
@@ -129,6 +133,7 @@ void Character::Renewal() {
 }
 
 void Character::nextLevel() {
+
 	SDL_RenderCopy(g_renderer, level_texture, &level_source, &level_destination);
 	
 }
