@@ -26,19 +26,19 @@ How::How()
 	destination_rectangle_.h = source_rectangle_.h = 720;
 
 	// 시작 버튼
-	SDL_Surface* start_surface = IMG_Load("../../Resources/btn_start.png");
+	SDL_Surface* start_surface = IMG_Load("../../Resources/btn_start_2.png");
 	start_texture_ = SDL_CreateTextureFromSurface(g_renderer, start_surface);
 	SDL_FreeSurface(start_surface);
 
 	SDL_QueryTexture(start_texture_, NULL, NULL, &start_source_rectangle_.w, &start_source_rectangle_.h);
 
-	start_destination_rectangle_.x = 450;
-	start_destination_rectangle_.y = 553;
+	start_destination_rectangle_.x = 486;
+	start_destination_rectangle_.y = 589;
 
 	start_source_rectangle_.x = 0;
 	start_source_rectangle_.y = 0;
-	start_destination_rectangle_.w = start_source_rectangle_.w = 380;
-	start_destination_rectangle_.h = start_source_rectangle_.h = 128;
+	start_destination_rectangle_.w = start_source_rectangle_.w = 308;
+	start_destination_rectangle_.h = start_source_rectangle_.h = 104;
 	
 
 }
