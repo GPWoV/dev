@@ -197,7 +197,7 @@ void Stage5::Update()
 		virus_delay = 0;
 		respawn_count++;
 		for (int virus_cnt = 0; virus_cnt < 3; virus_cnt++)
-			virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 10 * 50 + 20,3,500,500,round,50,true }));
+			virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 23 * 10 + 120,3,500,500,round,50,true }));
 	}
 	if (stage_clear) {
 		Mix_HaltMusic();
@@ -608,8 +608,8 @@ void Stage5::HandleEvents()
 				move_x = 50;
 			if (move_x > 1230)
 				move_x = 1230;
-			if (move_y < 50)
-				move_y = 50;
+			if (move_y < 120)
+				move_y = 120;
 			if (move_y > 520)
 				move_y = 520;
 
@@ -691,9 +691,7 @@ void Stage5::Renewal() {
 		delete (*iter);
 	}
 	virus_list.clear();
-	printf("stage5 monseter capacity before swap : %d\n", virus_list.capacity());
 	vector<Virus*>().swap(virus_list);
-	printf("stage5 monseter capacity after swap : %d\n", virus_list.capacity());
 	virus_delay = 0;
 	respawn_count = 0;
 	dead_virus = 0;
