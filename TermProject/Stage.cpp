@@ -258,8 +258,10 @@ void Stage::Update()
 
     for (int i = 0; i < tylenol_delay.size(); i++) { //Ÿ�̷��� ���� �ɾ ����
 		if (tylenol_delay[i] > tylenol_turret[i]->delay) {
-			Mix_VolumeChunk(tylenol_shot_, 10);
-			Mix_PlayChannel(-1, tylenol_shot_, 0);
+			if (character->game_state) {
+				Mix_VolumeChunk(tylenol_shot_, 10);
+				Mix_PlayChannel(-1, tylenol_shot_, 0);
+			}
 			tylenol_turret[i]->shooting();
 			tylenol_delay[i] = 0;
 		}
@@ -270,8 +272,10 @@ void Stage::Update()
 
 	for (int i = 0; i < hand_sanit_delay.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (hand_sanit_delay[i] > hand_sanit_turret[i]->delay) {
-			Mix_VolumeChunk(sanitizer_shot_, 10);
-			Mix_PlayChannel(1, sanitizer_shot_, 0);
+			if (character->game_state) {
+				Mix_VolumeChunk(sanitizer_shot_, 10);
+				Mix_PlayChannel(1, sanitizer_shot_, 0);
+			}
 			hand_sanit_turret[i]->shooting();
 			hand_sanit_delay[i] = 0;
 		}
@@ -282,8 +286,10 @@ void Stage::Update()
 
 	for (int i = 0; i < spray_delay.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (spray_delay[i] > spray_turret[i]->delay) {
-			Mix_VolumeChunk(spray_shot_, 30);
-			Mix_PlayChannel(6, spray_shot_, 0);
+			if (character->game_state) {
+				Mix_VolumeChunk(spray_shot_, 30);
+				Mix_PlayChannel(6, spray_shot_, 0);
+			}
 			spray_turret[i]->shooting();
 			spray_delay[i] = 0;
 		}
@@ -294,8 +300,10 @@ void Stage::Update()
 
 	for (int i = 0; i < vaccine_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (vaccine_delay[i] > vaccine_turret[i]->delay) {
-			Mix_VolumeChunk(vaccine_shot_, 50);
-			Mix_PlayChannel(2, vaccine_shot_, 0);
+			if (character->game_state) {
+				Mix_VolumeChunk(vaccine_shot_, 50);
+				Mix_PlayChannel(2, vaccine_shot_, 0);
+			}
 			vaccine_turret[i]->shooting();
 			vaccine_delay[i] = 0;
 		}
@@ -308,8 +316,10 @@ void Stage::Update()
 
 	for (int i = 0; i < support_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
 		if (support_delay[i] > support_turret[i]->delay) {
-			Mix_VolumeChunk(coin_, 80);
-			Mix_PlayChannel(3, coin_, 0);
+			if (character->game_state) {
+				Mix_VolumeChunk(coin_, 80);
+				Mix_PlayChannel(3, coin_, 0);
+			}
 			character->addGold(character->goverment_gold); // from yj / change parameter
 			support_delay[i] = 0;
 			support_turret[i]->coin_state = true;
