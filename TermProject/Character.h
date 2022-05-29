@@ -55,4 +55,5 @@ public:
 	void useGold(int turret_price);
 	void Renewal();
 	void nextLevel(int stage);
+	void gameOver();
 };

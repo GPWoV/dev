@@ -3,7 +3,7 @@
 #include <string.h>
 
 Character::Character(int character_hp) {
-	//main Ä³¸¯ÅÍ
+	//main ìºë¦­í„°
 	SDL_Surface* character_surface = IMG_Load("../../Resources/character_normal.png");
 	character_texture = SDL_CreateTextureFromSurface(g_renderer, character_surface);
 	SDL_FreeSurface(character_surface);
@@ -11,7 +11,7 @@ Character::Character(int character_hp) {
 	SDL_QueryTexture(character_texture, NULL, NULL, &character_source.w, &character_source.h);
 	character_destination = { 40, 220, character_source.w, character_source.h };
 
-	//µ¥¹ÌÁö
+	//ë°ë¯¸ì§€
 	SDL_Surface* damage_surface = IMG_Load("../../Resources/character_attacked.png");
 	damage_texture = SDL_CreateTextureFromSurface(g_renderer, damage_surface);
 	SDL_FreeSurface(damage_surface);
@@ -19,14 +19,14 @@ Character::Character(int character_hp) {
 	SDL_QueryTexture(damage_texture, NULL, NULL, &damage_source.w, &damage_source.h);
 	damage_destination = { character_destination.x, character_destination.y, damage_source.w, damage_source.h };
 
-	//Ã¼·Â¹Ù
+	//ì²´ë ¥ë°”
 	SDL_Surface* hp_surface = IMG_Load("../../Resources/virus_sprite.png");
 	hp_texture = SDL_CreateTextureFromSurface(g_renderer, hp_surface);
 	SDL_FreeSurface(hp_surface);
 	hp_source = { 0 ,213,230,17 };
 	hp_destination = { character_destination.x, character_destination.y - 20, (int)(character_source.w * character_hp / 1000), hp_source.h };
 
-	//°ÔÀÓ¿À¹ö
+	//ê²Œìž„ì˜¤ë²„
 	SDL_Surface* gameover_surface = IMG_Load("../../Resources/text_gameover.png");
 	gameover_texture = SDL_CreateTextureFromSurface(g_renderer, gameover_surface);
 	SDL_FreeSurface(gameover_surface);
@@ -34,7 +34,7 @@ Character::Character(int character_hp) {
 	SDL_QueryTexture(gameover_texture, NULL, NULL, &gameover_source.w, &gameover_source.h);
 	gameover_destination = { (1280 - gameover_source.w / 2) / 2, (720 - gameover_source.h / 2) / 2, gameover_source.w/2, gameover_source.h/2};
 
-	//³Ø½ºÆ®·¹º§
+	//ë„¥ìŠ¤íŠ¸ë ˆë²¨
 	SDL_Surface* level2_surface = IMG_Load("../../Resources/STAGE 2 START.png");
 	level2_texture = SDL_CreateTextureFromSurface(g_renderer, level2_surface);
 	SDL_FreeSurface(level2_surface);
@@ -62,7 +62,7 @@ Character::Character(int character_hp) {
 
 	SDL_QueryTexture(level5_texture, NULL, NULL, &level_source.w, &level_source.h);
 
-	//°ñµå
+	//ê³¨ë“œ
 	font = TTF_OpenFont("../../Resources/game_over.ttf", 150);
 	SDL_Color black = { 0, 0, 0, 0 };
 
@@ -108,18 +108,13 @@ void Character::show() {
 	SDL_RenderCopy(g_renderer, hp_texture, &hp_source, &hp_destination);
 
 
-	//Ä³¸¯ÅÍ, µ¥¹ÌÁö
+	//ìºë¦­í„°, ë°ë¯¸ì§€
 	if (this->damage_state == false) {
 		SDL_RenderCopy(g_renderer, character_texture, &character_source, &character_destination);
 	}
 	else {
 		SDL_RenderCopy(g_renderer, damage_texture, &damage_source, &damage_destination);
 		this->damage_state = false;
-	}
-
-	//°ÔÀÓ¿À¹ö
-	if (this->game_state == false) {
-		SDL_RenderCopy(g_renderer, gameover_texture, &gameover_source, &gameover_destination);
 	}
 }
 
@@ -166,4 +161,6 @@ void Character::nextLevel(int stage) {
 		SDL_RenderCopy(g_renderer, level5_texture, &level_source, &level_destination);
 	}
 
+void Character::gameOver() {
+	SDL_RenderCopy(g_renderer, gameover_texture, &gameover_source, &gameover_destination);
 }

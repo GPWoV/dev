@@ -492,6 +492,10 @@ void Stage4::Render()
 	if (stage_clear) {
 		character->nextLevel(5);
 	}
+	//게임오버
+	if (!character->game_state) {
+		character->gameOver();
+	}
 
 	SDL_RenderPresent(g_renderer);
 

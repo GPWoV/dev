@@ -491,6 +491,11 @@ void Stage2::Render()
 		character->nextLevel(3);
 	}
 
+	//게임오버
+	if (!character->game_state) {
+		character->gameOver();
+	}
+
 	SDL_RenderPresent(g_renderer);
 
 }
