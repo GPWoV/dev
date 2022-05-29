@@ -11,18 +11,6 @@ extern bool g_flag_running;
 extern int g_current_game_phase;
 extern int renewal;
 
-extern Mix_Music* stage5_music_;
-extern Mix_Music* ending_music_;
-
-// 사운드
-extern Mix_Chunk* click_;
-extern Mix_Chunk* coin_;
-extern Mix_Chunk* down_;
-extern Mix_Chunk* hit_;
-extern Mix_Chunk* tylenol_shot_;
-extern Mix_Chunk* spray_shot_;
-extern Mix_Chunk* vaccine_shot_;
-extern Mix_Chunk* sanitizer_shot_;
 
 extern Character* character;
 
@@ -132,6 +120,23 @@ Stage5::Stage5() : total_virus(18)
 	{
 		printf("Couldn't load the wav: %s\n", Mix_GetError());
 	}
+	game_over_ = Mix_LoadWAV("../../Resources/game_over.wav");
+	if (game_over_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
+	next_level_ = Mix_LoadWAV("../../Resources/next_level.wav");
+	if (next_level_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
+	character_hit_ = Mix_LoadWAV("../../Resources/character_hit.wav");
+	if (character_hit_ == NULL)
+	{
+		printf("Couldn't load the wav: %s\n", Mix_GetError());
+	}
+
+
 
 	//about turret
 	turret_kind = NONE; //터렛 종류
@@ -223,12 +228,21 @@ void Stage5::Update()
 		if (!((*iter)->virus_state)) {
 			dead_virus++;
 			if ((*iter)->getHpW())
+			{
+				Mix_VolumeChunk(character_hit_, 100);
+				Mix_PlayChannel(6, character_hit_, 0);
 				character->getDamage((*iter)->virus_attack);
-			else
+			}
+			else {
+				Mix_VolumeChunk(coin_, 80);
+				Mix_PlayChannel(3, coin_, 0);
 				character->addGold((*iter)->virus_gold);
+			}
 			virus_list.erase(iter);
 			if (dead_virus == total_virus) {
 				printf("stage finish");
+				Mix_VolumeChunk(next_level_, 100);
+				Mix_PlayChannel(7, next_level_, 0);
 				stage_clear = true;
 				break;
 			}
@@ -244,7 +258,7 @@ void Stage5::Update()
 	for (int i = 0; i < tylenol_delay.size(); i++) { //Ÿ�̷��� ���� �ɾ ����
 		if (tylenol_delay[i] > tylenol_turret[i]->delay) {
 			Mix_VolumeChunk(tylenol_shot_, 10);
-			Mix_PlayChannel(-1, tylenol_shot_, 0);
+			Mix_PlayChannel(8, tylenol_shot_, 0);
 			tylenol_turret[i]->shooting();
 			tylenol_delay[i] = 0;
 		}

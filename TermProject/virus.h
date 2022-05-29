@@ -8,6 +8,7 @@ extern phase game_phase;
 
 
 
+
 //바이라스
 class Virus {
 private:
