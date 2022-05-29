@@ -35,13 +35,32 @@ Character::Character(int character_hp) {
 	gameover_destination = { (1280 - gameover_source.w / 2) / 2, (720 - gameover_source.h / 2) / 2, gameover_source.w/2, gameover_source.h/2};
 
 	//³Ø½ºÆ®·¹º§
-	SDL_Surface* level_surface = IMG_Load("../../Resources/text_nextlevel.png");
-	level_texture = SDL_CreateTextureFromSurface(g_renderer, level_surface);
-	SDL_FreeSurface(level_surface);
+	SDL_Surface* level2_surface = IMG_Load("../../Resources/STAGE 2 START.png");
+	level2_texture = SDL_CreateTextureFromSurface(g_renderer, level2_surface);
+	SDL_FreeSurface(level2_surface);
 
-	SDL_QueryTexture(level_texture, NULL, NULL, &level_source.w, &level_source.h);
+	SDL_QueryTexture(level2_texture, NULL, NULL, &level_source.w, &level_source.h);
 	level_destination = { (1280 - level_source.w / 2) / 2, (720 - level_source.h / 2) / 2, level_source.w/2, level_source.h /2};
 
+	SDL_Surface* level3_surface = IMG_Load("../../Resources/STAGE 3 START.png");
+	level3_texture = SDL_CreateTextureFromSurface(g_renderer, level3_surface);
+	SDL_FreeSurface(level3_surface);
+
+	SDL_QueryTexture(level3_texture, NULL, NULL, &level_source.w, &level_source.h);
+
+
+	SDL_Surface* level4_surface = IMG_Load("../../Resources/STAGE 4 START.png");
+	level4_texture = SDL_CreateTextureFromSurface(g_renderer, level4_surface);
+	SDL_FreeSurface(level4_surface);
+
+	SDL_QueryTexture(level4_texture, NULL, NULL, &level_source.w, &level_source.h);
+
+
+	SDL_Surface* level5_surface = IMG_Load("../../Resources/STAGE 5 START.png");
+	level5_texture = SDL_CreateTextureFromSurface(g_renderer, level5_surface);
+	SDL_FreeSurface(level5_surface);
+
+	SDL_QueryTexture(level5_texture, NULL, NULL, &level_source.w, &level_source.h);
 
 	//°ñµå
 	font = TTF_OpenFont("../../Resources/game_over.ttf", 150);
@@ -54,9 +73,6 @@ Character::Character(int character_hp) {
 	gold_num_texture = SDL_CreateTextureFromSurface(g_renderer, gold_num_surface);
 	SDL_FreeSurface(gold_num_surface);
 
-
-
-
 }
 
 Character::~Character() {
@@ -65,7 +81,10 @@ Character::~Character() {
 	SDL_DestroyTexture(gold_num_texture);
 	SDL_DestroyTexture(gameover_texture);
 	SDL_DestroyTexture(hp_texture);
-
+	SDL_DestroyTexture(level2_texture);
+	SDL_DestroyTexture(level3_texture);
+	SDL_DestroyTexture(level4_texture);
+	SDL_DestroyTexture(level5_texture);
 }
 
 void Character::show() {
@@ -132,7 +151,19 @@ void Character::Renewal() {
 	hp_destination = { character_destination.x, character_destination.y - 20, (int)(character_source.w * character_hp / 1000), hp_source.h };
 }
 
-void Character::nextLevel() {
+void Character::nextLevel(int stage) {
 
-	SDL_RenderCopy(g_renderer, level_texture, &level_source, &level_destination);
+	if (stage == 2) {
+		SDL_RenderCopy(g_renderer, level2_texture, &level_source, &level_destination);
+	}
+	else if (stage == 3) {
+		SDL_RenderCopy(g_renderer, level3_texture, &level_source, &level_destination);
+	}
+	else if (stage == 4) {
+		SDL_RenderCopy(g_renderer, level4_texture, &level_source, &level_destination);
+	}
+	else {
+		SDL_RenderCopy(g_renderer, level5_texture, &level_source, &level_destination);
+	}
+
 }

@@ -500,7 +500,7 @@ void Stage::Render()
 
 	if (stage_clear) {
 
-		character->nextLevel();
+		character->nextLevel(2);
 	}
 
 

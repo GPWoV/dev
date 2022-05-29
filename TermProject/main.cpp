@@ -117,7 +117,6 @@ int main(int argc, char* argv[])
 
 		if (g_current_game_phase == PHASE_INTRO)
 		{
-
 			intro.HandleEvents();
 			intro.Update();
 			intro.Render();
