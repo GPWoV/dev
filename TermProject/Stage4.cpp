@@ -9,7 +9,7 @@ extern SDL_Window* g_window;
 extern SDL_Renderer* g_renderer;
 extern bool g_flag_running;
 extern int g_current_game_phase;
-extern int renewal;
+extern int renewal_stage_5;
 
 extern Mix_Music* stage4_music_;
 extern Mix_Music* ending_music_;
@@ -25,8 +25,21 @@ extern Mix_Chunk* spray_shot_;
 extern Mix_Chunk* vaccine_shot_;
 extern Mix_Chunk* sanitizer_shot_;
 
+extern Character* character;
 
-Stage4::Stage4()
+extern vector<int>tylenol_delay;
+extern vector<int>hand_sanit_delay;
+extern vector<int>spray_delay;
+extern vector<int>vaccine_delay;
+extern vector<int>support_delay;
+
+extern vector<Tylenol*> tylenol_turret;
+extern vector<HandSanitizers*> hand_sanit_turret;
+extern vector<Spray*>spray_turret;
+extern vector<Vaccine*>vaccine_turret;
+extern vector<Support*>support_turret;
+
+Stage4::Stage4() : total_virus(15)
 {
 	//stage01 img
 	SDL_Surface* temp_surface = IMG_Load("../../Resources/background_stage_04.png");
@@ -37,16 +50,16 @@ Stage4::Stage4()
 	destination_rectangle_ = { 0,0,1280,720 };
 
 	//about character
-	character = new Character();
 	character->damage_state = false;
 	character->game_state = true;
 
 	//about virus
 	srand((unsigned int)time(NULL));
-	round = 4;
-	for (int virus_cnt = 0; virus_cnt < 10; virus_cnt++)
-		virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 10 * 50 + 20,5,100,100,round,10,true }));
-
+	stage_clear = false;
+	round = 3;
+	virus_delay = 0;
+	respawn_count = 0;
+	dead_virus = 0;
 
 	// 시작 버튼
 	/*
@@ -173,6 +186,23 @@ Stage4::~Stage4()
 
 void Stage4::Update()
 {
+	virus_delay++;
+	if ((virus_delay > 330) && (respawn_count < total_virus / 3)) {
+		virus_delay = 0;
+		respawn_count++;
+		for (int virus_cnt = 0; virus_cnt < 3; virus_cnt++)
+			virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 10 * 50 + 20,3,300,300,round,30,true }));
+	}
+
+	SDL_Log("stage4 -> %d", stage_clear);
+	if (stage_clear) {
+		Mix_HaltMusic();
+		renewal_stage_5 = 1;
+
+		SDL_Delay(2000);
+		g_current_game_phase = PHASE_STAGE_5;
+		Mix_PlayMusic(stage5_music_, -1);
+	}
 
 	//virus 움직임,자기소멸,캐릭터한테 데미지 주기 구현완료
 	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) {
@@ -196,12 +226,13 @@ void Stage4::Update()
 
 		(*iter)->move();
 		if (!((*iter)->virus_state)) {
+			dead_virus++;
 			if ((*iter)->getHpW())
 				character->getDamage((*iter)->virus_attack);
 			else
-				character->addGold((*iter)->virus_attack);
+				character->addGold((*iter)->virus_gold);
 			virus_list.erase(iter);
-			if (virus_list.size() == 1) {
+			if (dead_virus == total_virus) {
 				printf("stage finish");
 				stage_clear = true;
 				break;
@@ -434,6 +465,10 @@ void Stage4::Render()
 
 	}
 
+	if (stage_clear) {
+		character->nextLevel();
+	}
+
 	SDL_RenderPresent(g_renderer);
 
 }
@@ -626,4 +661,15 @@ void Stage4::HandleEvents()
 			turret_kind = NONE;
 		}
 	}
+}
+
+void Stage4::Renewal() {
+	stage_clear = false;
+	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) {
+		delete (*iter);
+	}
+	virus_list.clear();
+	virus_delay = 0;
+	respawn_count = 0;
+	dead_virus = 0;
 }

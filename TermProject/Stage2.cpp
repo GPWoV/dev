@@ -9,7 +9,7 @@ extern SDL_Window* g_window;
 extern SDL_Renderer* g_renderer;
 extern bool g_flag_running;
 extern int g_current_game_phase;
-extern int renewal;
+extern int renewal_stage_3;
 
 extern Mix_Music* stage2_music_;
 extern Mix_Music* ending_music_;
@@ -25,8 +25,22 @@ extern Mix_Chunk* spray_shot_;
 extern Mix_Chunk* vaccine_shot_;
 extern Mix_Chunk* sanitizer_shot_;
 
+extern Character* character;
 
-Stage2::Stage2()
+extern vector<int>tylenol_delay;
+extern vector<int>hand_sanit_delay;
+extern vector<int>spray_delay;
+extern vector<int>vaccine_delay;
+extern vector<int>support_delay;
+
+extern vector<Tylenol*> tylenol_turret;
+extern vector<HandSanitizers*> hand_sanit_turret;
+extern vector<Spray*>spray_turret;
+extern vector<Vaccine*>vaccine_turret;
+extern vector<Support*>support_turret;
+
+
+Stage2::Stage2() : total_virus(12)
 {
 	//stage01 img
 	SDL_Surface* temp_surface = IMG_Load("../../Resources/background_stage_02.png");
@@ -37,16 +51,16 @@ Stage2::Stage2()
 	destination_rectangle_ = { 0,0,1280,720 };
 
 	//about character
-	character = new Character();
 	character->damage_state = false;
 	character->game_state = true;
 
 	//about virus
 	srand((unsigned int)time(NULL));
-	round = 2;
-	for (int virus_cnt = 0; virus_cnt < 10; virus_cnt++)
-		virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 10 * 50 + 20,5,100,100,round,10,true }));
-
+	stage_clear = false;
+	round = 1;
+	virus_delay = 0;
+	respawn_count = 0;
+	dead_virus = 0;
 
 	// 시작 버튼
 	/*
@@ -165,14 +179,32 @@ Stage2::~Stage2()
 	vaccine_turret.clear();
 	vaccine_turret.clear();
 
-	for (auto iter = support_turret.begin(); iter != support_turret.end(); iter++) { //���� �ͷ���� �����
-		delete (*iter);
-	}
-	support_turret.clear();
+	//for (auto iter = support_turret.begin(); iter != support_turret.end(); iter++) { //���� �ͷ���� �����
+	//	delete (*iter);
+	//}
+	//support_turret.clear();
 }
 
 void Stage2::Update()
 {
+	virus_delay++;
+	if ((virus_delay > 165) && (respawn_count < total_virus / 3)) {
+		virus_delay = 0;
+		respawn_count++;
+		for (int virus_cnt = 0; virus_cnt < 3; virus_cnt++)
+			virus_list.push_back(new Virus({ 1200 + rand() % 20 * 60,rand() % 10 * 50 + 20,3,200,200,round,10,true }));
+	}
+	
+
+	SDL_Log("stage2 -> %d", stage_clear);
+	if (stage_clear) {
+		Mix_HaltMusic();
+		renewal_stage_3 = 1;
+
+		SDL_Delay(2000);
+		g_current_game_phase = PHASE_STAGE_3;
+		Mix_PlayMusic(stage3_music_, -1);
+	}
 
 	//virus 움직임,자기소멸,캐릭터한테 데미지 주기 구현완료
 	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) {
@@ -196,12 +228,13 @@ void Stage2::Update()
 
 		(*iter)->move();
 		if (!((*iter)->virus_state)) {
+			dead_virus++;
 			if ((*iter)->getHpW())
 				character->getDamage((*iter)->virus_attack);
 			else
-				character->addGold((*iter)->virus_attack);
+				character->addGold((*iter)->virus_gold);
 			virus_list.erase(iter);
-			if (virus_list.size() == 1) {
+			if (dead_virus == total_virus) {
 				printf("stage finish");
 				stage_clear = true;
 				break;
@@ -262,7 +295,6 @@ void Stage2::Update()
 			vaccine_delay[i]++;
 		}
 	}
-
 
 
 	for (int i = 0; i < support_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
@@ -434,6 +466,9 @@ void Stage2::Render()
 
 	}
 
+	if (stage_clear) {
+		character->nextLevel();
+	}
 
 	SDL_RenderPresent(g_renderer);
 
@@ -498,7 +533,7 @@ void Stage2::HandleEvents()
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = HANDSANIT;
 				}
-				else if (event.button.x > 307 &&
+				/*else if (event.button.x > 307 &&
 					event.button.x < 387 &&
 					event.button.y>595 &&
 					event.button.y < 695) {
@@ -513,7 +548,7 @@ void Stage2::HandleEvents()
 					Mix_VolumeChunk(click_, 70);
 					Mix_PlayChannel(-1, click_, 0);
 					turret_kind = VACCINE;
-				}
+				}*/
 				else if (event.button.x > 788 &&
 					event.button.x < 868 &&
 					event.button.y>595 &&
@@ -627,4 +662,15 @@ void Stage2::HandleEvents()
 			turret_kind = NONE;
 		}
 	}
+}
+
+void Stage2::Renewal() {
+	stage_clear = false;
+	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) {
+		delete (*iter);
+	}
+	virus_list.clear();
+	virus_delay = 0;
+	respawn_count = 0;
+	dead_virus = 0;
 }

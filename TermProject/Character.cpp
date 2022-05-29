@@ -32,7 +32,15 @@ Character::Character() : character_hp(1000), w(250), h(250) {
 	SDL_FreeSurface(gameover_surface);
 
 	SDL_QueryTexture(gameover_texture, NULL, NULL, &gameover_source.w, &gameover_source.h);
-	gameover_destination = { (1280 - gameover_source.w / 2) / 2, (720 - gameover_source.h / 2) / 2, gameover_source.w / 2, gameover_source.h / 2 };
+	gameover_destination = { (1280 - gameover_source.w / 2) / 2, (720 - gameover_source.h / 2) / 2, gameover_source.w/2, gameover_source.h/2};
+
+	//넥스트레벨
+	SDL_Surface* level_surface = IMG_Load("../../Resources/text_nextlevel.png");
+	level_texture = SDL_CreateTextureFromSurface(g_renderer, level_surface);
+	SDL_FreeSurface(level_surface);
+
+	SDL_QueryTexture(level_texture, NULL, NULL, &level_source.w, &level_source.h);
+	level_destination = { (1280 - level_source.w / 2) / 2, (720 - level_source.h / 2) / 2, level_source.w/2, level_source.h /2};
 
 
 	//골드
@@ -58,11 +66,7 @@ Character::~Character() {
 }
 
 void Character::show() {
-	SDL_Rect character_r;
-	SDL_Rect damage_r;
 	SDL_Rect gold_num_r;
-	SDL_Rect gameover_r;
-
 
 	//gold_num
 	SDL_Color black = { 0, 0, 0, 0 };
@@ -84,19 +88,17 @@ void Character::show() {
 
 	//캐릭터, 데미지
 	if (this->damage_state == false) {
-		character_r = { character_destination.x, character_destination.y, character_destination.w, character_destination.h };
 		SDL_RenderCopy(g_renderer, character_texture, &character_source, &character_destination);
 	}
 	else {
-		damage_r = { character_destination.x, character_destination.y, damage_destination.w, damage_destination.h };
 		SDL_RenderCopy(g_renderer, damage_texture, &damage_source, &damage_destination);
 		damage_state = false;
 	}
 
 	//게임오버
 	if (this->game_state == false) {
-		gameover_r = { (1280 - gameover_destination.w / 2) / 2, (720 - gameover_destination.h / 2) / 2, gameover_destination.w / 2, gameover_destination.h / 2 };
 		SDL_RenderCopy(g_renderer, gameover_texture, &gameover_source, &gameover_destination);
+		character_hp = 1000;
 	}
 }
 
@@ -117,4 +119,16 @@ void Character::addGold(int gold) {
 
 void Character::useGold(int turret_price) {
 	this->gold_int -= turret_price;
+}
+
+void Character::Renewal() {
+	gold_int = 5000;
+	damage_state = false;
+	game_state = true;
+	hp_destination = { character_destination.x, character_destination.y - 20, (int)(character_source.w * character_hp / 1000), hp_source.h };
+}
+
+void Character::nextLevel() {
+	SDL_RenderCopy(g_renderer, level_texture, &level_source, &level_destination);
+	
 }
