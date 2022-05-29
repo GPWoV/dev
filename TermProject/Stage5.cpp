@@ -436,8 +436,6 @@ void Stage5::Render()
 	SDL_RenderCopy(g_renderer, texture_, &source_rectangle_, &destination_rectangle_);
 	//SDL_RenderCopy(g_renderer, start_texture_, &start_source_rectangle_, &start_destination_rectangle_);
 
-	character->show();
-
 	for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) {
 		(*iter)->show();
 	}
@@ -468,6 +466,8 @@ void Stage5::Render()
 		if ((*iter)->coin_state)
 			(*iter)->coinShow();
 	}
+
+	character->show();
 
 	if (btn_down) {//��ư�� ����� ���� ����� Ÿ�̷���� �����ְڴ�.
 		switch (turret_kind) {

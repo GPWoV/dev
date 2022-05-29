@@ -209,8 +209,6 @@ void Stage::Update()
 		respawn_count++;
 		//for (int virus_cnt = 0; virus_cnt < 3; virus_cnt++)
 		virus_list.push_back(new Virus({ 1200 ,rand() % 38 * 10 + 120,3,10,100,round,10,true }));
-		printf("stage1 new moster count\n");
-		printf("stage1 moster capacity : %d\n", virus_list.capacity());
 	}
 	
 
@@ -335,13 +333,11 @@ void Stage::Update()
 	
 
 	for (int i = 0; i < support_turret.size(); i++) { //�ռҵ�� ���� �ɾ ����
-		printf("support turret size : %d\n", support_turret.size());
 		if (support_delay[i] > support_turret[i]->delay) {
 			if (character->game_state) {
 				Mix_VolumeChunk(coin_, 80);
 				Mix_PlayChannel(3, coin_, 0);
 			}
-			printf("government support : %d\n", character->goverment_gold);
 			character->addGold(character->goverment_gold); // from yj / change parameter
 			support_delay[i] = 0;
 			support_turret[i]->coin_state = true;
@@ -451,8 +447,6 @@ void Stage::Render()
 	
 	SDL_RenderCopy(g_renderer, texture_, &source_rectangle_, &destination_rectangle_);
 	//SDL_RenderCopy(g_renderer, start_texture_, &start_source_rectangle_, &start_destination_rectangle_);
-	
-	character->show();
 
   for (auto iter = virus_list.begin(); iter != virus_list.end(); iter++) {
 		(*iter)-> show();
@@ -485,6 +479,8 @@ void Stage::Render()
 			(*iter)->coinShow();
 	}
 
+	character->show();
+
 	if (btn_down) {//��ư�� ����� ���� ����� Ÿ�̷���� �����ְڴ�.
 		switch (turret_kind) {
 		case TYLENOL:
@@ -512,6 +508,7 @@ void Stage::Render()
 
 		character->nextLevel(2);
 	}
+
 
 	//게임오버
 	if (!character->game_state) {
@@ -688,7 +685,6 @@ void Stage::HandleEvents()
 				else {
 					support_turret.push_back(new Support({ move_x, move_y }));
 					support_delay.push_back(330);
-					printf("suport price %d\n", support_price);
 					character->useGold(support_price);
 				}
 				Mix_VolumeChunk(down_, 70);
