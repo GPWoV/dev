@@ -65,6 +65,7 @@ Character::~Character() {
 	SDL_DestroyTexture(gold_num_texture);
 	SDL_DestroyTexture(gameover_texture);
 	SDL_DestroyTexture(hp_texture);
+	SDL_DestroyTexture(level_texture);
 
 }
 
