@@ -15,6 +15,24 @@
 
 #include<cstdlib>
 #include<ctime>
+
+extern Mix_Music* stage5_music_;
+extern Mix_Music* ending_music_;
+
+// »ç¿îµå
+extern Mix_Chunk* click_;
+extern Mix_Chunk* coin_;
+extern Mix_Chunk* down_;
+extern Mix_Chunk* hit_;
+extern Mix_Chunk* tylenol_shot_;
+extern Mix_Chunk* spray_shot_;
+extern Mix_Chunk* vaccine_shot_;
+extern Mix_Chunk* sanitizer_shot_;
+extern Mix_Chunk* character_hit_;
+extern Mix_Chunk* game_over_;
+extern Mix_Chunk* next_level_;
+
+
 using namespace std;
 
 class Stage5
