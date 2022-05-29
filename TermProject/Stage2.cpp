@@ -189,6 +189,8 @@ Stage2::~Stage2()
 
 void Stage2::Update()
 {
+	character->goldShow();
+
 	virus_delay++;
 	if ((virus_delay > 165) && (respawn_count < total_virus / 3)) {
 		virus_delay = 0;
