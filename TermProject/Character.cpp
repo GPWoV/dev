@@ -65,6 +65,13 @@ Character::Character(int character_hp) {
 	//골드
 	font = TTF_OpenFont("../../Resources/game_over.ttf", 150);
 
+	SDL_Color black = { 0, 0, 0, 0 };
+	SDL_Surface* gold_num_surface = TTF_RenderText_Blended(font, std::to_string((long long)gold_int).c_str(), black);
+
+	gold_num_destination = { 0, 0, gold_num_surface->w, gold_num_surface->h };
+	gold_num_texture = SDL_CreateTextureFromSurface(g_renderer, gold_num_surface);
+
+	SDL_FreeSurface(gold_num_surface);
 }
 
 Character::~Character() {
@@ -84,6 +91,15 @@ void Character::show() {
 
 	//gold_num
 	SDL_Rect gold_num_r = { 950, 600, gold_num_destination.w, gold_num_destination.h };
+	
+	SDL_Color black = { 0, 0, 0, 0 };
+	SDL_Surface* gold_num_surface = TTF_RenderText_Blended(font, std::to_string((long long)gold_int).c_str(), black);
+
+	gold_num_destination = { 0, 0, gold_num_surface->w, gold_num_surface->h };
+	gold_num_texture = SDL_CreateTextureFromSurface(g_renderer, gold_num_surface);
+
+	SDL_FreeSurface(gold_num_surface);
+
 	SDL_RenderCopy(g_renderer, gold_num_texture, &gold_num_destination, &gold_num_r);
 
 
@@ -99,6 +115,9 @@ void Character::show() {
 		SDL_RenderCopy(g_renderer, damage_texture, &damage_source, &damage_destination);
 		this->damage_state = false;
 	}
+
+	SDL_RenderPresent(g_renderer);
+	SDL_DestroyTexture(gold_num_texture);
 
 }
 
@@ -124,7 +143,7 @@ void Character::useGold(int turret_price) {
 
 void Character::Renewal() {
 	this->character_hp = 1000;
-	this->gold_int = 5000;
+	this->gold_int = 1000;
 	this->damage_state = false;
 	this->game_state = true;
 	hp_destination = { character_destination.x, character_destination.y - 20, (int)(character_source.w * character_hp / 1000), hp_source.h };
@@ -148,13 +167,4 @@ void Character::nextLevel(int stage) {
 
 void Character::gameOver() {
 	SDL_RenderCopy(g_renderer, gameover_texture, &gameover_source, &gameover_destination);
-}
-
-void Character::goldShow() {
-	SDL_Color black = { 0, 0, 0, 0 };
-	SDL_Surface* gold_num_surface = TTF_RenderText_Blended(font, std::to_string((long long)gold_int).c_str(), black);
-	gold_num_destination = { 0, 0, gold_num_surface->w, gold_num_surface->h };
-	gold_num_texture = SDL_CreateTextureFromSurface(g_renderer, gold_num_surface);
-	SDL_FreeSurface(gold_num_surface);
-
 }
