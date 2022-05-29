@@ -1,6 +1,6 @@
 #include "SprayMissile.h"
 
-SprayMissile::SprayMissile(int x, int y) :speed(20), damage(10) {
+SprayMissile::SprayMissile(int x, int y) :speed(20), damage(5) {
 	this->x = x;
 	this->y = y;
 	this->state = true;

@@ -34,7 +34,7 @@ Intro::Intro()
 	SDL_QueryTexture(start_texture_, NULL, NULL, &start_source_rectangle_.w, &start_source_rectangle_.h);
 
 	start_destination_rectangle_.x = 202;
-	start_destination_rectangle_.y = 443;
+	start_destination_rectangle_.y = 502;
 
 	start_source_rectangle_.x = 0;
 	start_source_rectangle_.y = 0;
@@ -49,7 +49,7 @@ Intro::Intro()
 	SDL_QueryTexture(tutorial_texture_, NULL, NULL, &tutorial_source_rectangle_.w, &tutorial_source_rectangle_.h);
 
 	tutorial_destination_rectangle_.x = 698;
-	tutorial_destination_rectangle_.y = 443;
+	tutorial_destination_rectangle_.y = 502;
 
 	tutorial_source_rectangle_.x = 0;
 	tutorial_source_rectangle_.y = 0;
