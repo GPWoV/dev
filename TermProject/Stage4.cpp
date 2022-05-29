@@ -625,7 +625,7 @@ void Stage4::HandleEvents()
 				else {
 					tylenol_turret.push_back(new Tylenol({ move_x, move_y }));
 					tylenol_delay.push_back(33);
-					character->useGold(300);
+					character->useGold(tylenol_turret.front()->gold);
 				}
 				tylenol_turret.push_back(new Tylenol({ move_x, move_y }));
 				tylenol_delay.push_back(33);
@@ -637,7 +637,7 @@ void Stage4::HandleEvents()
 				else {
 					hand_sanit_turret.push_back(new HandSanitizers({ move_x, move_y }));
 					hand_sanit_delay.push_back(99);
-					character->useGold(500);
+					character->useGold(hand_sanit_turret.front()->gold);
 				}
 				hand_sanit_turret.push_back(new HandSanitizers({ move_x, move_y }));
 				hand_sanit_delay.push_back(99);
@@ -649,7 +649,7 @@ void Stage4::HandleEvents()
 				else {
 					spray_turret.push_back(new Spray({ move_x, move_y }));
 					spray_delay.push_back(66);
-					character->useGold(700);
+					character->useGold(spray_turret.front()->gold);
 				}
 				spray_turret.push_back(new Spray({ move_x, move_y }));
 				spray_delay.push_back(66);
@@ -661,7 +661,7 @@ void Stage4::HandleEvents()
 				else {
 					vaccine_turret.push_back(new Vaccine({ move_x, move_y }));
 					vaccine_delay.push_back(165);
-					character->useGold(1000);
+					character->useGold(vaccine_turret.front()->gold);
 				}
 				vaccine_turret.push_back(new Vaccine({ move_x, move_y }));
 				vaccine_delay.push_back(165);
@@ -673,7 +673,7 @@ void Stage4::HandleEvents()
 				else {
 					support_turret.push_back(new Support({ move_x, move_y }));
 					support_delay.push_back(330);
-					character->useGold(5000);
+					character->useGold(support_turret.front()->gold);
 				}
 				support_turret.push_back(new Support({ move_x, move_y }));
 				support_delay.push_back(330);
