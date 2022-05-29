@@ -1,6 +1,6 @@
 #include "Support.h"
 
-Support::Support(int x, int y) : gold(300), w(100), h(100), delay(165) {
+Support::Support(int x, int y) : gold(200), w(100), h(100), delay(165) {
 	SDL_Surface* support_surface = IMG_Load("../../Resources/turret_05_support.png");
 	support_texture = SDL_CreateTextureFromSurface(g_renderer, support_surface);
 	SDL_FreeSurface(support_surface);
