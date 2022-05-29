@@ -538,8 +538,9 @@ void Stage::HandleEvents()
 
 			if (event.key.keysym.sym == SDLK_SPACE) {
 				Mix_HaltMusic();
+				if(!character->game_state) g_current_game_phase = PHASE_INTRO;
 				
-				g_current_game_phase = PHASE_ENDING;
+				else g_current_game_phase = PHASE_ENDING;
 
 				Mix_PlayMusic(ending_music_, -1);
 			}
