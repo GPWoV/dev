@@ -33,9 +33,7 @@ private:
 	SDL_Rect gold_num_destination;
 
 public:
-	int character_hp;
-	const int w;
-	const int h;
+	int character_hp = 1000;
 
 	int gold_int = 5000;
 	const char* gold_char;
@@ -45,7 +43,7 @@ public:
 	bool damage_state = false;
 	bool game_state = true;
 
-	Character();
+	Character(int character_hp);
 	~Character();
 	void show();
 	void getDamage(int missile_damage);

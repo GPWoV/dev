@@ -226,7 +226,9 @@ void Stage2::Update()
 			(*iter)->virus_speed = (*iter)->virus_default_speed;
 		}
 
-		(*iter)->move();
+		if (character->game_state) {
+			(*iter)->move();
+		}
 		if (!((*iter)->virus_state)) {
 			dead_virus++;
 			if ((*iter)->getHpW())

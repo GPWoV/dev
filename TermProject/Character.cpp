@@ -2,7 +2,7 @@
 #include "Character.h"
 #include <string.h>
 
-Character::Character() : character_hp(1000), w(250), h(250) {
+Character::Character(int character_hp) {
 	//main 캐릭터
 	SDL_Surface* character_surface = IMG_Load("../../Resources/character_normal.png");
 	character_texture = SDL_CreateTextureFromSurface(g_renderer, character_surface);
@@ -92,13 +92,12 @@ void Character::show() {
 	}
 	else {
 		SDL_RenderCopy(g_renderer, damage_texture, &damage_source, &damage_destination);
-		damage_state = false;
+		this->damage_state = false;
 	}
 
 	//게임오버
 	if (this->game_state == false) {
 		SDL_RenderCopy(g_renderer, gameover_texture, &gameover_source, &gameover_destination);
-		character_hp = 1000;
 	}
 }
 
@@ -122,13 +121,13 @@ void Character::useGold(int turret_price) {
 }
 
 void Character::Renewal() {
-	gold_int = 5000;
-	damage_state = false;
-	game_state = true;
+	this->character_hp = 1000;
+	this->gold_int = 5000;
+	this->damage_state = false;
+	this->game_state = true;
 	hp_destination = { character_destination.x, character_destination.y - 20, (int)(character_source.w * character_hp / 1000), hp_source.h };
 }
 
 void Character::nextLevel() {
 	SDL_RenderCopy(g_renderer, level_texture, &level_source, &level_destination);
-	
 }
