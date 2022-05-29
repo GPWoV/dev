@@ -509,12 +509,11 @@ void Stage::Render()
 		character->nextLevel(2);
 	}
 
-
 	//게임오버
 	if (!character->game_state) {
 		character->gameOver();
+		renewal_stage_1 = 1;
 	}
-
 
 	SDL_RenderPresent(g_renderer);
 	
@@ -539,7 +538,6 @@ void Stage::HandleEvents()
 			if (event.key.keysym.sym == SDLK_SPACE) {
 				Mix_HaltMusic();
 				if(!character->game_state) g_current_game_phase = PHASE_INTRO;
-				
 				else g_current_game_phase = PHASE_ENDING;
 
 				Mix_PlayMusic(ending_music_, -1);

@@ -494,6 +494,8 @@ void Stage5::Render()
 	//게임오버
 	if (!character->game_state) {
 		character->gameOver();
+		renewal_stage_5 = 1;
+		
 	}
 
 	SDL_RenderPresent(g_renderer);
