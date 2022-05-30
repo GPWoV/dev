@@ -45,6 +45,7 @@ public:
 	void Render();
 	void Renewal();
 	bool crash();
+	void GameOver();
 
 private:
 	SDL_Texture* texture_;

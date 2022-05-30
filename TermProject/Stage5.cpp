@@ -494,6 +494,8 @@ void Stage5::Render()
 	//게임오버
 	if (!character->game_state) {
 		character->gameOver();
+		renewal_stage_5 = 1;
+		
 	}
 
 	SDL_RenderPresent(g_renderer);
@@ -518,7 +520,10 @@ void Stage5::HandleEvents()
 
 			if (event.key.keysym.sym == SDLK_SPACE) {
 				Mix_HaltMusic();
-				if (!character->game_state) g_current_game_phase = PHASE_INTRO;
+				if (!character->game_state) {
+					g_current_game_phase = PHASE_INTRO;
+					GameOver();
+				}
 				else g_current_game_phase = PHASE_ENDING;
 
 				Mix_PlayMusic(ending_music_, -1);
@@ -693,3 +698,49 @@ void Stage5::Renewal() {
 	dead_virus = 0;
 }
 
+
+void Stage5::GameOver() {
+	if (!character->game_state) {
+		character->game_state = true;
+		tylenol_delay.clear();
+		hand_sanit_delay.clear();
+		spray_delay.clear();
+		vaccine_delay.clear();
+		support_delay.clear();
+
+		for (auto iter = tylenol_turret.begin(); iter != tylenol_turret.end(); iter++) {
+			delete (*iter);
+		}
+		tylenol_turret.clear();
+
+		for (auto iter = hand_sanit_turret.begin(); iter != hand_sanit_turret.end(); iter++) {
+			delete (*iter);
+		}
+		hand_sanit_turret.clear();
+
+		for (auto iter = spray_turret.begin(); iter != spray_turret.end(); iter++) {
+			delete (*iter);
+		}
+		spray_turret.clear();
+
+		for (auto iter = vaccine_turret.begin(); iter != vaccine_turret.end(); iter++) {
+			delete (*iter);
+		}
+		vaccine_turret.clear();
+
+		for (auto iter = support_turret.begin(); iter != support_turret.end(); iter++) {
+			delete (*iter);
+		}
+		support_turret.clear();
+
+		character->gold_int = 1000;
+		tylenol_price = 200;
+		hand_sanitizers_price = 200;
+		spray_price = 200;
+		vaccine_price = 2000;
+		vaccine_price = 2000;
+		support_price = 200;
+
+		character->Renewal();
+	}
+}
